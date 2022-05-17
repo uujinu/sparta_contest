@@ -3,17 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 
 
-# many to many
-# 1. Ingredient-Recipe
-recipe_ingre = db.Table('recipe_ingre',
-                        db.Column('recipe_id', db.Integer, db.ForeignKey(
-                            'recipe.id', ondelete='CASCADE'), primary_key=True),
-                        db.Column('ingre_id', db.Integer, db.ForeignKey(
-                            'ingredient.id', ondelete='CASCADE'), primary_key=True),
-                        db.Column('quantity', db.String(50), nullable=False)
-                        )
-
-# 2. Ingredient-Refrige
+# 1. Ingredient-Refrige
 Ingre_Refrige = db.Table('ingre_refrige',
                          db.Column('ingre_id', db.Integer, db.ForeignKey(
                              'ingredient.id', ondelete='CASCADE'), primary_key=True),
@@ -23,7 +13,7 @@ Ingre_Refrige = db.Table('ingre_refrige',
                                    default=datetime.utcnow)
                          )
 
-# 3. Recipe-User 좋아요
+# 2. Recipe-User 좋아요
 recipe_user = db.Table('recipe_user_like',
                        db.Column('recipe_id', db.Integer, db.ForeignKey(
                            'recipe.id', ondelete='CASCADE'), primary_key=True),
@@ -79,13 +69,13 @@ class Recipe(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique=False, nullable=False)
-    description = db.Column(db.String(200), unique=False, nullable=True)
+    description = db.Column(db.Text(), unique=False, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'))
     ingredients = db.relationship(
-        'Ingredient', secondary=recipe_ingre, backref='recipes')
+        'RecipeIngredient', backref='recipe', lazy=True)
     info = db.relationship('RecipeInfo', backref='recipe', uselist=False)
     steps = db.relationship('RecipeStep', backref='recipe', lazy=True)
     images = db.relationship('RecipeImage', backref='recipe', lazy=True)
@@ -110,6 +100,18 @@ class Ingredient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
+
+
+class RecipeIngredient(db.Model):
+    __tablename__ = 'recipe_ingre'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    quantity = db.Column(db.String(50), nullable=False)
+
+    recipe_id = db.Column(db.Integer, db.ForeignKey(
+        'recipe.id', ondelete='CASCADE'), nullable=False)
+    ingre_id = db.Column(db.Integer, nullable=True)
 
 
 class RecipeStep(db.Model):
