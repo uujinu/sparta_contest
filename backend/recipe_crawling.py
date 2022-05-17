@@ -63,11 +63,13 @@ for n, m in enumerate(url_list):  # /recipe/xxxxxxx
     info_dict = {}
     info_list = summary.select('div.view2_summary_info > span')
 
-    if len(info_list) == 0:  # 정보 안적은 레시피 제외
+    if len(info_list) < 3:  # 정보 3개 모두 적지 않은 레시피 제외
         continue
 
     for n, info in enumerate(info_list):
         info_dict[f'info{str(n+1)}'] = info.text  # key: info1, info2, info3
+        if n == 1 and info.text == '120분 이내':
+            info_dict[f'info{str(n+1)}'] = '2시간 이내'
 
     # 재료
     if soup.select_one('div.ready_ingre3') is None:  # 재료 안적은 레시피 제외
