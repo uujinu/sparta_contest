@@ -74,6 +74,7 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique=False, nullable=False)
     description = db.Column(db.Text(), unique=False, nullable=True)
+    thumbnail = db.Column(db.String(200), unique=False, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey(

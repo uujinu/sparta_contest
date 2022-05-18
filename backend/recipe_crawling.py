@@ -134,7 +134,8 @@ for n, m in enumerate(url_list):  # /recipe/xxxxxxx
         'info': info_dict,
         'ingre_list': ingre_list,
         'step_list': step_list,
-        'imgs': img_list
+        'imgs': img_list,
+        'thumbnail': thumb_url
     }
     recipe_list.append(recipe_dict)
 
