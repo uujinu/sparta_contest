@@ -42,7 +42,6 @@ f.close()
 sql = 'INSERT INTO ingredient(name) VALUES (%s)'
 cursor.executemany(sql, ingre_list)
 conn.commit()
-conn.close()
 
 
 # 3. Ingredient 테이블에서 재료 id, 재료명 불러오기
