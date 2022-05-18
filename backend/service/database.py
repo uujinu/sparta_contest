@@ -5,6 +5,9 @@ import MySQLdb
 from datetime import datetime
 from random import randint
 from MySQLdb._exceptions import DataError
+from pathlib import Path
+
+script_location = Path(__file__).absolute().parent
 
 
 # DB 연결
@@ -19,7 +22,7 @@ cursor = conn.cursor()
 
 # 1. DB에 회원 데이터 입력
 
-with open('db_data/user_mock_data.json', encoding='utf-8') as json_file:
+with open(f'{script_location}/db_data/user_mock_data.json', encoding='utf-8') as json_file:
     json_data = json.load(json_file)
     for d in json_data:
         created_at = datetime.today().strftime("%Y/%m/%d %H:%M:%S")
@@ -33,7 +36,7 @@ with open('db_data/user_mock_data.json', encoding='utf-8') as json_file:
 # 2. DB에 재료 데이터 입력
 
 ingre_list = []
-f = open('db_data/ingredients.csv', 'r', encoding='utf-8')
+f = open(f'{script_location}/db_data/ingredients.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     ingre_list.append(line)
@@ -60,7 +63,7 @@ for i in range(981):  # 레시피 작성자를 무작위로 뽑음
 
 count = 0  # random_num의 인덱스
 for i in range(1, 6):  # recipe1.json ~ recipe5.json
-    json_path = f'db_data/recipe{i}.json'
+    json_path = f'{script_location}/db_data/recipe{i}.json'
     with open(json_path, encoding='utf-8') as json_file:
         json_data = json.load(json_file)
         for d in json_data:
