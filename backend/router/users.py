@@ -10,13 +10,6 @@ _user_auth = UserDto.user_auth
 _user_profile = UserDto.user_profile
 
 
-def is_user(id):
-    user = get_a_user(id)
-    if not user:
-        api.abort(404)
-    return user
-
-
 @api.route('/signup')
 class Signup(Resource):
     @api.expect(_user_auth, validate=True)
@@ -50,19 +43,20 @@ class UserManagement(Resource):
 
 @api.route('/<int:id>')
 @api.param('id', '회원 식별자')
+@api.response(404, '존재하지 않는 회원')
+@api.response(500, '서버 오류')
 class User(Resource):
     @api.marshal_with(_user_profile)
-    @api.response(404, '존재하지 않는 회원')
     def get(self, id):
         '''회원 정보를 불러옵니다.'''
-        return is_user(id)
+        return user_get(id)
 
     def delete(self, id):
         '''회원 정보를 삭제합니다.'''
-        user = is_user(id)
+        user = user_get(id)
         delete_data(user)
 
         return {
             'status': 'success',
             'msg': '탈퇴되었습니다.'
-        }
+        }, 204

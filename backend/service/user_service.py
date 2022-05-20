@@ -66,6 +66,14 @@ def get_a_user(id):
     return User.query.filter_by(id=id).first()
 
 
+@login_required
+def user_get(id):
+    user = User.query.filter_by(id=id).first()
+    if user:
+        return user
+    return abort(404, '존재하지 않는 회원입니다.')
+
+
 # 회원 생성
 def save_changes(data):
     db.session.add(data)
