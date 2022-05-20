@@ -1,12 +1,16 @@
 from flask import Flask
 from config.flask_config import Config
 from model.models import *
+from flask_wtf.csrf import CSRFProtect
 
 
 def create_app():
     # 앱 설정
     app = Flask(__name__)
     app.config.from_object((get_flask_env()))
+
+    csrf = CSRFProtect()
+    csrf.init_app(app)
 
     db.init_app(app)
     migrate.init_app(app, db)
