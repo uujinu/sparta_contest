@@ -44,3 +44,30 @@ class UserDto:
         'posts': fields.List(fields.Nested(recipe_base), required=False, description='회원 작성글 리스트'),
         'likes': fields.List(fields.Nested(recipe_base), required=False, description='회원 좋아요 리스트')
     })
+
+
+class RecipeDto:
+    api = Namespace('Recipes',  description='레시피 관리 operation을 담당하는 API입니다.')
+    api.models[recipe_base.name] = recipe_base
+
+    info = api.model('recipe_info', {
+        'portion_info': fields.String(required=True, description='레시피 몇 인분'),
+        'time_info': fields.String(required=True, description='레시피 조리 시간'),
+        'degree_info': fields.String(required=True, description='레시피 난이도')
+    })
+    ingredients = api.model('recipe_ingre', {
+        'name': fields.String(required=True, description='레시피 재료명'),
+        'quantity': fields.String(required=True, description='레시피 재료 용량')
+    })
+    steps = api.model('recipe_steps', {
+        'step_num': fields.Integer(required=True, description='레시피 순서 번호'),
+        'step_desc': fields.String(required=True, description='레시피 순서 설명'),
+        'step_image': fields.String(required=False, description='레시피 순서 이미지')
+    })
+    recipe = api.clone('recipe', recipe_base, {
+        'description': fields.String(required=False, description='레시피 소개'),
+        'info': fields.Nested(info, required=True, description='레시피 정보'),
+        'ingredients': fields.List(fields.Nested(ingredients), required=True, description='레시피 재료'),
+        'steps': fields.List(fields.Nested(steps), required=True, description='레시피 순서'),
+        'images': fields.List(fields.String, required=False, description='레시피 이미지 리스트'),
+    })
