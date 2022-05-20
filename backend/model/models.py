@@ -1,10 +1,6 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-db = SQLAlchemy()
-migrate = Migrate()
+from app.extension import *
 
 
 # 1. Ingredient-Refrige
