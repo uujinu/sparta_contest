@@ -80,8 +80,8 @@ for i in range(1, 6):  # recipe1.json ~ recipe5.json
 
             conn.commit()
 
-            sql = 'SELECT id FROM recipe where user_id = %s'
-            cursor.execute(sql, (user_id,))
+            sql = 'SELECT id FROM recipe where user_id = %s and title = %s'
+            cursor.execute(sql, (user_id, d['title']))
             recipe_id = cursor.fetchall()[0][0]
 
             # 레시피-재료 데이터 입력
