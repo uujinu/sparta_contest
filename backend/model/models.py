@@ -3,17 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.extension import *
 
 
-# 1. Ingredient-Refrige
-Ingre_Refrige = db.Table('ingre_refrige',
-                         db.Column('ingre_id', db.Integer, db.ForeignKey(
-                             'ingredient.id', ondelete='CASCADE'), primary_key=True),
-                         db.Column('refrige_id', db.Integer, db.ForeignKey(
-                             'refrige.id', ondelete='CASCADE'), primary_key=True),
-                         db.Column('created_at', db.DateTime,
-                                   default=datetime.utcnow)
-                         )
-
-# 2. Recipe-User 좋아요
+# Recipe-User 좋아요
 recipe_user = db.Table('recipe_user_like',
                        db.Column('recipe_id', db.Integer, db.ForeignKey(
                            'recipe.id', ondelete='CASCADE'), primary_key=True),
@@ -59,9 +49,21 @@ class Refrige(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     ingredients = db.relationship(
-        'Ingredient', secondary=Ingre_Refrige, backref='refriges')
+        'Refrige_ingre', backref='user_refrige', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'))
+
+
+class Refrige_ingre(db.Model):
+    __tablename__ = 'refrige_ingre'
+
+    id = db.Column(db.Integer, primary_key=True)
+    refrige_id = db.Column(db.Integer, db.ForeignKey(
+        'refrige.id', ondelete='CASCADE'))
+    ingre_id = db.Column(db.Integer, unique=False, nullable=True)
+    name = db.Column(db.String(100), unique=False, nullable=False)
+    memo = db.Column(db.String(200), unique=False, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class Recipe(db.Model):
