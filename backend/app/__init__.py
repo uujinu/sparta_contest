@@ -20,6 +20,7 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    login_manager.init_app(app)
 
     api = Api(blueprint,
               title='쩝쩝박사 Project API',
