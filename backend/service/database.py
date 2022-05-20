@@ -69,9 +69,10 @@ for i in range(1, 6):  # recipe1.json ~ recipe5.json
         json_data = json.load(json_file)
         for d in json_data:
             user_id = random_num[count]
-            sql = 'INSERT INTO recipe(title, description, created_at, user_id) VALUES (%s, %s, %s, %s)'
+            sql = 'INSERT INTO recipe(title, description, thumbnail, created_at, user_id) VALUES (%s, %s, %s, %s)'
             created_at = datetime.today().strftime("%Y/%m/%d %H:%M:%S")
-            val = (d['title'], d['description'], created_at, user_id)
+            val = (d['title'], d['description'],
+                   d['thumbnail'], created_at, user_id)
 
             try:
                 cursor.execute(sql, val)
