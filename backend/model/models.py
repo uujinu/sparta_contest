@@ -41,6 +41,9 @@ class User(db.Model):
             method='sha256'
         )
 
+    def get_id(self):
+        return str(self.id)
+
     def check_password(self, password):
         '''Check hashed password'''
         return check_password_hash(self.password_hashed, password)
