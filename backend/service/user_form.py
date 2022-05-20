@@ -10,3 +10,9 @@ class RegisterForm(FlaskForm):
                              DataRequired(), EqualTo('password2')])
     password2 = PasswordField('password', validators=[DataRequired()])
     submit = SubmitField('submit')
+
+
+class LoginForm(FlaskForm):
+    email = EmailField('email', validators=[DataRequired()])
+    password = PasswordField('password', validators=[DataRequired()])
+    submit = SubmitField('submit')
