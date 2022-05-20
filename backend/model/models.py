@@ -45,6 +45,18 @@ class User(db.Model):
         '''Check hashed password'''
         return check_password_hash(self.password_hashed, password)
 
+    def is_authenticated(self):
+        '''Return True if the user is authenticated'''
+        return True
+
+    def is_active(self):
+        '''All users are active'''
+        return True
+
+    def is_anonymous(self):
+        '''False, as anonymous users aren't supported'''
+        return False
+
     def __repr__(self):
         return f'User({self.id}| {self.nickname} | {self.email})'
 
