@@ -17,6 +17,14 @@ recipe_base = Model('recipe_base', {
 })
 
 
+class ImageGet(fields.Raw):
+    def format(self, value):
+        res = []
+        for img in value:
+            res.append(img.img_path)
+        return res
+
+
 class UserDto:
     api = Namespace('Users', description='회원 관리 operation을 담당하는 API입니다.')
     api.models[user_base.name] = user_base
@@ -25,7 +33,7 @@ class UserDto:
     user_auth = api.model('user', {
         'email': fields.String(required=True, description='회원 이메일'),
         'nickname': fields.String(required=True, description='회원 닉네임'),
-        'password': fields.String(required=True, description='회원 비밀번호'),
+        'password': fields.String(required=True, description='회원 비밀번호', attribute='password_hashed'),
         'password2': fields.String(required=True, description='회원 비밀번호2'),
     })
     user_ingre = api.model('user_ingre', {
@@ -64,10 +72,13 @@ class RecipeDto:
         'step_desc': fields.String(required=True, description='레시피 순서 설명'),
         'step_image': fields.String(required=False, description='레시피 순서 이미지')
     })
+    images = api.model('recipe_images', {
+        'img_path': ImageGet(required=False, description='레시피 완성 이미지')
+    })
     recipe = api.clone('recipe', recipe_base, {
         'description': fields.String(required=False, description='레시피 소개'),
         'info': fields.Nested(info, required=True, description='레시피 정보'),
         'ingredients': fields.List(fields.Nested(ingredients), required=True, description='레시피 재료'),
         'steps': fields.List(fields.Nested(steps), required=True, description='레시피 순서'),
-        'images': fields.List(fields.String, required=False, description='레시피 이미지 리스트'),
+        'images': ImageGet(attribute='images', required=False, description='레시피 이미지 리스트')
     })
