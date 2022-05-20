@@ -10,7 +10,7 @@ user_base = Model('user_base', {
 
 recipe_base = Model('recipe_base', {
     'id': fields.Integer(required=True, description='레시피 식별자'),
-    'author': fields.Nested(user_base, required=True, description='레시피 작성자'),
+    'author': fields.Nested(user_base, required=True, description='레시피 작성자', attribute='user'),
     'title': fields.String(required=True, description='레시피 제목'),
     'thumbnail': fields.String(required=False, description='레시피 썸네일 이미지'),
     'likes': fields.Integer(requierd=False, description='레시피 좋아요 수')
