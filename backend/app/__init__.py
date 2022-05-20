@@ -1,7 +1,13 @@
-from flask import Flask
+from flask import Flask, Blueprint
 from config.flask_config import Config
 from model.models import *
+from flask_restx import Api
 from flask_wtf.csrf import CSRFProtect
+from router.recipes import api as Recipe_ns
+from router.users import api as User_ns
+
+
+blueprint = Blueprint('api', __name__)
 
 
 def create_app():
@@ -15,6 +21,13 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+    api = Api(blueprint,
+              title='쩝쩝박사 Project API',
+              version='1.0',
+              description='JJBS project flask server')
+
+    api.add_namespace(User_ns, path='/users')
+    api.add_namespace(Recipe_ns, path='/recipes')
     return app
 
 
