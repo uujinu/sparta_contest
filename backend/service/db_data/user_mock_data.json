@@ -1,157 +1,126 @@
 [
   {
     "nickname": "test",
-    "email": "test@test.com",
-    "password": "test"
+    "email": "test@test.com"
   },
   {
     "nickname": "Camfield",
-    "email": "vcamfield0@disqus.com",
-    "password": "test"
+    "email": "vcamfield0@disqus.com"
   },
   {
     "nickname": "Fenner",
-    "email": "tfenner1@miitbeian.gov.cn",
-    "password": "test"
+    "email": "tfenner1@miitbeian.gov.cn"
   },
   {
     "nickname": "Coulthurst",
-    "email": "ccoulthurst2@nba.com",
-    "password": "test"
+    "email": "ccoulthurst2@nba.com"
   },
   {
     "nickname": "Bicksteth",
-    "email": "rbicksteth3@microsoft.com",
-    "password": "test"
+    "email": "rbicksteth3@microsoft.com"
   },
   {
     "nickname": "Rangle",
-    "email": "jrangle4@ucoz.com",
-    "password": "test"
+    "email": "jrangle4@ucoz.com"
   },
   {
     "nickname": "Haversum",
-    "email": "hhaversum5@opera.com",
-    "password": "test"
+    "email": "hhaversum5@opera.com"
   },
   {
     "nickname": "Garbutt",
-    "email": "mgarbutt6@scientificamerican.com",
-    "password": "test"
+    "email": "mgarbutt6@scientificamerican.com"
   },
   {
     "nickname": "Huerta",
-    "email": "chuerta7@odnoklassniki.ru",
-    "password": "test"
+    "email": "chuerta7@odnoklassniki.ru"
   },
   {
     "nickname": "Boydle",
-    "email": "dboydle8@printfriendly.com",
-    "password": "test"
+    "email": "dboydle8@printfriendly.com"
   },
   {
     "nickname": "Henriksson",
-    "email": "bhenriksson9@discuz.net",
-    "password": "test"
+    "email": "bhenriksson9@discuz.net"
   },
   {
     "nickname": "Upwood",
-    "email": "cupwooda@imdb.com",
-    "password": "test"
+    "email": "cupwooda@imdb.com"
   },
   {
     "nickname": "Ryburn",
-    "email": "dryburnb@typepad.com",
-    "password": "test"
+    "email": "dryburnb@typepad.com"
   },
   {
     "nickname": "Sunock",
-    "email": "jsunockc@ox.ac.uk",
-    "password": "test"
+    "email": "jsunockc@ox.ac.uk"
   },
   {
     "nickname": "Balk",
-    "email": "bbalkd@plala.or.jp",
-    "password": "test"
+    "email": "bbalkd@plala.or.jp"
   },
   {
     "nickname": "Chinge",
-    "email": "dchingee@posterous.com",
-    "password": "test"
+    "email": "dchingee@posterous.com"
   },
   {
     "nickname": "Kellough",
-    "email": "akelloughf@oaic.gov.au",
-    "password": "test"
+    "email": "akelloughf@oaic.gov.au"
   },
   {
     "nickname": "Lyal",
-    "email": "mlyalg@intel.com",
-    "password": "test"
+    "email": "mlyalg@intel.com"
   },
   {
     "nickname": "Wreight",
-    "email": "rwreighth@storify.com",
-    "password": "test"
+    "email": "rwreighth@storify.com"
   },
   {
     "nickname": "Masic",
-    "email": "dmasici@merriam-webster.com",
-    "password": "test"
+    "email": "dmasici@merriam-webster.com"
   },
   {
     "nickname": "Dodgshon",
-    "email": "pdodgshonj@prlog.org",
-    "password": "test"
+    "email": "pdodgshonj@prlog.org"
   },
   {
     "nickname": "Gouny",
-    "email": "kgounyk@hhs.gov",
-    "password": "test"
+    "email": "kgounyk@hhs.gov"
   },
   {
     "nickname": "Grindell",
-    "email": "mgrindelll@skyrock.com",
-    "password": "test"
+    "email": "mgrindelll@skyrock.com"
   },
   {
     "nickname": "Boatwright",
-    "email": "sboatwrightm@loc.gov",
-    "password": "test"
+    "email": "sboatwrightm@loc.gov"
   },
   {
     "nickname": "Cordes",
-    "email": "ecordesn@unesco.org",
-    "password": "test"
+    "email": "ecordesn@unesco.org"
   },
   {
     "nickname": "Cromie",
-    "email": "acromieo@fda.gov",
-    "password": "test"
+    "email": "acromieo@fda.gov"
   },
   {
     "nickname": "Goulborn",
-    "email": "agoulbornp@npr.org",
-    "password": "test"
+    "email": "agoulbornp@npr.org"
   },
   {
     "nickname": "Beames",
-    "email": "dbeamesq@newsvine.com",
-    "password": "test"
+    "email": "dbeamesq@newsvine.com"
   },
   {
     "nickname": "Loving",
-    "email": "mlovingr@huffingtonpost.com",
-    "password": "test"
+    "email": "mlovingr@huffingtonpost.com"
   },
   {
     "nickname": "Feyer",
-    "email": "rfeyers@answers.com",
-    "password": "test"
+    "email": "rfeyers@answers.com"
   },
   {
     "nickname": "Campe",
-    "email": "lcampet@go.com",
-    "password": "test"
+    "email": "lcampet@go.com"
   }
 ]

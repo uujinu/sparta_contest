@@ -26,8 +26,9 @@ with open(f'{script_location}/db_data/user_mock_data.json', encoding='utf-8') as
     json_data = json.load(json_file)
     for d in json_data:
         created_at = datetime.today().strftime("%Y/%m/%d %H:%M:%S")
-        sql = 'INSERT INTO user(email, nickname, password, created_at) VALUES (%s, %s, %s, %s)'
-        val = (d['email'], d['nickname'], d['password'], created_at)
+        sql = 'INSERT INTO user(email, nickname, password_hashed, created_at) VALUES (%s, %s, %s, %s)'
+        password_hashed = 'sha256$UQN6KiK8wG0vxvZu$11e77c8c5674a2598e7d9acecf4bdf9455fa1f786c02c3c0e50ffaa3e7032a5c'
+        val = (d['email'], d['nickname'], password_hashed, created_at)
 
         cursor.execute(sql, val)
         conn.commit()

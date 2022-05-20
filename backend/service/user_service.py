@@ -16,7 +16,7 @@ def save_new_user(data):
             new_user = User(
                 email=form.email.data,
                 nickname=form.nickname.data,
-                password=hashed_pw
+                password_hashed=hashed_pw
             )
             save_changes(new_user)
 
