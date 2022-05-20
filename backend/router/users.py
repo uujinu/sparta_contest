@@ -20,11 +20,23 @@ def is_user(id):
 @api.route('/signup')
 class Signup(Resource):
     @api.expect(_user_auth, validate=True)
-    @api.doc(response={201: '회원가입 완료', 500: '회원가입 실패'})
+    @api.response(201, '회원가입 완료')
+    @api.response(500, '회원가입 실패')
     def post(self):
         '''새로운 회원을 생성합니다.'''
         data = request.json
         return save_new_user(data=data)
+
+
+@api.route('/login')
+class Login(Resource):
+    @api.response(200, '로그인에 성공하였습니다.')
+    @api.response(401, '로그인에 실패하였습니다.')
+    @api.expect(_user_auth, validate=True, skip_null=True)
+    def post(self):
+        '''회원 로그인 로직 입니다.'''
+        data = request.json
+        return sign_in_user(data=data)
 
 
 @api.route('/')
