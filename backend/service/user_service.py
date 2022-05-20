@@ -2,7 +2,7 @@ from app.extension import db, login_manager
 from model.models import User, generate_password_hash
 from .user_form import *
 from flask_restx import abort
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 
 
 # 회원 생성
@@ -51,6 +51,17 @@ def sign_in_user(data):
                 abort(401, '로그인에 실패하였습니다.')
     else:
         abort(401, '등록되지 않은 사용자입니다. 회원가입하세요.')
+
+
+# 회원 로그아웃
+@login_required
+def sign_out_user():
+    logout_user()
+    response_object = {
+        'status': 'logout success',
+        'message': '로그아웃 되었습니다.'
+    }
+    return response_object, 200
 
 
 # 모든 회원 get

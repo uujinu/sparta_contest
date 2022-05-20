@@ -32,6 +32,15 @@ class Login(Resource):
         return sign_in_user(data=data)
 
 
+@api.route('/logout')
+class Logout(Resource):
+    @api.response(200, '로그아웃 성공')
+    @api.response(401, '로그아웃 실패')
+    def get(self):
+        '''회원 로그아웃 로직 입니다.'''
+        return sign_out_user()
+
+
 @api.route('/')
 class UserManagement(Resource):
     @api.response(401, '권한이 없습니다.')
