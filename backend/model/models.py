@@ -20,7 +20,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     nickname = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), unique=False, nullable=False)
+    password_hashed = db.Column(db.String(100), unique=False, nullable=False)
     profile_image = db.Column(db.String(200), default='default.png')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -29,16 +29,21 @@ class User(db.Model):
         'Recipe', secondary=recipe_user, backref='like_users')
     posts = db.relationship('Recipe', backref='user', lazy=True)
 
-    def set_password(self, password):
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute!')
+
+    @password.setter
+    def password(self, password):
         '''Create hashed password'''
-        self.password = generate_password_hash(
+        self.password_hashed = generate_password_hash(
             password,
             method='sha256'
         )
 
     def check_password(self, password):
         '''Check hashed password'''
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.password_hashed, password)
 
     def __repr__(self):
         return f'User({self.id}| {self.nickname} | {self.email})'
