@@ -3,6 +3,7 @@ from model.models import User, generate_password_hash
 from .user_form import *
 from flask_restx import abort
 from flask_login import current_user, login_user, logout_user, login_required
+from flask import request
 
 
 # 회원 생성
@@ -70,19 +71,42 @@ def get_all_users():
     return User.query.all()
 
 
-# 특정 회원 get
+# 특정 회원 get(user_loader)
 @login_required
 @login_manager.user_loader
 def get_a_user(id):
     return User.query.filter_by(id=id).first()
 
 
+# 특정 회원 get
 @login_required
 def user_get(id):
     user = User.query.filter_by(id=id).first()
     if user:
         return user
     return abort(404, '존재하지 않는 회원입니다.')
+
+
+# 이메일/닉네임 중복 검사
+def duplicate_check(data):
+    _t = '이메일'
+    _res = {
+        'status': 'success',
+        'message': f'사용 가능한 {_t}입니다.'
+    }
+    try:  # 이메일 중복검사
+        email = request.json['email']
+        if User.query.filter_by(email=email).first():
+            return abort(409, f'중복된 {_t}입니다.')
+        else:
+            return _res, 200
+    except KeyError:  # 닉네임 중복검사
+        _t = '닉네임'
+        nickname = request.json['nickname']
+        if User.query.filter_by(nickname=nickname).first():
+            return abort(409, f'중복된 {_t}입니다.')
+        else:
+            return _res, 200
 
 
 # 회원 생성

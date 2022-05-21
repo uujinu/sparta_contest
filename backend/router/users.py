@@ -14,6 +14,7 @@ _user_ingre = UserDto.user_ingre
 _user_login = UserDto.user_login
 
 
+# 회원가입
 @api.route('/signup')
 class Signup(Resource):
     @api.expect(_user_auth, validate=True)
@@ -25,6 +26,7 @@ class Signup(Resource):
         return save_new_user(data=data)
 
 
+# 로그인
 @api.route('/login')
 class Login(Resource):
     @api.response(200, '로그인에 성공하였습니다.')
@@ -36,6 +38,7 @@ class Login(Resource):
         return sign_in_user(data=data)
 
 
+# 로그아웃
 @api.route('/logout')
 class Logout(Resource):
     @api.response(200, '로그아웃 성공')
@@ -45,15 +48,17 @@ class Logout(Resource):
         return sign_out_user()
 
 
+# 회원 리스트
 @api.route('/')
 class UserManagement(Resource):
-    @api.response(401, '권한이 없습니다.')
+    @api.response(401, '인증되지 않은 회원')
     @api.marshal_list_with(_user)
     def get(self):
         '''회원 리스트를 불러옵니다.'''
         return get_all_users()
 
 
+# 회원 관리
 @api.route('/<int:id>')
 @api.param('id', '회원 식별자')
 @api.response(404, '존재하지 않는 회원')
@@ -75,6 +80,18 @@ class User(Resource):
         }, 204
 
 
+# 이메일, 닉네임 중복 검사
+@api.route('/auth/check')
+@api.response(409, '중복 오류')
+@api.response(500, '서버 오류')
+class UserManagy(Resource):
+    def post(self):
+        '''이메일, 닉네임 중복검사 로직입니다.'''
+        data = request.json
+        return duplicate_check(data)
+
+
+# 회원 냉장고 관리
 @api.route('/<int:id>/refrige')
 @api.param('id', '회원 식별자')
 @api.response(401, '인증되지 않은 회원')
@@ -100,6 +117,7 @@ class UserRefrige(Resource):
 @api.response(404, '존재하지 않는 회원')
 class UserRefrige(Resource):
     @api.expect(_user_ingre, skip_null=True)
+    @api.response(200, '재료가 수정되었습니다.')
     def put(self, id, ingre_idx):
         '''회원 냉장고의 재료를 수정합니다.'''
         refrige = user_get(id).refrige
