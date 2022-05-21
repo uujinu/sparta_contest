@@ -69,6 +69,13 @@ class User(Resource):
         '''회원 정보를 불러옵니다.'''
         return user_get(id)
 
+
+    def patch(self, id):
+        '''회원 정보를 수정합니다.'''
+        user = user_get(id)
+        return update_user(user)
+
+
     def delete(self, id):
         '''회원 정보를 삭제합니다.'''
         user = user_get(id)

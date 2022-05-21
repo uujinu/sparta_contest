@@ -4,6 +4,7 @@ from .user_form import *
 from flask_restx import abort
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
+from util.file.file_upload import reqparser, s3_upload_obj, s3_delete_image
 
 
 # 회원 생성
@@ -107,6 +108,53 @@ def duplicate_check(data):
             return abort(409, f'중복된 {_t}입니다.')
         else:
             return _res, 200
+
+
+# 프로필 사진 변경
+@login_required
+def update_image():
+    img = request.files['profile_image']
+    id = current_user.get_id()
+    user = get_a_user(id)
+    _url = user.profile_image  # 이전 프로필 이미지 url
+    prefix = f'profile/{id}/'
+
+    try:
+        new_url = s3_upload_obj(img, prefix)  # s3 이미지 업로드
+        # db 업데이트
+        user.profile_image = new_url
+        db.session.commit()
+
+        if _url != None:  # 이전 프로필 이미지 삭제
+            s3_delete_image(_url.split('amazonaws.com/')[1])
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+
+# 회원 정보 수정(비밀번호 제외)
+@login_required
+def update_user(user):
+    args = reqparser()
+    if args['profile_image']:
+        if not update_image():
+            return {
+                'status': 'failed',
+                'message': '회원 정보 수정 중 오류가 발생했습니다.'
+            }, 500
+    if len(request.form):
+        user.nickname = request.form['nickname']
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return abort(500, '오류가 발생했습니다.')
+
+    return {
+        'status': 'success',
+        'message': '회원 정보 수정이 완료되었습니다.'
+    }, 200
 
 
 # 회원 생성
