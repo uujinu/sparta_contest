@@ -1,3 +1,5 @@
+import string
+import random
 from app.extension import db, login_manager
 from model.models import User, generate_password_hash
 from .user_form import *
@@ -5,6 +7,7 @@ from flask_restx import abort
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
 from util.file.file_upload import reqparser, s3_upload_obj, s3_delete_image
+from .user_email import send_auth_email
 
 
 # 회원 생성
@@ -155,6 +158,58 @@ def update_user(user):
         'status': 'success',
         'message': '회원 정보 수정이 완료되었습니다.'
     }, 200
+
+
+# 회원 비밀번호 초기화
+def managy_pw(email):
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return abort(404, '존재하지 않는 회원입니다.')
+
+    # 랜덤 비밀번호 생성
+    new_pw_len = 9
+    pw_candidate = [string.ascii_letters, string.digits, string.punctuation]
+    new_pw = ""
+    for i in range(new_pw_len):
+        idx = int(i / len(pw_candidate))
+        new_pw += random.choice(pw_candidate[idx])
+
+    # 새 비밀번호로 변경
+    hashed_pw = generate_password_hash(new_pw, 'sha256')
+    user.password_hashed = hashed_pw
+    db.session.commit()
+
+    # 비밀번호 초기화 이메일 전송
+    return send_auth_email(user.email, new_pw)
+
+
+# 회원 비밀번호 변경
+@login_required
+def managy_edit_pw(data):
+    email = data['email']
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        abort(404, '존재하지 않는 회원입니다.')
+    if user != current_user:
+        abort(403, '권한이 없습니다.')
+
+    # 비밀번호 확인
+    form = PasswordManageForm()
+    if form.validate_on_submit():
+        # hash the password
+        hashed_pw = generate_password_hash(form.password.data, 'sha256')
+        user.password_hashed = hashed_pw
+        db.session.commit()
+
+        # 세션 삭제
+        logout_user()
+        response_object = {
+            'status': 'success',
+            'message': '비밀번호가 변경되었습니다. 다시 로그인해주세요.'
+        }
+        return response_object, 200
+    else:
+        abort(400)
 
 
 # 회원 생성

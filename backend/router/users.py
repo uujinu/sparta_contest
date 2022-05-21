@@ -69,12 +69,10 @@ class User(Resource):
         '''회원 정보를 불러옵니다.'''
         return user_get(id)
 
-
     def patch(self, id):
         '''회원 정보를 수정합니다.'''
         user = user_get(id)
         return update_user(user)
-
 
     def delete(self, id):
         '''회원 정보를 삭제합니다.'''
@@ -96,6 +94,26 @@ class UserManagy(Resource):
         '''이메일, 닉네임 중복검사 로직입니다.'''
         data = request.json
         return duplicate_check(data)
+
+
+# 회원 비밀번호 초기화
+@api.route('/auth/passwd-reset')
+class SetPassword(Resource):
+    @api.response(200, '비밀번호 초기화 완료')
+    def post(self):
+        '''비밀번호 초기화 로직입니다.'''
+        email = request.json['email']
+        return managy_pw(email)
+
+
+# 회원 비밀번호 변경
+@api.route('/auth/passwd')
+class SetPassword(Resource):
+    @api.response(200, '비밀번호 수정 완료')
+    def post(self):
+        '''비밀번호 변경 로직입니다.'''
+        data = request.json
+        return managy_edit_pw(data)
 
 
 # 회원 냉장고 관리
