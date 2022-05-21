@@ -7,14 +7,16 @@ class UserDto:
     api.models[user_base.name] = user_base
     api.models[recipe_base.name] = recipe_base
 
-    user_auth = api.model('user', {
+    user_login = api.model('user_login', {
         'email': fields.String(required=True, description='회원 이메일'),
-        'nickname': fields.String(required=True, description='회원 닉네임'),
         'password': fields.String(required=True, description='회원 비밀번호', attribute='password_hashed'),
+    })
+    user_auth = api.clone('user_auth', {
+        'nickname': fields.String(required=True, description='회원 닉네임'),
         'password2': fields.String(required=True, description='회원 비밀번호2'),
     })
     user_ingre = api.model('user_ingre', {
-        'id': fields.Integer(required=True, description='회원 냉장고 재료 식별자'),
+        'id': fields.Integer(required=False, description='회원 냉장고 재료 식별자'),
         'ingre_id': fields.Integer(required=False, description='재료 식별자(재료 테이블 참조용)'),
         'name': fields.String(required=True, description='회원 냉장고 재료명'),
         'memo': fields.String(required=False, description='회원 냉장고 재료 메모'),
