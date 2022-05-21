@@ -11,7 +11,7 @@ class UserDto:
         'email': fields.String(required=True, description='회원 이메일'),
         'password': fields.String(required=True, description='회원 비밀번호', attribute='password_hashed'),
     })
-    user_auth = api.clone('user_auth', {
+    user_auth = api.clone('user_auth', user_login, {
         'nickname': fields.String(required=True, description='회원 닉네임'),
         'password2': fields.String(required=True, description='회원 비밀번호2'),
     })
