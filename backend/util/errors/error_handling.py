@@ -58,7 +58,6 @@ def api_error_handler(api):
         except AttributeError:  # # custom message data가 없는 경우
             try:
                 msg = msg_dict[e.code]
-                print(msg)
                 return {'status': e.name, 'message': msg, 'description': e.description}, e.code
             except KeyError:
                 return abort(e.code)
