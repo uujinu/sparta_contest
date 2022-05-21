@@ -36,10 +36,14 @@ class gmail_sender:
         self.smtp.close()
 
 
-def send_auth_email(email):
+def send_auth_email(email, new_pw):
     auth_email = gmail_sender(
         os.getenv('GMAIL_SENDER_EMAIL'), email, os.getenv('GMAIL_SENDER_PWD'))
-    auth_email.msg_set('test title', 'test msg')
+
+    email_title = '[쩝쩝박사] 비밀번호 초기화 이메일입니다.'
+    email_msg = f'\n\n해당 비밀번호로 로그인 후, 새로운 비밀번호로 변경해주시기 바랍니다.\n\n{new_pw}'
+
+    auth_email.msg_set(email_title, email_msg)
     auth_email.smtp_connect_send()
     auth_email.smtp_disconnect()
     return {'message': '비밀번호 초기화 이메일이 전송되었습니다.'}
