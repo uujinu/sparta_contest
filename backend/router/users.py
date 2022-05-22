@@ -87,6 +87,7 @@ class User(Resource):
 
 # 이메일, 닉네임 중복 검사
 @api.route('/auth/check')
+@api.response(200, '사용 가능')
 @api.response(409, '중복 오류')
 @api.response(500, '서버 오류')
 class UserManagy(Resource):
@@ -100,6 +101,7 @@ class UserManagy(Resource):
 @api.route('/auth/passwd-reset')
 class SetPassword(Resource):
     @api.response(200, '비밀번호 초기화 완료')
+    @api.response(404, '존재하지 않는 회원')
     def post(self):
         '''비밀번호 초기화 로직입니다.'''
         email = request.json['email']
@@ -110,6 +112,8 @@ class SetPassword(Resource):
 @api.route('/auth/passwd')
 class SetPassword(Resource):
     @api.response(200, '비밀번호 수정 완료')
+    @api.response(403, '권한 없음')
+    @api.response(404, '존재하지 않는 회원')
     def post(self):
         '''비밀번호 변경 로직입니다.'''
         data = request.json
