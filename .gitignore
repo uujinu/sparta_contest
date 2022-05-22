@@ -130,3 +130,6 @@ dmypy.json
 
 frontend/node_modules
 frontend/package-lock.json
+
+# db migration
+backend/migrations/
