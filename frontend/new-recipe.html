@@ -177,7 +177,7 @@
                                 <div class="img-wrapper">
                                   <div class="file-upload-comp">
                                     <span class="file-img"><i class="bi bi-image"></i></span>
-                                    <input class="upload-file" id="upload" name="sil-1_stepImage" type="file" title="" accept="image/*">
+                                    <input class="upload-file" id="upload" name="sli-1_stepImage" type="file" title="" accept="image/*">
                                     <!--이미지 프리뷰-->
                                     <div class="prv-wrapper">
                                       <img class="prv-img">
@@ -198,7 +198,7 @@
                                 <div class="img-wrapper">
                                   <div class="file-upload-comp">
                                     <span class="file-img"><i class="bi bi-image"></i></span>
-                                    <input class="upload-file" id="upload" name="sil-2_stepImage" type="file" title="" accept="image/*">
+                                    <input class="upload-file" id="upload" name="sli-2_stepImage" type="file" title="" accept="image/*">
                                     <!--이미지 프리뷰-->
                                     <div class="prv-wrapper">
                                       <img class="prv-img">
@@ -230,7 +230,7 @@
                         <input id="upload" name="thumbnail" class="upload-file" type="file" title="" accept="image/*">
                         <!--이미지 프리뷰-->
                         <div class="prv-wrapper">
-                          <img class="prv-img">
+                          <img class="prv-img" name="thumb_img">
                           <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
                         </div>
                         <!--end 이미지 프리뷰-->
@@ -239,18 +239,19 @@
                   </div>
                   <div class="content-line">
                     <label class="input-label title-bta cmp-tit">완성 사진</label>
-                    <div class="img-wrapper">
+                    <div class="img-wrapper flex-column align-items-start
+                    ">
                       <div class="file-upload-comp mti-w">
                         <p class="mti-p">최대 5장까지 업로드할 수 있어요.</p>
                         <span class="file-img"><i class="bi bi-image"></i></span>
                         <input id="images" name="images" class="upload-file" type="file" title="" accept="image/*" multiple>
                       </div>  
                       <!--멀티 이미지 프리뷰-->
-                      <div class="prv-wrapper mti">
-                        <!--MultiFileBox-->
-                        <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
+                      <div class="mti-prv-wrapper">
+                        <div class="mti-prv-box">
+                        </div>
                       </div>
-                      <!--end 이미지 프리뷰-->
+                      <!--end 멀티 이미지 프리뷰-->
                     </div>
                   </div>
                 </div>
