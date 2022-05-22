@@ -1,0 +1,324 @@
+@font-face {
+  font-family: "Bazzi";
+  src: url("../fonts/Bazzi.woff") format("woff");
+}
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("../fonts/Jalnan.woff") format("woff");
+}
+@font-face {
+  font-family: "S-CoreDream-3Light";
+  src: url("../fonts/SCDream3.woff") format("woff");
+}
+
+@font-face {
+  font-family: "HallymGothic-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/*--------------------------------------------------------------
+# common components
+--------------------------------------------------------------*/
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #be6d75;
+  border-radius: 5px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+
+textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+input {
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  background-color: #fff;
+  outline: none;
+  border-radius: 10px;
+  transition: border 0.15s ease-in-out;
+}
+
+textarea:focus {
+  outline: none;
+  border: 1px solid #dc3545;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #dc3545;
+}
+
+@media (max-width: 768px) {
+  input {
+    font-size: 14px;
+    height: 40px;
+  }
+
+  textarea {
+    font-size: 14px;
+  }
+}
+
+/*--------------------------------------------------------------
+# main-image
+--------------------------------------------------------------*/
+.hero-inner-box {
+  margin: 50px 0;
+}
+
+@media (max-width: 768px) {
+  .hero-inner-box {
+    padding: 0 15px;
+  }
+}
+
+/* main about */
+.w-100 {
+  width: 100%;
+}
+
+/* about testimonials */
+.abt-f {
+  justify-content: space-between;
+}
+
+.abt-ttm {
+  width: 450px;
+  border-radius: 50px;
+  box-shadow: rgb(0 0 0 / 9%) 0px 3px 12px;
+}
+
+@media (max-width: 768px) {
+  .abt-f {
+    flex-direction: column;
+  }
+
+  .abt-ttm {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/*--------------------------------------------------------------
+# login page
+--------------------------------------------------------------*/
+.overlay {
+  padding-top: 20px;
+}
+
+.overlay button {
+  margin: 5% auto;
+}
+
+#user.login-box {
+  height: calc(100vh - 90px);
+  margin: auto;
+  background-color: antiquewhite;
+}
+
+#form {
+  width: 450px;
+  min-height: 500px;
+  border-radius: 15px;
+  margin: auto;
+  box-shadow: rgb(17 12 46 / 15%) 2px 8px 20px 0px;
+  padding: 2%;
+}
+
+/* form Container */
+#form .con {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #form {
+    width: 100%;
+    box-shadow: none;
+  }
+}
+
+/* Login title form form */
+header.head-form {
+  text-align: center;
+  margin: 20px 0;
+}
+
+header h2 {
+  font-size: 250%;
+  font-weight: bold;
+  color: #3e403f;
+}
+
+/*  A welcome message or an explanation of the login form */
+header p {
+  letter-spacing: 0.05em;
+}
+
+#tab-content .tap-inactive {
+  display: none;
+}
+
+.field-set {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 0 20px;
+}
+
+.field-set p.forgot {
+  width: 250px;
+  text-align: right;
+  font-size: 14px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.input-item {
+  background: #fff;
+  color: #333;
+  padding: 14.5px 0px 15px 9px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+/* inputs form  */
+input[class="form-input"] {
+  width: 250px;
+  padding: 15px;
+  margin-bottom: 2%;
+  font-size: 16px;
+  color: #52575b;
+  background-color: #e9e9e9;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  transition: 0.2s linear;
+}
+
+div.signup::before {
+  content: "아직 회원이 아니신가요?";
+  display: block;
+  font-size: 11px;
+}
+
+div.signup {
+  border-top: 1px solid #e9e9e9;
+  width: fit-content;
+  margin: 10px auto;
+  padding-top: 20px;
+}
+
+#signup input {
+  margin-bottom: 20px;
+}
+
+.helper {
+  margin: 0;
+  font-size: 12px;
+  font-family: "Noto Sans KR";
+  text-align: left;
+  padding-left: 14px;
+  color: red;
+  top: 48px;
+  position: absolute;
+  font-weight: bold;
+}
+
+#signup button {
+  padding: 10px;
+  margin: 10px 0 14px;
+  line-height: initial;
+}
+
+#signup button.check-btn {
+  padding: 0;
+  right: 1px;
+  font-size: 11px;
+  background: #c9c3c3;
+  margin: 0;
+}
+
+#signup button.check-btn:hover {
+  animation: none;
+  transform: none;
+}
+
+button {
+  display: inline-block;
+  color: #fff;
+  width: 250px;
+  height: 50px;
+  padding: 0 20px;
+  background: #dc3545;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s linear;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  button {
+    font-size: 13px;
+    height: 40px;
+  }
+
+  .helper {
+    top: 40px;
+  }
+}
+
+/* Submits */
+.submits {
+  display: inline-block;
+}
+
+.trans-btn {
+  color: #444444;
+  background: transparent;
+  border: 1px solid #dc3545;
+}
+
+/* buttons hover */
+button:hover {
+  transform: translatey(3px);
+  box-shadow: none;
+}
+
+/* buttons hover Animation */
+button:hover {
+  animation: ani9 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes ani9 {
+  0% {
+    transform: translateY(3px);
+  }
+
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+.check-btn {
+  width: fit-content;
+}

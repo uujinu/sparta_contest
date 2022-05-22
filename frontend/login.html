@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>쩝쩝박사</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@100&family=Sunflower&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- =======================================================
+  * Template Name: Squadfree - v4.7.0
+  * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top bg-color">
+      <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <h1 class="text-light"><a href="index.html"><span>쩝쩝박사</span></a></h1>
+        </div>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto" href="index.html">Home</a></li>
+            <li><a class="nav-link scrollto" href="#about">나의 냉장고</a></li>
+            <li><a class="nav-link scrollto" href="#cta">레시피 검색</a></li>
+            <li><a class="nav-link scrollto" href="#portfolio">추천</a></li>
+            <li><a class="nav-link scrollto active" href="login.html">로그인</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+      </div>
+    </header>
+    <main id="main">
+      <div class="overlay">
+        <div id="form">
+          <div class="con">
+            <div id="tab-content">
+              <div id="signup" class="tap-inactive">
+                <header class="head-form">
+                  <h2 class="tab">Sign Up</h2>
+                </header>
+                <div class="field-set">
+                  <div class="position-relative">
+                    <input class="form-input" id="email" type="text" placeholder="이메일" autocomplete="off" required>
+                    <button class="check-btn position-absolute check"> 중복확인 </button>          
+                    <p id="email-helper-text" class="helper"></p>
+                  </div>
+                  <div class="position-relative">
+                    <input class="form-input" id="nickname" type="text" placeholder="닉네임" autocomplete="off" required>
+                    <button class="check-btn position-absolute check"> 중복확인 </button>          
+                    <p id="nickname-helper-text" class="helper"></p>
+                  </div>
+                  <div class="position-relative">
+                    <input class="form-input" type="password" placeholder="비밀번호" id="pwd1"  name="password" required>
+                    <p id="pwd1-helper-text" class="helper"></p>
+                  </div>
+                  <div class="position-relative">
+                    <input class="form-input" type="password" placeholder="비밀번호 확인" id="pwd2"  name="password" required>
+                    <p id="pwd2-helper-text" class="helper"></p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <button id="signup-btn"> 회원가입 </button>
+                  <button class="change-btn" id="login-change"> 로그인 </button>
+                </div>
+              </div>
+              <div id="login">
+                <header class="head-form">
+                  <h2 class="tab">Sign In</h2>
+                </header>
+                <div class="field-set">
+                  <input class="form-input" id="email-si" type="text" placeholder="이메일" autocomplete="off" required>           
+                  <input class="form-input" type="password" placeholder="비밀번호" id="pwd"  name="password" required>
+                  <p class="forgot">
+                    <a href="#">비밀번호 찾기</a>
+                  </p>
+                  <button id="login-btn"> 로그인 </button>
+                </div>
+                <div class="signup">
+                  <button class="change-btn" id="signup-change"> 회원가입 </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./assets/js/login.js" type="module"></script>
+</body>
+</html>
