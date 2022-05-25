@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from router.recipes import api as Recipe_ns
 from router.users import api as User_ns
 from util.errors.error_handling import app_error_handler, api_error_handler
+from flask_cors import CORS, cross_origin
 
 
 blueprint = Blueprint('api', __name__)
@@ -15,7 +16,9 @@ def create_app():
     # 앱 설정
     app = Flask(__name__)
     app.config.from_object((get_flask_env()))
-
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    CORS(app, resources={
+         r"/api/*": {"origins": ['http://localhost:8080', 'http://3.34.181.171:8080']}})
     csrf = CSRFProtect()
     csrf.init_app(app)
 
@@ -26,7 +29,8 @@ def create_app():
     api = Api(blueprint,
               title='쩝쩝박사 Project API',
               version='1.0',
-              description='JJBS project flask server')
+              description='JJBS project flask server',
+              decorators=[cross_origin()])
 
     # 에러 핸들러 등록
     app_error_handler(app)
@@ -35,6 +39,16 @@ def create_app():
 
     api.add_namespace(User_ns, path='/users')
     api.add_namespace(Recipe_ns, path='/recipes')
+
+    # cors 오류 해결
+    @app.after_request
+    def after_request_cors(resp):
+        resp.access_control_allow_credentials = True
+        resp.access_control_allow_origin = '*'
+        resp.access_control_allow_methods = [
+            'GET', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'POST', 'HEAD']
+        return resp
+
     return app
 
 
