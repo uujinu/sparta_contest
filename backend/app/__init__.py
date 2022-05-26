@@ -1,3 +1,4 @@
+import redis
 from flask import Flask, Blueprint
 from config.flask_config import Config
 from model.models import *
@@ -7,6 +8,8 @@ from router.recipes import api as Recipe_ns
 from router.users import api as User_ns
 from util.errors.error_handling import app_error_handler, api_error_handler
 from flask_cors import CORS, cross_origin
+from flask_session import Session
+from datetime import timedelta
 
 
 blueprint = Blueprint('api', __name__)
@@ -17,8 +20,24 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object((get_flask_env()))
     app.config['CORS_HEADERS'] = 'Content-Type'
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=120)
+
+    # session config
+    app.config['SESSION_TYPE'] = 'redis'
+
+    # if set to true, close the browser session is failure.
+    app.config['SESSION_PERMANENT'] = False
+
+    # whether to send to the browser session cookie value to encrypt
+    app.config['SESSION_USE_SIGNER'] = True
+
+    app.config['SESSION_REDIS'] = redis.Redis(host='3.34.181.171')
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config["SESSION_COOKIE_SECURE"] = True
+    Session(app)
+
     CORS(app, resources={
-         r"/api/*": {"origins": ['http://localhost:8080', 'http://3.34.181.171:8080']}})
+         r'/api/*': {'origins': ['http://127.0.0.1:8080', 'http://3.34.181.171:8080']}}, supports_credentials=True)
     csrf = CSRFProtect()
     csrf.init_app(app)
 
@@ -44,7 +63,8 @@ def create_app():
     @app.after_request
     def after_request_cors(resp):
         resp.access_control_allow_credentials = True
-        resp.access_control_allow_origin = '*'
+        origin = 'http://127.0.0.1:8080' if Config.ENV == 'dev' else 'http://3.34.181.171:8080'
+        resp.access_control_allow_origin = origin
         resp.access_control_allow_methods = [
             'GET', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'POST', 'HEAD']
         return resp
