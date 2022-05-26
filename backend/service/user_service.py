@@ -13,7 +13,8 @@ from .user_email import send_auth_email
 # 회원 생성
 def save_new_user(data):
     user = User.query.filter_by(email=data['email']).first()
-    if not user:
+    nickname = User.query.filter_by(nickname=data['nickname']).first()
+    if not user and not nickname:
         form = RegisterForm()
         if form.validate_on_submit():
             # hash the password
@@ -31,6 +32,8 @@ def save_new_user(data):
                 'message': '회원가입이 완료되었습니다.'
             }
             return response_object, 201
+        else:
+            abort(400, '올바르지 않은 입력 형식입니다. 다시 시도해주세요.')
     else:
         abort(409, '이미 존재하는 회원입니다. 로그인해주세요.')
 
