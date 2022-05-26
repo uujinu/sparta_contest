@@ -96,23 +96,22 @@ def user_get(id):
 
 # 이메일/닉네임 중복 검사
 def duplicate_check(data):
-    _t = '이메일'
     _res = {
         'status': 'success',
-        'message': f'사용 가능한 {_t}입니다.'
     }
     try:  # 이메일 중복검사
-        email = request.json['email']
+        email = data['email']
         if User.query.filter_by(email=email).first():
-            return abort(409, f'중복된 {_t}입니다.')
+            return abort(409, '중복된 이메일입니다.')
         else:
+            _res['message'] = '사용 가능한 이메일입니다.'
             return _res, 200
     except KeyError:  # 닉네임 중복검사
-        _t = '닉네임'
-        nickname = request.json['nickname']
+        nickname = data['nickname']
         if User.query.filter_by(nickname=nickname).first():
-            return abort(409, f'중복된 {_t}입니다.')
+            return abort(409, '중복된 닉네임입니다.')
         else:
+            _res['message'] = '사용 가능한 닉네임입니다.'
             return _res, 200
 
 
