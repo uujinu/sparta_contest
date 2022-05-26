@@ -21,7 +21,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     nickname = db.Column(db.String(100), unique=True, nullable=False)
     password_hashed = db.Column(db.String(100), unique=False, nullable=False)
-    profile_image = db.Column(db.String(200), default='default.png')
+    profile_image = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     refrige = db.relationship('Refrige', backref='user', uselist=False)
