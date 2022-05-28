@@ -61,6 +61,10 @@ input:focus {
 }
 
 @media (max-width: 768px) {
+  *::-webkit-scrollbar-thumb {
+    background: none;
+  }
+
   input {
     font-size: 14px;
     height: 40px;
