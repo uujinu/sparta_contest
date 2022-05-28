@@ -5,7 +5,7 @@ from model.models import User, generate_password_hash
 from .user_form import *
 from flask_restx import abort
 from flask_login import current_user, login_user, logout_user, login_required
-from flask import request
+from flask import request, session
 from util.file.file_upload import reqparser, s3_upload_obj, s3_delete_image
 from .user_email import send_auth_email
 
@@ -50,6 +50,7 @@ def sign_in_user(data):
             # check the password
             if user.check_password(password=form.password.data):  # 로그인 성공
                 login_user(user)
+                session.permanent = True
                 return user, 200
             else:  # 로그인 실패
                 abort(401, '로그인에 실패하였습니다.')

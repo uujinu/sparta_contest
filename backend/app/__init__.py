@@ -20,7 +20,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object((get_flask_env()))
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=120)
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 
     # session config
     app.config['SESSION_TYPE'] = 'redis'
