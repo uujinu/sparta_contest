@@ -38,6 +38,7 @@
     <link href="assets/css/custom.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
     <!-- =======================================================
@@ -54,16 +55,11 @@
       <div class="container d-flex align-items-center justify-content-between">
         <div class="logo">
           <h1 class="text-light">
-            <a href="index.html"><span>쩝쩝박사</span></a>
+            <a href="/"><span>쩝쩝박사</span></a>
           </h1>
         </div>
         <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#about">나의 냉장고</a></li>
-            <li><a class="nav-link scrollto" href="#cta">레시피 검색</a></li>
-            <li><a class="nav-link scrollto" href="#portfolio">추천</a></li>
-            <li><a class="nav-link scrollto" href="login.html">로그인</a></li>
+          <ul>     
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
@@ -102,8 +98,7 @@
               <div class="content">
                 <h3>쩝쩝박사 사용법을 알아봐요!</h3>
                 <p>쩝쩝박사는 나의 냉장고에 등록된 재료를 기반으로 레시피를 추천해드려요!</p>
-                <a href="./login.html" class="about-btn">시작하기! <i class="bx bx-chevron-right"></i></a>
-                <a href="./new-recipe.html" class="about-btn">글쓰기! <i class="bx bx-chevron-right"></i></a>
+                <a href="login" class="about-btn">시작하기! <i class="bx bx-chevron-right"></i></a>
               </div>
               <section id="testimonials" class="testimonials section-bg abt-ttm pt-4 pb-4">
                 <div class="container">
@@ -344,5 +339,7 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js" type="module"></script>
+    <script src="assets/js/common/common.js" type="module"></script>
+    <script src="assets/js/login.js" type="module"></script>
   </body>
 </html>

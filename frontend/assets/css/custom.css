@@ -21,18 +21,18 @@
 /*--------------------------------------------------------------
 # common components
 --------------------------------------------------------------*/
-textarea::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 8px;
 }
 
-textarea::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background-color: #be6d75;
   border-radius: 5px;
   background-clip: padding-box;
   border: 1px solid transparent;
 }
 
-textarea::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px white;
@@ -69,6 +69,95 @@ input:focus {
   textarea {
     font-size: 14px;
   }
+}
+
+/*--------------------------------------------------------------
+# header
+--------------------------------------------------------------*/
+a.user-phone-access {
+  display: none;
+}
+
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 20px;
+  position: relative;
+
+  background-color: transparent;
+}
+
+button.profile-btn:hover {
+  animation: none;
+  transform: none;
+}
+
+.avatar-root {
+  border: 5px solid rgba(250, 250, 250, 0.36);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.25rem;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+.avatar-img {
+  color: transparent;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  text-align: center;
+  text-indent: 10000px;
+}
+
+@media (max-width: 989px) {
+  a.user-phone-access {
+    display: inline-block;
+  }
+
+  .profile-btn {
+    display: none;
+    margin-left: 30px;
+  }
+}
+
+.user-collapse {
+  display: none;
+  position: absolute;
+  right: 1px;
+}
+
+.card-body {
+  padding: 8px;
+  border-radius: 10%;
+}
+
+.collapse-ul {
+  flex-direction: column;
+}
+
+.collapse-li {
+  cursor: pointer;
+}
+
+a.collapse-a {
+  margin: 0;
+  color: #52575b;
+  font-size: 14px;
+}
+
+a.collapse-a:active {
+  margin-left: 0;
+  font-size: 14px;
+  transition: none;
 }
 
 /*--------------------------------------------------------------
@@ -199,7 +288,7 @@ header p {
 }
 
 /* inputs form  */
-input[class="form-input"] {
+input.form-input {
   width: 250px;
   padding: 15px;
   margin-bottom: 2%;
