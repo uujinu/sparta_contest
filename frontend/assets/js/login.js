@@ -82,26 +82,113 @@ $(".check").on("click", function(e) {
   }
 });
 
+
 // 비밀번호 체크
 $("#pwd1").on("propertychange change keyup paste input", function() {
   const id = "#" + $(this).attr("id");
   const helper = `${id}-helper-text`;
   const pwd = $(this).val();
 
-  if (pwd.length < 8)
+  if (pwd.length < 8) {
     $(helper).text("비밀번호는 최소 8자입니다.");
-  else if (pwd.length > 15)
+    signupCheck.passwordCheck = false;
+  } else if (pwd.length > 15) {
     $(helper).text("비밀번호는 8~15자로 구성되어야 합니다.");
-  else
+    signupCheck.passwordCheck = false;
+  } else {
     $(helper).text(/^(?=.*[a-zA-Z])((?=.*\d)+(?=.*\W)).{8,15}$/.test(pwd) ? "" : "영문자, 숫자, 특수문자를 혼용해야 합니다.");
+    signupCheck.passwordCheck = true;
+  }
 });
+
 
 $("#pwd2").on("propertychange change keyup paste input", function() {
   const id = "#" + $(this).attr("id");
   const helper = `${id}-helper-text`;
   const pwd1 = $("#pwd1").val();
   const pwd2 = $(this).val();
-  if (pwd1 !== pwd2)
+  if (pwd1 !== pwd2) {
     $(helper).text("비밀번호가 같지 않습니다.");
-  else $(helper).text("");
+    signupCheck.password2Check = false;
+  }
+  else {
+    $(helper).text("");
+    signupCheck.password2Check = true;
+  }
 });
+
+
+// 회원가입
+$("#signup-btn").on("click", function(e) {
+  e.preventDefault();
+
+  if (!(signupCheck.emailCheck && signupCheck.nicknameCheck && signupCheck.passwordCheck && signupCheck.password2Check)) {
+    alert("작성이 완료되지 않았습니다.");
+    return
+  }
+
+  const data = {
+    email: $("#email").val(),
+    nickname: $("#nickname").val(),
+    password: $("#pwd1").val(),
+    password2: $("#pwd2").val(),
+  };
+
+  axiosWrapper("POST", "/users/signup", data, (res) => {
+    if (res.status === 201) {
+      alert(res.data.message);
+      location.href = "/login";
+    }
+  }, (e) => {
+    console.log("error: ", e);
+    alert(e.response.data.message);
+  });
+});
+
+
+// 로그인
+$("#login-btn").on("click", function(e) {
+  e.preventDefault();
+
+  const data = {
+    email: $("#email-si").val(),
+    password: $("#pwd").val()
+  }
+  if (!(data.email && data.password)) {
+    alert("값을 입력하세요.");
+    return
+  } else {
+    axiosWrapper("POST", "/users/login", data, (res) => {
+      if (res.status === 200) {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        location.replace("/");
+      }
+    }, (e) => {
+      console.log("error: ", e);
+      if (e.response.status === 400 || e.response.status === 401) alert(e.response.data.message || "로그인에 실패했습니다.");
+      else alert("로그인에 실패했습니다.");
+    });
+  }
+});
+
+
+// 로그아웃
+$("#logout-btn").on("click", function(e) {
+  e.preventDefault();
+  const user = current_user();
+  if (user) {
+    axiosWrapper("GET", "/users/logout", null, (res) => {
+      if (res.status === 200) {
+        localStorage.removeItem("user");
+        location.replace = "/";
+      }
+    }, (e) => {
+      alert("로그아웃 되었습니다.");
+      console.log("res: ",e);
+      localStorage.removeItem("user");
+      location.replace = "/";
+    });
+  } else {
+    alert("로그인되지 않았습니다.");
+  }
+})
