@@ -1,3 +1,15 @@
+import { axiosWrapper } from "./utils/axios_helper.js";
+import { current_user } from "./user/user_profile.js";
+
+
+const signupCheck = {
+  emailCheck: false,
+  nicknameCheck: false,
+  passwordCheck: false,
+  password2Check: false,
+};
+
+
 // 로그인/회원가입 전환
 $(".change-btn").on("click", function(e) {
   e.preventDefault();
@@ -7,6 +19,30 @@ $(".change-btn").on("click", function(e) {
   $(chagned_id).hide();
   $(id).fadeIn(600);
 });
+
+
+$(".duplicate-check").on("propertychange change keyup paste input", function(e) {
+  const id = $(this).attr("id");
+  const helper = `#${id}-helper-text`;
+
+  if (id === "email") {
+    const email = $(this).val();
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (email.match(regExp) !== null) {
+      $(helper).text("");
+      $(this).next().attr("disabled", false);
+    } else {
+      $(helper).text("잘못된 이메일 형식입니다.");
+      $(this).next().attr("disabled", true);
+      signupCheck.emailCheck = false;
+    }
+  } else {
+    $(helper).text("");
+    signupCheck.nicknameCheck = false;
+  }
+})
+
 
 // 이메일/비밀번호 중복 체크
 $(".check").on("click", function(e) {
