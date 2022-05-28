@@ -180,13 +180,13 @@ $("#logout-btn").on("click", function(e) {
     axiosWrapper("GET", "/users/logout", null, (res) => {
       if (res.status === 200) {
         localStorage.removeItem("user");
-        location.replace = "/";
+        location.replace("/");
       }
     }, (e) => {
       alert("로그아웃 되었습니다.");
       console.log("res: ",e);
       localStorage.removeItem("user");
-      location.replace = "/";
+      location.replace("/");
     });
   } else {
     alert("로그인되지 않았습니다.");
