@@ -50,11 +50,7 @@ def sign_in_user(data):
             # check the password
             if user.check_password(password=form.password.data):  # 로그인 성공
                 login_user(user)
-                response_object = {
-                    'status': 'login success',
-                    'message': '로그인에 성공하였습니다.'
-                }
-                return response_object, 200
+                return user, 200
             else:  # 로그인 실패
                 abort(401, '로그인에 실패하였습니다.')
     else:

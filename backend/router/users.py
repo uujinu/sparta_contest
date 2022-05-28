@@ -32,6 +32,7 @@ class Login(Resource):
     @api.response(200, '로그인에 성공하였습니다.')
     @api.response(401, '로그인에 실패하였습니다.')
     @api.expect(_user_login, validate=True, skip_null=True)
+    @api.marshal_with(_user_profile)
     def post(self):
         '''회원 로그인 로직 입니다.'''
         data = request.json
