@@ -133,3 +133,4 @@ frontend/package-lock.json
 
 # db migration
 backend/migrations/
+backend/flask_session/

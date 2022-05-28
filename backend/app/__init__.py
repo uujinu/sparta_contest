@@ -1,4 +1,3 @@
-import redis
 from flask import Flask, Blueprint
 from config.flask_config import Config
 from model.models import *
@@ -20,18 +19,13 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object((get_flask_env()))
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
-
-    # session config
-    app.config['SESSION_TYPE'] = 'redis'
-
-    # if set to true, close the browser session is failure.
-    app.config['SESSION_PERMANENT'] = False
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=360)
+    app.config['SESSION_TYPE'] = 'filesystem'
 
     # whether to send to the browser session cookie value to encrypt
     app.config['SESSION_USE_SIGNER'] = True
 
-    app.config['SESSION_REDIS'] = redis.Redis(host='3.34.181.171')
+    # app.config['SESSION_REDIS'] = redis.Redis(host='3.34.181.171')
     app.config['SESSION_COOKIE_SAMESITE'] = 'None'
     app.config["SESSION_COOKIE_SECURE"] = True
     Session(app)
