@@ -47,28 +47,38 @@ $(".duplicate-check").on("propertychange change keyup paste input", function(e) 
 // 이메일/비밀번호 중복 체크
 $(".check").on("click", function(e) {
   e.preventDefault();
-
-  const id = "#" + $(this).prev().attr("id");
-  const helper = `${id}-helper-text`;
+  const idx = $(this).prev();
+  const id = idx.attr("id");
+  const helper = `#${id}-helper-text`;
 
   // 입력 여부 확인
-  if ($(id).val() === undefined || $(id).val() === "") {
+  if ($(idx).val() === undefined || $(idx).val() === "") {
     alert("값을 입력하세요.");
     return;
   }
 
-  if (id === "#email") { // 이메일 중복체크인 경우
-    const email = $(id).val();
-
-    if (!(/$^|.+@.+..+/.test(email))) {
-      $(helper).text("잘못된 이메일 형식입니다.");
-    } else $(helper).text("");
+  if (id === "email") { // 이메일 중복체크인 경우
+    const email = $(idx).val();
 
     // 이메일 중복 검사 시행
+    axiosWrapper("POST", "/users/auth/check", {"email": email}, (res) => {
+      $(helper).text(res.data.message);
+      signupCheck.emailCheck = true;
+    }, (e) => {
+      $(helper).text(e.response.data.message);
+      signupCheck.emailCheck = false;
+    })
+  } else if (id === "nickname") { // 닉네임 중복체크인 경우
+    const nickname = $(idx).val();
 
-  } else if (id === "#nickname") { // 닉네임 중복체크인 경우
     // 닉네임 중복 검사 시행
-    $(helper).text("닉네임검사");
+    axiosWrapper("POST", "/users/auth/check", {"nickname": nickname}, (res) => {
+      $(helper).text(res.data.message);
+      signupCheck.nicknameCheck = true;
+    }, (e) => {
+      $(helper).text(e.response.data.message);
+      signupCheck.nicknameCheck = false;
+    });
   }
 });
 
