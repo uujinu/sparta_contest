@@ -8,7 +8,7 @@ _recipe = RecipeDto.recipe
 _recipe_card = recipe_base
 
 
-@api.route('/')
+@api.route('')
 class RecipeList(Resource):
     @api.doc('쩝쩝박사에 등록된 레시피 리스트')
     @api.marshal_list_with(_recipe_card)
