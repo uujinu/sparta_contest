@@ -10,11 +10,29 @@ const signupCheck = {
 };
 
 
+// 전환시 input 초기화
+function input_init(id) {
+  const input_list = $(id).find("input");
+  
+  for (let i = 0; i < input_list.length; i++) {
+    $(input_list[i]).val("");
+  }
+  if (id === "#signup") {
+    const p_list = $(id).find("p");
+    console.log("p_list: ", p_list)
+    for (let i = 0; i < p_list.length; i++) {
+      $(p_list[i]).text("");
+    }
+  }
+}
+
+
 // 로그인/회원가입 전환
 $(".change-btn").on("click", function(e) {
   e.preventDefault();
   const id = "#" + $(this).attr("id").split("-")[0];
   const chagned_id = id === "#login" ? "#signup" : "#login";
+  input_init(chagned_id);
 
   $(chagned_id).hide();
   $(id).fadeIn(600);
