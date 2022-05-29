@@ -1,5 +1,10 @@
 import { header_set } from "../user/user_profile.js";
+import { main_set } from "../page/main.js";
+import { refrige_controller } from "../user/user_refrige.js";
 
+
+$(document).ready(main_set);
+$(document).ready(refrige_controller);
 
 $(document).ready(header_set);
 $(document).mouseup(function (e) {
