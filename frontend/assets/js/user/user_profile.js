@@ -4,7 +4,7 @@ export function current_user() {
   if (user !== null && user.id !== "")
     return user;
   return null;
-}
+};
 
 
 // 헤더 세팅
@@ -15,7 +15,7 @@ export const header_set = (function() {
   const idx = link.split("http://127.0.0.1:8080/")[1];
 
   const home_url = idx === "" ? "#hero" : "/";
-  const refrige_url = idx === "" ? "#about" : "/manage/refrige";
+  const refrige_url = idx === "" ? (user !== null ? "#refrige" : "#about") : (idx[0] === "#" ? (user !== null ? "#refrige" : "about") : "/manage/refrige");
   const search_url = idx === "" ? "#cta" : "/search";
   const recom_rul = idx === "" ? "#portfolio" : "/recipes";
 
@@ -25,18 +25,17 @@ export const header_set = (function() {
                             <li><a class="nav-link scrollto" href="${recom_rul}">추천</a></li>` 
 
   if (user) { // 로그인한 상태
-    const profile = user.profile_image ? user.profile_image : "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
     const user_html = `<li class="user-li">
                         <a class="nav-link scrollto user-phone-access user-page">마이페이지</a>
                         <button class="nav-link scrollto profile-btn user-page">
                           <div class="avatar-root">
-                            <img class="avatar-img" src="${profile}">
+                            <img class="avatar-img" src="${user.profile_image}">
                           </div>
                         </button>
                         <div class="collapse user-collapse">
                           <div class="card card-body">
                             <ul class="collapse-ul">
-                              <li class="collapse-li"><a class="collapse-a user-page" href="/manage/${user.id}">마이페이지</a></li>
+                              <li class="collapse-li"><a class="collapse-a user-page" href="/manage">마이페이지</a></li>
                               <li class="collapse-li"><a class="collapse-a" href="/new-recipe">글 작성하기</a></li>
                               <li id="logout-btn" class="collapse-li"><a class="collapse-a">로그아웃</a></li>
                             </ul>
