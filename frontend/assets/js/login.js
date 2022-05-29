@@ -24,7 +24,7 @@ function input_init(id) {
       $(p_list[i]).text("");
     }
   }
-}
+};
 
 
 // 로그인/회원가입 전환
@@ -59,7 +59,7 @@ $(".duplicate-check").on("propertychange change keyup paste input", function(e) 
     $(helper).text("");
     signupCheck.nicknameCheck = false;
   }
-})
+});
 
 
 // 이메일/비밀번호 중복 체크
@@ -164,21 +164,23 @@ $("#signup-btn").on("click", function(e) {
 });
 
 
-// 로그인
-$("#login-btn").on("click", function(e) {
-  e.preventDefault();
-
+function user_login() {
   const data = {
     email: $("#email-si").val(),
     password: $("#pwd").val()
   }
   if (!(data.email && data.password)) {
     alert("값을 입력하세요.");
-    return
+    return;
   } else {
     axiosWrapper("POST", "/users/login", data, (res) => {
       if (res.status === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        const user_data = res.data;
+        if (user_data.profile_image === null) {
+          user_data.profile_image = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
+        }
+
+        localStorage.setItem("user", JSON.stringify(user_data));
         location.replace("/");
       }
     }, (e) => {
@@ -186,6 +188,19 @@ $("#login-btn").on("click", function(e) {
       if (e.response.status === 400 || e.response.status === 401) alert(e.response.data.message || "로그인에 실패했습니다.");
       else alert("로그인에 실패했습니다.");
     });
+  }
+};
+
+
+// 로그인
+$("#login-btn").on("click", function(e) {
+  e.preventDefault();
+  user_login();
+});
+// enter 클릭 시 로그인
+$("#pwd").keydown(function (e) {
+  if (e.keyCode === 13) {
+    user_login();
   }
 });
 
@@ -209,4 +224,4 @@ $("#logout-btn").on("click", function(e) {
   } else {
     alert("로그인되지 않았습니다.");
   }
-})
+});
