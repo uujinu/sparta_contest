@@ -62,7 +62,7 @@ $(".duplicate-check").on("propertychange change keyup paste input", function(e) 
 });
 
 
-// 이메일/비밀번호 중복 체크
+// 이메일/닉네임 중복 체크
 $(".check").on("click", function(e) {
   e.preventDefault();
   const idx = $(this).prev();
@@ -185,7 +185,7 @@ function user_login() {
       }
     }, (e) => {
       console.log("error: ", e);
-      if (e.response.status === 400 || e.response.status === 401) alert(e.response.data.message || "로그인에 실패했습니다.");
+      if (e.response.status === 400 || e.response.status === 401) alert(e.response.data.message);
       else alert("로그인에 실패했습니다.");
     });
   }
