@@ -54,6 +54,8 @@ def sign_in_user(data):
                 return user, 200
             else:  # 로그인 실패
                 abort(401, '로그인에 실패하였습니다.')
+        else:
+            abort(400, '입력 양식이 잘못되었습니다.')
     else:
         abort(401, '등록되지 않은 사용자입니다. 회원가입하세요.')
 
