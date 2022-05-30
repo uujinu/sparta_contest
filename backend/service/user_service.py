@@ -6,7 +6,8 @@ from .user_form import *
 from flask_restx import abort
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request, session
-from util.file.file_upload import reqparser, s3_upload_obj, s3_delete_image
+from util.file.file_upload import s3_upload_obj, s3_delete_image
+from util.file.file_convert import convert_image
 from .user_email import send_auth_email
 
 
@@ -116,22 +117,30 @@ def duplicate_check(data):
 
 # 프로필 사진 변경
 @login_required
-def update_image():
-    img = request.files['profile_image']
+def update_image(new_pf):
+    img = ''
+    if new_pf == 'null':
+        img = new_pf
+    else:
+        img = request.files['profile_image']
     id = current_user.get_id()
     user = get_a_user(id)
     _url = user.profile_image  # 이전 프로필 이미지 url
     prefix = f'profile/{id}/'
 
     try:
-        new_url = s3_upload_obj(img, prefix)  # s3 이미지 업로드
-        # db 업데이트
-        user.profile_image = new_url
-        db.session.commit()
+        if img != 'null':
+            # 파일 컨버팅
+            converted_img = convert_image(img, 150, 150)
+            new_url = s3_upload_obj(converted_img, prefix)  # s3 이미지 업로드
+            # db 업데이트
+            user.profile_image = new_url
+        else:
+            user.profile_image = None
 
         if _url != None:  # 이전 프로필 이미지 삭제
             s3_delete_image(_url.split('amazonaws.com/')[1])
-        return True
+        return new_url
     except Exception as e:
         print(e)
         return False
@@ -140,25 +149,35 @@ def update_image():
 # 회원 정보 수정(비밀번호 제외)
 @login_required
 def update_user(user):
-    args = reqparser()
-    if args['profile_image']:
-        if not update_image():
+    new_nick = request.form.get('nickname')
+    new_pf = request.form.get('profile_image')
+    new_url = ''
+
+    if len(request.files) or new_pf:
+        new_url = update_image(new_pf)
+        if not new_url:
             return {
                 'status': 'failed',
                 'message': '회원 정보 수정 중 오류가 발생했습니다.'
             }, 500
-    if len(request.form):
-        user.nickname = request.form['nickname']
-        try:
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            return abort(500, '오류가 발생했습니다.')
 
-    return {
+    if new_nick:  # 닉네임 변경
+        user.nickname = request.form['nickname']
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        return abort(500, '오류가 발생했습니다.')
+
+    response_object = {
         'status': 'success',
         'message': '회원 정보 수정이 완료되었습니다.'
-    }, 200
+    }
+
+    if len(request.files) or new_pf == 'null':  # 이미지 변경시 변경된 url 함께 리턴
+        response_object['profile_url'] = '' if new_pf == 'null' else new_url
+    return response_object, 200
 
 
 # 회원 비밀번호 초기화
