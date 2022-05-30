@@ -95,6 +95,44 @@ function nick_change(nick) {
 };
 
 
+// 비밀번호 변경 이벤트
+function pwd_change() {
+  const pwd_box = $(".pwd-ch-box");
+  const pwd_btn = pwd_box.next().children(":first");
+  pwd_btn.on("click", function(e) {
+    e.preventDefault();
+
+    const email = pwd_box.find("#email");
+    const pwd1 = pwd_box.find("#pwd1");
+    const pwd2 = pwd_box.find("#pwd2");
+    const helper1 = pwd_box.find("#pwd1-helper-text");
+    const helper2 = pwd_box.find("#pwd2-helper-text");
+    const val_check = (email.val() === user.email) && pwd1.val() && pwd2.val() && (pwd1.val() === pwd2.val());
+    const helper_check = !(helper1.text() || helper2.text());
+    if (val_check && helper_check) {
+      const data = {
+        email: email.val(),
+        password: pwd1.val(),
+        password2: pwd2.val()
+      };
+      
+      axiosWrapper("POST", "/users/auth/passwd", data, (res) => {
+        if (res.status === 200) {
+          alert(res.data.message);
+          localStorage.removeItem("user");
+          location.replace("/login");
+        }
+      }, (e) => {
+        console.log("error: ", e);
+        alert(e.response.data.message);
+      });
+    } else {
+      alert("입력이 완료되지 않았습니다.");
+    }
+  });
+}
+
+
 // 내 정보 프로필 화면 구성
 $(document).ready(function() {
   const info_box = $(".info-box");
@@ -102,11 +140,13 @@ $(document).ready(function() {
   info_box.find("img").attr("src", user.profile_image); // 초기화
   pf_change(); // 이벤트 등록
 
-
   // 닉네임
   const info_nickname = info_box.find(".info-nick input");
   info_nickname.val(user.nickname);
   nick_change(info_nickname); // 이벤트 등록
+
+  // 비밀번호 변경
+  pwd_change(); // 이벤트 등록
 });
 
 

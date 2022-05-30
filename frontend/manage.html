@@ -114,14 +114,37 @@
                   <div class="info-nick">
                     <p>닉네임</p>
                     <div class="d-flex flex-row">
-                      <input type="text" required>
+                      <input type="text" autocomplete="off" required>
                       <button disabled>중복확인</button>
                     </div>
                   </div>
                 </div>
-                <div class="info-row">
-                  <div class="infoot">
-                    비밀번호 변경
+                <div class="info-row flex-column infoot">
+                  <div class="w-100 pt-3 pb-3">
+                    <div class="mb-0">
+                      <button data-bs-toggle="collapse" data-bs-target="#collapsepwd" aria-expanded="false" aria-controls="collapsepwd">
+                        비밀번호 변경
+                      </button>
+                    </div>
+                    <div class="collapse" id="collapsepwd">
+                      <div class="pwd-ch-box">
+                        <p>이메일</p>
+                        <input id="email" type="text" autocomplete="off" required>
+                        <p>비밀번호</p>
+                        <div class="position-relative">
+                          <input id="pwd1" type="password" autocomplete="off" required>
+                          <p id="pwd1-helper-text" class="helper"></p>
+                        </div>
+                        <p>비밀번호 확인</p>
+                        <div class="position-relative">
+                          <input id="pwd2" type="password" autocomplete="off" required>
+                          <p id="pwd2-helper-text" class="helper"></p>
+                        </div>
+                      </div>
+                      <div class="text-end pe-2">
+                        <button>변경</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="info-row rm-info">
