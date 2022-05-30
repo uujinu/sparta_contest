@@ -65,6 +65,8 @@ function nick_change(nick) {
 
   $(info_nickname).on("propertychange change keyup paste input", function() {
     const new_nick = $(this).val();
+    info_ch_idx = false;
+    info_state.nickname = "";
 
     if (new_nick && new_nick !== user.nickname) {
       info_btn.attr("disabled", false);
@@ -88,6 +90,7 @@ function nick_change(nick) {
           info_ch_idx = true;
       }, (e) => {
         alert(e.response.data.message);
+        info_state.nickname = "";
         info_ch_idx = false;
       });
     }
@@ -133,6 +136,51 @@ function pwd_change() {
 }
 
 
+// 저장
+function info_save(info_box) {
+  $(".info-save-btn").on("click", function(e) {
+    e.preventDefault();
+    const info_nickname = info_box.find(".info-nick input").val();
+
+    if (info_nickname !== user.nickname || info_state.profile_image) {
+      const formData = new FormData();
+
+      if (info_nickname) {
+        if (info_nickname !== user.nickname) { // 닉네임 변경
+          if (info_ch_idx) { // 중복 검사 완료
+            formData.append("nickname", info_state.nickname);
+          } else {
+            alert("닉네임 중복검사를 해주세요.");
+            return;
+          }
+        } 
+      } else {
+        alert("닉네임을 입력하세요.");
+      }
+
+      if (info_state.profile_image) { // 프로필 이미지 변경
+        formData.append("profile_image", info_state.profile_image);
+      }
+
+      axiosWrapper("PATCH", `/users/${user.id}`, formData, (res) => {
+        alert(res.data.message);
+
+        const userinfo = JSON.parse(localStorage.getItem("user"));
+        if (info_state.nickname) userinfo["nickname"] = info_state.nickname;
+        if (res.data.profile_url) userinfo["profile_image"] = res.data.profile_url;
+        localStorage.setItem("user", JSON.stringify(userinfo)); // 회원정보 업데이트
+        location.reload();
+      }, (e) => {
+        console.log("error: ", e);
+        alert(e.response.data.message);
+      });    
+    } else {
+      alert("변경 사항이 없습니다.");
+    }
+  });
+};
+
+
 // 내 정보 프로필 화면 구성
 $(document).ready(function() {
   const info_box = $(".info-box");
@@ -147,6 +195,9 @@ $(document).ready(function() {
 
   // 비밀번호 변경
   pwd_change(); // 이벤트 등록
+
+  // 저장
+  info_save(info_box); // 이벤트 등록
 });
 
 

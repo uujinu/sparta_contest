@@ -256,7 +256,7 @@ a[data-toggle="collapse"] {
 }
 
 .info-save-btn button {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .info-save-btn {
