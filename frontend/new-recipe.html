@@ -48,221 +48,211 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   </head>
-</html>
 
-<body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top header-transparent">
-    <div class="container d-flex align-items-center justify-content-between">
-      <div class="logo">
-        <h1 class="text-light">
-          <a href="/"><span>쩝쩝박사</span></a>
-        </h1>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top header-transparent">
+      <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <h1 class="text-light">
+            <a href="/"><span>쩝쩝박사</span></a>
+          </h1>
+        </div>
+        <nav id="navbar" class="navbar">
+          <ul></ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
       </div>
-      <nav id="navbar" class="navbar">
-        <ul>     
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
-      <!-- .navbar -->
-    </div>
-  </header>
-  <main id="main">
+    </header>
+    <main id="main">
       <section class="new-recipe-sec">
-          <div class="container">
-            <div class="post-container">
-                <div class="regi-title"><h4>레시피 등록</h4></div>
-                <div class="content-box">
-                    <div class="content-line">
-                      <label class="input-label fill">
-                        레시피 제목
-                      </label>
-                      <input id="title" name="title" maxlength="50" placeholder="예) 부침개 만들기" required>
-                    </div>
-                    <div class="content-line">
-                        <label class="input-label fill">
-                          레시피 소개
-                        </label>
-                        <textarea id="description" name="description" maxlength="200" placeholder="예) 부추와 해산물을 넣은 맛있는 부침개 레시피입니다." required></textarea>
-                    </div>
-                    <div class="content-line">
-                        <label class="input-label fill">
-                            레시피 정보
-                        </label>
-                        <div class="info-list">
-                        <div class="form-floating">
-                          <select class="form-select" id="portion_info" aria-label="portion_info">
-                            <option selected></option>
-                            <option value="_1p">1인분</option>
-                            <option value="_2p">2인분</option>
-                            <option value="_3p">3인분</option>
-                            <option value="_4p">4인분</option>
-                            <option value="_5p">5인분</option>
-                            <option value="_6p">6인분 이상</option>
-                          </select>
-                          <label for="floatingSelect">인원</label>
-                        </div>
-                        <div class="form-floating">
-                          <select class="form-select" id="time_info" aria-label="time-info">
-                            <option selected></option>
-                            <option value="_1t">10분 이내</option>
-                            <option value="_2t">15분 이내</option>
-                            <option value="_3t">20분 이내</option>
-                            <option value="_4t">30분 이내</option>
-                            <option value="_5t">60분 이내</option>
-                            <option value="_6t">90분 이내</option>
-                            <option value="_7t">2시간 이내</option>
-                            <option value="_8t">2시간 이상</option>
-                          </select>
-                          <label for="floatingSelect">시간</label>
-                        </div>
-                        <div class="form-floating">
-                          <select class="form-select" id="degree_info" aria-label="degree-info">
-                            <option selected></option>
-                            <option value="_1d">아무나</option>
-                            <option value="_2d">초급</option>
-                            <option value="_3d">중급</option>
-                            <option value="_4d">고급</option>
-                          </select>
-                          <label for="floatingSelect">난이도</label>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="content-box">
-                  <div class="content-line">
-                    <label class="input-label fill ingre-title">재료</label>
-                    <div id="ingre-list">
-                      <ul class="ingre-list">
-                        <li id="li-1">
-                          <input id="li-1" name="li-1_name" placeholder="재료" required autocomplete="off">
-                          <input id="li-1" name="li-1_quantity" placeholder="용량" required autocomplete="off">
-                          <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
-                        </li>
-                        <li id="li-2">
-                          <input id="li-2" name="li-2_name" placeholder="재료" required autocomplete="off">
-                          <input id="li-2" name="li-2_quantity" placeholder="용량" required autocomplete="off">
-                          <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
-                        </li>
-                        <li id="li-3">
-                          <input id="li-3" name="li-3_name" placeholder="재료" required autocomplete="off">
-                          <input id="li-3" name="li-3_quantity" placeholder="용량" required autocomplete="off">
-                          <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
-                        </li>
-                      </ul>
-                      <div class="p-btn-box">
-                        <span>
-                          <i class="bi bi-plus-circle p-ili p-btn"></i>
-                        </span>
-                      </div>
-                    </div>
+        <div class="container">
+          <div class="post-container">
+            <div class="regi-title"><h4>레시피 등록</h4></div>
+            <div class="content-box">
+              <div class="content-line">
+                <label class="input-label fill"> 레시피 제목 </label>
+                <input id="title" name="title" maxlength="50" placeholder="예) 부침개 만들기" required />
+              </div>
+              <div class="content-line">
+                <label class="input-label fill"> 레시피 소개 </label>
+                <textarea id="description" name="description" maxlength="200" placeholder="예) 부추와 해산물을 넣은 맛있는 부침개 레시피입니다." required></textarea>
+              </div>
+              <div class="content-line">
+                <label class="input-label fill"> 레시피 정보 </label>
+                <div class="info-list">
+                  <div class="form-floating">
+                    <select class="form-select" id="portion_info" aria-label="portion_info">
+                      <option selected></option>
+                      <option value="_1p">1인분</option>
+                      <option value="_2p">2인분</option>
+                      <option value="_3p">3인분</option>
+                      <option value="_4p">4인분</option>
+                      <option value="_5p">5인분</option>
+                      <option value="_6p">6인분 이상</option>
+                    </select>
+                    <label for="floatingSelect">인원</label>
+                  </div>
+                  <div class="form-floating">
+                    <select class="form-select" id="time_info" aria-label="time-info">
+                      <option selected></option>
+                      <option value="_1t">10분 이내</option>
+                      <option value="_2t">15분 이내</option>
+                      <option value="_3t">20분 이내</option>
+                      <option value="_4t">30분 이내</option>
+                      <option value="_5t">60분 이내</option>
+                      <option value="_6t">90분 이내</option>
+                      <option value="_7t">2시간 이내</option>
+                      <option value="_8t">2시간 이상</option>
+                    </select>
+                    <label for="floatingSelect">시간</label>
+                  </div>
+                  <div class="form-floating">
+                    <select class="form-select" id="degree_info" aria-label="degree-info">
+                      <option selected></option>
+                      <option value="_1d">아무나</option>
+                      <option value="_2d">초급</option>
+                      <option value="_3d">중급</option>
+                      <option value="_4d">고급</option>
+                    </select>
+                    <label for="floatingSelect">난이도</label>
                   </div>
                 </div>
-                <div class="content-box">
-                  <div class="content-line">
-                    <div class="step-box w-100">
-                      <label class="input-label fill recipe-step">레시피 순서</label>
-                      <span class="step-info">
-                        <i class="bi bi-pencil-square"></i>
-                        당신의 레시피를 소개해주세요!<br>조리 사진을 첨부하여 더욱 근사한 레시피를 완성해보세요.
-                      </span>
-                      <div class="step-list">
-                        <ul class="sli-list" id="sli">
-                          <div id="sli-1" class="step-comb">
-                            <p class="step-num">Step 1</p>
-                            <li id="sli-1" class="step-li-row">
-                              <textarea id="sli-1" name="sli-1_description" class="sli-desc" placeholder="Step 1 과정 설명"></textarea>
-                              <div class="side-d">
-                                <div class="img-wrapper">
-                                  <div class="file-upload-comp">
-                                    <span class="file-img"><i class="bi bi-image"></i></span>
-                                    <input class="upload-file" id="upload" name="sli-1_stepImage" type="file" title="" accept="image/*">
-                                    <!--이미지 프리뷰-->
-                                    <div class="prv-wrapper">
-                                      <img class="prv-img">
-                                      <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
-                                    </div>
-                                    <!--end 이미지 프리뷰-->
-                                  </div>  
+              </div>
+            </div>
+            <div class="content-box">
+              <div class="content-line">
+                <label class="input-label fill ingre-title">재료</label>
+                <div id="ingre-list">
+                  <ul class="ingre-list">
+                    <li id="li-1">
+                      <input id="li-1" name="li-1_name" placeholder="재료" required autocomplete="off" />
+                      <input id="li-1" name="li-1_quantity" placeholder="용량" required autocomplete="off" />
+                      <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
+                    </li>
+                    <li id="li-2">
+                      <input id="li-2" name="li-2_name" placeholder="재료" required autocomplete="off" />
+                      <input id="li-2" name="li-2_quantity" placeholder="용량" required autocomplete="off" />
+                      <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
+                    </li>
+                    <li id="li-3">
+                      <input id="li-3" name="li-3_name" placeholder="재료" required autocomplete="off" />
+                      <input id="li-3" name="li-3_quantity" placeholder="용량" required autocomplete="off" />
+                      <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
+                    </li>
+                  </ul>
+                  <div class="p-btn-box">
+                    <span>
+                      <i class="bi bi-plus-circle p-ili p-btn"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content-box">
+              <div class="content-line">
+                <div class="step-box w-100">
+                  <label class="input-label fill recipe-step">레시피 순서</label>
+                  <span class="step-info">
+                    <i class="bi bi-pencil-square"></i>
+                    당신의 레시피를 소개해주세요!<br />조리 사진을 첨부하여 더욱 근사한 레시피를 완성해보세요.
+                  </span>
+                  <div class="step-list">
+                    <ul class="sli-list" id="sli">
+                      <div id="sli-1" class="step-comb">
+                        <p class="step-num">Step 1</p>
+                        <li id="sli-1" class="step-li-row">
+                          <textarea id="sli-1" name="sli-1_description" class="sli-desc" placeholder="Step 1 과정 설명"></textarea>
+                          <div class="side-d">
+                            <div class="img-wrapper">
+                              <div class="file-upload-comp">
+                                <span class="file-img"><i class="bi bi-image"></i></span>
+                                <input class="upload-file" id="upload" name="sli-1_stepImage" type="file" title="" accept="image/*" />
+                                <!--이미지 프리뷰-->
+                                <div class="prv-wrapper">
+                                  <img class="prv-img" />
+                                  <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
                                 </div>
-                                <span class="span-ds"><i class="bi bi-x-circle d-sli d-btn"></i></span>
-                              </div>  
-                            </li>
-                          </div>
-                          <div id="sli-2" class="step-comb">
-                            <p class="step-num">Step 2</p>
-                            <li id="sli-2" class="step-li-row">
-                              <textarea id="sli-2" name="sli-2_description" class="sli-desc" placeholder="Step 2 과정 설명"></textarea>
-                              <div class="side-d">
-                                <div class="img-wrapper">
-                                  <div class="file-upload-comp">
-                                    <span class="file-img"><i class="bi bi-image"></i></span>
-                                    <input class="upload-file" id="upload" name="sli-2_stepImage" type="file" title="" accept="image/*">
-                                    <!--이미지 프리뷰-->
-                                    <div class="prv-wrapper">
-                                      <img class="prv-img">
-                                      <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
-                                    </div>
-                                    <!--end 이미지 프리뷰-->
-                                  </div>                
-                                </div>
-                                <span class="span-ds"><i class="bi bi-x-circle d-sli d-btn"></i></span>
+                                <!--end 이미지 프리뷰-->
                               </div>
-                            </li>
+                            </div>
+                            <span class="span-ds"><i class="bi bi-x-circle d-sli d-btn"></i></span>
                           </div>
-                        </ul>
-                        <div class="p-btn-box w-100">
-                          <span class="p-sli">
-                            <i class="bi bi-plus-circle p-btn"></i>
-                          </span>
-                        </div>
+                        </li>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="content-box">
-                  <div class="content-line">
-                    <label class="input-label title-bta">썸네일</label>
-                    <div class="img-wrapper">
-                      <div class="file-upload-comp">
-                        <span class="file-img"><i class="bi bi-image"></i></span>
-                        <input id="upload" name="thumbnail" class="upload-file" type="file" title="" accept="image/*">
-                        <!--이미지 프리뷰-->
-                        <div class="prv-wrapper">
-                          <img class="prv-img" name="thumb_img">
-                          <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
-                        </div>
-                        <!--end 이미지 프리뷰-->
-                      </div>                 
-                    </div>
-                  </div>
-                  <div class="content-line">
-                    <label class="input-label title-bta cmp-tit">완성 사진</label>
-                    <div class="img-wrapper flex-column align-items-start
-                    ">
-                      <div class="file-upload-comp mti-w">
-                        <p class="mti-p">최대 5장까지 업로드할 수 있어요.</p>
-                        <span class="file-img"><i class="bi bi-image"></i></span>
-                        <input id="images" name="images" class="upload-file" type="file" title="" accept="image/*" multiple>
-                      </div>  
-                      <!--멀티 이미지 프리뷰-->
-                      <div class="mti-prv-wrapper">
-                        <div class="mti-prv-box">
-                        </div>
+                      <div id="sli-2" class="step-comb">
+                        <p class="step-num">Step 2</p>
+                        <li id="sli-2" class="step-li-row">
+                          <textarea id="sli-2" name="sli-2_description" class="sli-desc" placeholder="Step 2 과정 설명"></textarea>
+                          <div class="side-d">
+                            <div class="img-wrapper">
+                              <div class="file-upload-comp">
+                                <span class="file-img"><i class="bi bi-image"></i></span>
+                                <input class="upload-file" id="upload" name="sli-2_stepImage" type="file" title="" accept="image/*" />
+                                <!--이미지 프리뷰-->
+                                <div class="prv-wrapper">
+                                  <img class="prv-img" />
+                                  <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
+                                </div>
+                                <!--end 이미지 프리뷰-->
+                              </div>
+                            </div>
+                            <span class="span-ds"><i class="bi bi-x-circle d-sli d-btn"></i></span>
+                          </div>
+                        </li>
                       </div>
-                      <!--end 멀티 이미지 프리뷰-->
+                    </ul>
+                    <div class="p-btn-box w-100">
+                      <span class="p-sli">
+                        <i class="bi bi-plus-circle p-btn"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
-                <div class="btn-box">
-                  <button id="clr-btn" type="button" class="btn-wh"> 취소 </button>
-                  <button id="save-btn" type="submit"> 저장 </button>
+              </div>
+            </div>
+            <div class="content-box">
+              <div class="content-line">
+                <label class="input-label title-bta">썸네일</label>
+                <div class="img-wrapper">
+                  <div class="file-upload-comp">
+                    <span class="file-img"><i class="bi bi-image"></i></span>
+                    <input id="upload" name="thumbnail" class="upload-file" type="file" title="" accept="image/*" />
+                    <!--이미지 프리뷰-->
+                    <div class="prv-wrapper">
+                      <img class="prv-img" name="thumb_img" />
+                      <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
+                    </div>
+                    <!--end 이미지 프리뷰-->
+                  </div>
                 </div>
+              </div>
+              <div class="content-line">
+                <label class="input-label title-bta cmp-tit">완성 사진</label>
+                <div class="img-wrapper flex-column align-items-start">
+                  <div class="file-upload-comp mti-w">
+                    <p class="mti-p">최대 5장까지 업로드할 수 있어요.</p>
+                    <span class="file-img"><i class="bi bi-image"></i></span>
+                    <input id="images" name="images" class="upload-file" type="file" title="" accept="image/*" multiple />
+                  </div>
+                  <!--멀티 이미지 프리뷰-->
+                  <div class="mti-prv-wrapper">
+                    <div class="mti-prv-box"></div>
+                  </div>
+                  <!--end 멀티 이미지 프리뷰-->
+                </div>
+              </div>
+            </div>
+            <div class="btn-box">
+              <button id="clr-btn" type="button" class="btn-wh">취소</button>
+              <button id="save-btn" type="submit">저장</button>
             </div>
           </div>
+        </div>
       </section>
-  </main>
-  <script src="./assets/js/new-recipe.js" type="module"></script>
-  <script src="./assets/js/common/common.js" type="module"></script>
-</body>
+    </main>
+    <script src="./assets/js/new-recipe.js" type="module"></script>
+    <script src="./assets/js/common/common.js" type="module"></script>
+  </body>
 </html>
