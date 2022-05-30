@@ -20,12 +20,12 @@ def reqparser():
 def s3_upload_obj(file, prefix):
     # 업로드 성공 시 업로드된 이미지 주소, 실패 시 False 리턴
     try:
-        f_type = file.mimetype.split('/')[1]
+        f_type = 'jpeg'
         full_path = prefix + str(uuid.uuid4().hex) + f'.{f_type}'
 
         s3.upload_fileobj(file, Bucket, full_path, ExtraArgs={
             'ACL': 'public-read',
-            'ContentType': file.content_type
+            'ContentType': 'image/jpeg'
         })
     except Exception as e:
         print(e)
