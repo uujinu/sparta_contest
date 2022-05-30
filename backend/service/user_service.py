@@ -119,6 +119,7 @@ def duplicate_check(data):
 @login_required
 def update_image(new_pf):
     img = ''
+    new_url = 'null'
     if new_pf == 'null':
         img = new_pf
     else:

@@ -7,6 +7,7 @@ const info_state = {
   profile_image: ""
 };
 let info_ch_idx = false;
+const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
 
 
 const user = current_user();
@@ -52,7 +53,6 @@ function pf_change() {
 
   remove_img.on("click", function() { // 이미지 삭제
     info_state.profile_image = "null";
-    const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
     prev_img.attr("src", default_img);
   });
 };
@@ -167,7 +167,9 @@ function info_save(info_box) {
 
         const userinfo = JSON.parse(localStorage.getItem("user"));
         if (info_state.nickname) userinfo["nickname"] = info_state.nickname;
-        if (res.data.profile_url) userinfo["profile_image"] = res.data.profile_url;
+        if (res.data.profile_url !== undefined) {
+          userinfo["profile_image"] = res.data.profile_url ? res.data.profile_url : default_img;
+        }
         localStorage.setItem("user", JSON.stringify(userinfo)); // 회원정보 업데이트
         location.reload();
       }, (e) => {
