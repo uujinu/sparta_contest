@@ -19,7 +19,6 @@ function input_init(id) {
   }
   if (id === "#signup") {
     const p_list = $(id).find("p");
-    console.log("p_list: ", p_list)
     for (let i = 0; i < p_list.length; i++) {
       $(p_list[i]).text("");
     }
@@ -217,11 +216,58 @@ $("#logout-btn").on("click", function(e) {
       }
     }, (e) => {
       alert("로그아웃 되었습니다.");
-      console.log("res: ",e);
       localStorage.removeItem("user");
       location.replace("/");
     });
   } else {
     alert("로그인되지 않았습니다.");
+  }
+});
+
+
+// 비밀번호 초기화
+$(".forgot > a").on("click", function(e) {
+  e.preventDefault();
+
+  const login = $("#login");
+  const passwd_reset = login.next();
+
+  input_init($("#login")); // 로그인 input 초기화
+  login.hide();
+  passwd_reset.fadeIn(600);
+});
+
+
+$(".reset-btn").on("click", function(e) {
+  e.preventDefault();
+
+  const passwd_reset = $(this).parent();
+  const login = passwd_reset.prev();
+
+  input_init($(this).prev()); // 비밀번호 초기화 input 초기화
+  passwd_reset.hide();
+  login.fadeIn(600);
+});
+
+
+// 비밀번호 초기화 요청
+$("#passwd-reset-btn").on("click", function(e) {
+  e.preventDefault();
+
+  const email = $(this).prev().val();
+  const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+  if (email.match(regExp) !== null) {
+    axiosWrapper("POST", "/users/auth/passwd-reset", {email: email}, (res) => {
+      alert(res.data.message);
+      location.reload();
+    }, (e) => {
+      console.log("error: ", e);
+      if (e.response.status === 404) alert("존재하지 않는 회원입니다.");
+      else alert(e.response.data.message);
+      location.reload();
+    }); 
+  } else {
+    alert("잘못된 이메일 형식입니다.");
   }
 });

@@ -209,7 +209,7 @@ a.collapse-a:active {
 # login page
 --------------------------------------------------------------*/
 .overlay {
-  padding-top: 20px;
+  padding: 20px 0;
 }
 
 .overlay button {
@@ -370,7 +370,25 @@ button {
   letter-spacing: 0.05em;
 }
 
+#passwd-reset {
+  margin-top: 70px;
+}
+
+.reset-btn {
+  position: absolute;
+  top: -80px;
+  width: fit-content;
+  right: 0;
+  background: none;
+  color: #444444;
+  font-size: 20px;
+}
+
 @media (max-width: 768px) {
+  #tab-content {
+    width: 100%;
+  }
+
   button {
     font-size: 13px;
     height: 40px;

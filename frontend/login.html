@@ -107,13 +107,25 @@
                     <input class="form-input" id="email-si" type="text" placeholder="이메일" autocomplete="off" required>           
                     <input class="form-input" type="password" placeholder="비밀번호" id="pwd"  name="password" required>
                     <p class="forgot">
-                      <a href="#">비밀번호 찾기</a>
+                      <a href="#">비밀번호를 잊으셨나요?</a>
                     </p>
                     <button id="login-btn"> 로그인 </button>
                   </div>
                   <div class="signup">
                     <button class="change-btn" id="signup-change"> 회원가입 </button>
                   </div>
+                </div>
+                <div id="passwd-reset" class="tap-inactive position-relative">
+                  <header class="head-form">
+                    <p class="passwd-t">
+                      입력하신 이메일로 임시 비밀번호가 전송됩니다.
+                    </p>
+                  </header>
+                  <div class="field-set">
+                    <input class="form-input" id="email-rs" type="text" placeholder="이메일" autocomplete="off" required>
+                    <button id="passwd-reset-btn"> 비밀번호 초기화 </button>
+                  </div>
+                  <button class="reset-btn"><i class="bi bi-x-lg"></i></button>
                 </div>
               </div>
             </div>
