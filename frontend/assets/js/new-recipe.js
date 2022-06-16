@@ -1,4 +1,34 @@
 import { state } from "./recipe-elements.js";
+import { axiosWrapper } from "./utils/axios_helper.js";
+import { current_user } from "./user/user_profile.js";
+
+
+const mode = {
+  method: "",
+  url: ""
+};
+
+
+// method 구분
+$(document).ready(function() {
+  let _id = location.href.split("new-recipe")[1];
+  _id = _id === "" ? _id : _id.split("?id=")[1];
+  mode.method = _id === "" ? "POST" : "PUT";
+  mode.url = _id === "" ? "/recipes" : `/recipes/${_id}`;
+
+  if (_id !== "" && current_user()) {
+    axiosWrapper("GET", mode.url + "?manage=true", null, (res) => {
+      console.log("data: ", res);
+    }, (e) => {
+      if (e.response.status === 403) {
+        alert(e.response.data.message);
+      } else {
+        alert("오류가 발생했습니다.");
+      }
+      location.replace("/");
+    });
+  }
+});
 
 
 /**********************************
