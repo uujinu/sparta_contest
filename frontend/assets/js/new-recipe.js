@@ -35,7 +35,7 @@ $(document).ready(function() {
  *  필수 문항 작성 체크 
  * ********************************/
 function submitCheck() {
-  const check = state.title && state.description && state.portion_info && state.time_info && state.degree_info;
+  const check = state.title && state.description && state.info.portion_info && state.info.time_info && state.info.degree_info;
   let ingre = false;
   let step = false;
   console.log("check: ", check);
@@ -77,25 +77,73 @@ function submitCheck() {
   }
   console.log("steps: ", step);
 
-
   // 필수 요소 입력 확인
   if (check && ingre && step) {
-    alert("입력이 완료되었습니다.");
-    return true;   
+    return true;
   } 
   alert("입력이 완료되지 않았습니다.");
   return false;
-}
+};
+
 
 $("#save-btn").on("click", function(e) {
   e.preventDefault();
 
   // 필수요소 작성 체크
   if (submitCheck()) { // 작성 완료일 경우
+    const formData = new FormData();
+    formData.append("title", state.title);
+    formData.append("description", state.description);
+    formData.append("info", JSON.stringify(state.info));
+
+    // ingredients
+    const ingres = [];
+    Object.values(state.ingredient).map((value) => {
+      if (value.name && value.quantity) {
+        ingres.push(value);
+      }
+    });
+    formData.append("ingredients", JSON.stringify(ingres));
+
+    // steps
+    const steps = [];
+    Object.values(state.cook_step).map((value, idx) => {
+      if (value.step_desc) {
+        if (value.step_image instanceof Blob) {
+          steps.push({ step_desc: value.step_desc, step_image: "img" });
+          formData.append(`img_${idx}`, value.step_image);
+        }
+        else {
+          steps.push(value);
+        }
+      }
+    });
+    formData.append("steps", JSON.stringify(steps));
+
+    // images
+    const imgs = [];
+    Object.values(state.images.images).map((value) => {
+      if (value instanceof Blob) {
+        formData.append("images", value);
+      } else imgs.push(value);
+    });
+
+    if (mode.method === "PUT") { // 수정일때만 이미지주소 넘김
+      formData.append("imgs", JSON.stringify(imgs));
+    }
+
+    // thumbnail
+    formData.append("thumbnail", state.images.thumbnail);
     
-  } else {  // 미완료일 경우
-
+    axiosWrapper(mode.method, mode.url, formData, (res) => {
+      console.log("res: ", res);
+      if (res.data.status === "success") {
+        alert(res.data.message);
+      } else alert("오류가 발생했습니다.");
+    }, (e) => {
+      console.log("error: ", e);
+      alert("오류가 발생했습니다.");
+    });
   }
-
   console.log("state: ", state);
 });
