@@ -105,7 +105,7 @@ function fileUploadState(_temp, file) {
   const name = _temp.attr("name");
 
   if (name === "thumbnail") {
-    state.thumbnail = file;
+    state.images.thumbnail = file;
   } else if (name === "images") {
     state.images.images[file.name] = file;
   } else { // cookStep Image
