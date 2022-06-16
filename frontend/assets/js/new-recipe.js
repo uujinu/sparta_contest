@@ -147,3 +147,12 @@ $("#save-btn").on("click", function(e) {
   }
   console.log("state: ", state);
 });
+
+
+$("#clr-btn").on("click", function(e) {
+  e.preventDefault();
+
+  if (confirm("작성된 내용이 저장되지 않습니다. 취소하시겠습니까?")) {
+    history.back();
+  }
+});
