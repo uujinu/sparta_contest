@@ -1,4 +1,7 @@
 import { inputEvent } from "./file-upload.js";
+import { axiosWrapper } from "./utils/axios_helper.js";
+import { throttle, mouse_event, auto_list_ctrl } from "./search.js";
+
 
 // 글 내용
 export const state = {
@@ -11,14 +14,17 @@ export const state = {
   },
   ingredient: {
     "li-1": {
+      ingre_id: "",
       name: "",
       quantity: ""
     },
     "li-2": {
+      ingre_id: "",
       name: "",
       quantity: ""
     },
     "li-3": {
+      ingre_id: "",
       name: "",
       quantity: ""
     }
@@ -63,38 +69,179 @@ $(".form-select").on("change", function(e) {
 function ingreAdd() {
   $(".ingre-list > li").on("propertychange change keyup paste input", function(e) {
     const _id = $(this).attr("id");
-    const _name = $(this).children(":first");
-    const _quantity = _name.next();
+    const _name = $(this).children(":first").children(":first");
+    const _quantity = _name.parent().next();
     const _idx_n = _name.attr("name").split("_")[1];
     const _idx_q = _quantity.attr("name").split("_")[1];
+
+    // 자동완성
+    const autodiv = _name.next().children(":first");
+    const li = autodiv.children();
+    
+    if (li.length) {
+      for (let i = 0; i < li.length; i++) {
+        if (_name.val() === $(li[i]).text()) {
+          const _ingre_id = $(li[i]).attr("id").split("-")[1];
+          state.ingredient[_id].ingre_id = _ingre_id;
+          break;
+        }
+      }
+    } else state.ingredient[_id].ingre_id = "";
   
     state.ingredient[_id][_idx_n] = _name.val();
     state.ingredient[_id][_idx_q] = _quantity.val();
-  })
-}
+  });
+};
 ingreAdd();
 
 
-// 재료 추가
-$(".p-ili").on("click", function() {
+// 재료 자동완성 선택(위, 아래 이동)
+$(document).ready(function() {
+  const ingre_input = $(".li-auto-div > input");
+  for (let i = 0; i < ingre_input.length; i++) {
+    const name = ingre_input.attr("name").split("_")[1];
+    if (name === "name") {
+      auto_list_ctrl($(ingre_input[i]));
+    }
+  }
+});
+
+
+// 재료 자동완성 닫기
+$(document).mouseup(function (e) {
+  const autocomp = $(".li-auto");
+  const auto_list = autocomp.find("ul");
+
+  // 현재 열린 자동완성
+  const opened = [];
+  for (let i = 0; i < auto_list.length; i++) {
+    if ($(auto_list[i]).css("display") === "block")
+      opened.push(auto_list[i]);
+  }
+
+  if (auto_list.has(e.target).length === 0) {
+    // 닫기
+    for (let i = 0; i < opened.length; i++) {
+      if ($(opened[i]).parent().css("display") === "block") {
+        $(opened[i]).parent().css("display", "none");
+      }
+    }
+  }
+});
+
+
+function auto_close() {
+  $(".li-auto-div").on("click", function() {
+    const li_auto = $(this).find("div");
+    if (li_auto.children(":first").children().length) {
+      if (li_auto.css("display") === "none") {
+        li_auto.css("display", "block");
+      } else li_auto.css("display", "none");
+    }
+  });
+};
+auto_close();
+
+
+// 재료 자동완성 선택(클릭, 엔터) 
+function ingre_li_select(autodiv) {
+  const input = autodiv.parent().prev();
+  const _id = input.attr("id");
+  const _idx_n = input.attr("name").split("_")[1];
+  const li = autodiv.children();
+  if (li.length) {
+    $(li).on("click", function(e) { 
+      const now = $(e.target);
+      const ingre_id = now.attr("id");
+      if (ingre_id !== "") {
+        input.val(now.text());
+        state.ingredient[_id].ingre_id = ingre_id.split("-")[1];
+        state.ingredient[_id][_idx_n] = input.val();
+      }
+
+      if (now.parent().parent().css("display") === "block") {
+        now.parent().parent().css("display", "none");
+      }
+    });
+
+    $(input).on("keydown", function(e) {
+      const now_auto_div = $(e.target).next();
+      if (e.keyCode === 13) {
+        now_auto_div.css("display", "none");
+      }
+    });
+  }
+}
+
+
+// 재료 자동완성
+function ingre_auto() {
+  const autocomp = $(".li-auto");
+  const input = autocomp.prev();
+
+  input.on("propertychange change keyup paste input click", function(e) {
+    const now_val = $(this).val();
+    const auto_div = $(this).next().children(":first");
+    const key = e.keyCode;
+
+    if (now_val.length && (key !== 40 && key !== 38 && key !== 13)) {
+      throttle(
+        axiosWrapper("GET", `/recipes/search?iname=${encodeURIComponent(now_val)}`, null, (res) => {
+          auto_div.empty();
+          if (res.data.length) {
+            const suggestions = res.data.filter(function(data) {
+              return data[1].startsWith(now_val);
+            });
+          
+            suggestions.forEach(function(suggested) {
+              const html = `<li id="i-${suggested[0]}">${suggested[1]}</li>`;
+              auto_div.append(html);
+            });
+
+            if (suggestions.length) {
+              auto_div.parent().css("display", "block");
+            } else {
+              auto_div.parent().css("display", "none");
+            }
+            mouse_event(auto_div);
+            ingre_li_select(auto_div);
+          } else {
+            auto_div.parent().css("display", "none");
+          }
+        }, (e) => {
+          console.log("error: ", e);
+        }), 500);
+    }
+  });
+};
+ingre_auto();
+
+
+export function ingre_add_func() {
   const parent = $(".ingre-list");
   let id = "";
   if (parent.children().length === 0)
     id = "1";
-  else id = String(parseInt($(".ingre-list li:last-child").attr("id").split("-")[1]) + 1);
+  else id = String(parseInt($(".ingre-list > li:last-child").attr("id").split("-")[1]) + 1);
 
   // state에 추가
   state.ingredient[`li-${id}`] = {
+    ingre_id: "",
     name: "",
     quantity: ""
   }
 
   const html = `
     <li id="li-${id}">
-      <input id="ii-${id}" name="li-${id}_name" placeholder="재료" required autocomplete="off">
-      <input id="ii-${id}" name="li-${id}_quantity" placeholder="용량" required autocomplete="off">
+      <div class="li-auto-div position-relative">
+        <input id="li-${id}" name="li-${id}_name" placeholder="재료" required autocomplete="off">
+        <div class="li-auto">
+          <ul></ul>
+        </div>
+      </div>
+      <input id="li-${id}" name="li-${id}_quantity" placeholder="용량" required autocomplete="off">
       <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
-    </li>`
+    </li>`;
   
   parent.append(html);
   parent.children(":last-child").children("span").on("click", function() {
@@ -103,7 +250,17 @@ $(".p-ili").on("click", function() {
     delete state.ingredient[_id];
   });
   ingreAdd();
-})
+  ingre_auto();
+  auto_close();
+
+  const input = parent.children(":last-child").find(".li-auto").prev();
+  auto_list_ctrl(input);
+}
+
+// 재료 추가
+$(".p-ili").on("click", function() {
+  ingre_add_func();
+});
 
 
 // 재료 삭제
@@ -123,7 +280,7 @@ function stepState() {
 
     state.cook_step[_id][_idx_d] = _desc.val();  
   })
-}
+};
 stepState();
 
 
@@ -136,13 +293,13 @@ function num_asc() {
     _temp.first().text(`Step ${i + 1}`); // 라벨 변경
     _temp.find("textarea").attr("placeholder", `Step ${i + 1} 과정 설명`);
   }
-}
+};
 
 
-// 레시피 추가
-$(".p-sli").on("click", function() {
+export function step_add_func(sli) {
   let id = "";
-  const parent = $(this).parent().prev();
+  const _sli = sli ? sli : $(".p-sli");
+  const parent = _sli.parent().prev();
   const num = parent.children().length;
   let _temp = parent.children(":last-child");
 
@@ -154,7 +311,7 @@ $(".p-sli").on("click", function() {
   state.cook_step[`sli-${id}`] = {
     step_desc: "",
     step_image: ""
-  }
+  };
 
   const html = `<div id="sli-${id}" class="step-comb">
                   <p class="step-num">Step ${num + 1}</p>
@@ -191,7 +348,13 @@ $(".p-sli").on("click", function() {
   
   // state 이벤트 등록
   stepState();
-})
+};
+
+
+// 레시피 추가
+$(".p-sli").on("click", function() {
+  step_add_func($(this));
+});
 
 
 function stepDel() {
@@ -202,5 +365,5 @@ function stepDel() {
     _t.remove();
     num_asc();
   });
-}
+};
 stepDel();

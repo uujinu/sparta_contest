@@ -1,12 +1,89 @@
-import { state } from "./recipe-elements.js";
+import { state, ingre_add_func, step_add_func } from "./recipe-elements.js";
 import { axiosWrapper } from "./utils/axios_helper.js";
 import { current_user } from "./user/user_profile.js";
+import { prvEvent, step_prv_btn, multi_file } from "./file-upload.js";
 
 
 const mode = {
   method: "",
   url: ""
 };
+
+
+function recipe_edit_init(data) {
+  state.title = data.title;
+  $("#title").val(state.title);
+  state.description = data.description;
+  $("#description").val(state.description);
+
+  // info
+  state.info = data.info;
+  Object.keys(state.info).map((val) => {
+    const _id = val;
+    const _selected = state.info[val];
+    $(`#${_id} > option:nth-child(${parseInt(_selected[1]) + 1})`).prop("selected", true);
+  });
+
+  // ingredients
+  const ingre_list = $(".ingre-list");
+  data.ingredients.forEach((val, idx) => {
+    const _t = { ...val };
+    const _li = ingre_list.find(`#li-${idx + 1}`);
+    let _input = [];
+    
+    if (_li.length) {
+      _input = _li.find("input");
+    } else {
+      ingre_add_func();
+      _input = ingre_list.find(`#li-${idx + 1}`).find("input");
+    }
+    state.ingredient[`li-${idx + 1}`] = _t;
+
+    $(_input[0]).val(val.name);
+    $(_input[1]).val(val.quantity);
+  });  
+  
+
+  // steps
+  const step_list = $(".sli-list");
+  data.steps.forEach((val, idx) => {
+    const _sli = step_list.find(`#sli-${idx + 1}`);
+    let _txt = "";
+    let _prv = "";
+    let _img = "";
+    if (_sli.length) {
+      _txt = _sli.find("textarea");
+      _prv = _sli.find(".prv-wrapper");
+      _img = _sli.find("img");
+    } else {
+      step_add_func();
+      _txt = step_list.find(`#sli-${idx + 1}`).find("textarea");
+      _prv = step_list.find(`#sli-${idx + 1}`).find(".prv-wrapper");
+      _img = _prv.find("img");
+    }
+    state.cook_step[`sli-${idx + 1}`].step_desc = val.step_desc;
+    state.cook_step[`sli-${idx + 1}`].step_image = val.step_image ? val.step_image : "";
+    _txt.val(val.step_desc);
+    if (val.step_image) {
+      _img.attr("src", val.step_image);
+      _prv.css("display", "block");
+      step_prv_btn($(_prv.find("span")));
+    }
+  });
+
+  // thumbnail
+  if (data.thumbnail) {
+    const _prv = $("#thumbnail-box");
+    prvEvent(_prv, data.thumbnail);
+  }
+
+  // images
+  if (data.images.length) {
+    const _prv = $(".mti-w > input");
+    const _temp = $(".mti-prv-box");
+    multi_file(_prv, _temp, data.images);
+  }
+}
 
 
 // method 구분
@@ -19,6 +96,7 @@ $(document).ready(function() {
   if (_id !== "" && current_user()) {
     axiosWrapper("GET", mode.url + "?manage=true", null, (res) => {
       console.log("data: ", res);
+      recipe_edit_init(res.data);
     }, (e) => {
       if (e.response.status === 403) {
         alert(e.response.data.message);
@@ -38,7 +116,6 @@ function submitCheck() {
   const check = state.title && state.description && state.info.portion_info && state.info.time_info && state.info.degree_info;
   let ingre = false;
   let step = false;
-  console.log("check: ", check);
 
   // 재료 입력 확인
   const ingres = state.ingredient;
@@ -75,7 +152,6 @@ function submitCheck() {
       }
     }
   }
-  console.log("steps: ", step);
 
   // 필수 요소 입력 확인
   if (check && ingre && step) {
@@ -128,7 +204,7 @@ $("#save-btn").on("click", function(e) {
       } else imgs.push(value);
     });
 
-    if (mode.method === "PUT") { // 수정일때만 이미지주소 넘김
+    if (mode.method === "PUT") {
       formData.append("imgs", JSON.stringify(imgs));
     }
 
@@ -145,7 +221,6 @@ $("#save-btn").on("click", function(e) {
       alert("오류가 발생했습니다.");
     });
   }
-  console.log("state: ", state);
 });
 
 
@@ -153,6 +228,6 @@ $("#clr-btn").on("click", function(e) {
   e.preventDefault();
 
   if (confirm("작성된 내용이 저장되지 않습니다. 취소하시겠습니까?")) {
-    history.back();
+    location.href = "/";
   }
 });
