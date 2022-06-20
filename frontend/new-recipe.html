@@ -97,14 +97,15 @@
                   <div class="form-floating">
                     <select class="form-select" id="time_info" aria-label="time-info">
                       <option selected></option>
-                      <option value="_1t">10분 이내</option>
-                      <option value="_2t">15분 이내</option>
-                      <option value="_3t">20분 이내</option>
-                      <option value="_4t">30분 이내</option>
-                      <option value="_5t">60분 이내</option>
-                      <option value="_6t">90분 이내</option>
-                      <option value="_7t">2시간 이내</option>
-                      <option value="_8t">2시간 이상</option>
+                      <option value="_1t">5분 이내</option>
+                      <option value="_2t">10분 이내</option>
+                      <option value="_3t">15분 이내</option>
+                      <option value="_4t">20분 이내</option>
+                      <option value="_5t">30분 이내</option>
+                      <option value="_6t">60분 이내</option>
+                      <option value="_7t">90분 이내</option>
+                      <option value="_8t">2시간 이내</option>
+                      <option value="_9t">2시간 이상</option>
                     </select>
                     <label for="floatingSelect">시간</label>
                   </div>
@@ -127,17 +128,32 @@
                 <div id="ingre-list">
                   <ul class="ingre-list">
                     <li id="li-1">
-                      <input id="li-1" name="li-1_name" placeholder="재료" required autocomplete="off" />
+                      <div class="li-auto-div position-relative">
+                        <input id="li-1" name="li-1_name" placeholder="재료" required autocomplete="off" />
+                        <div class="li-auto">
+                          <ul></ul>
+                        </div>
+                      </div>
                       <input id="li-1" name="li-1_quantity" placeholder="용량" required autocomplete="off" />
                       <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
                     </li>
                     <li id="li-2">
-                      <input id="li-2" name="li-2_name" placeholder="재료" required autocomplete="off" />
+                      <div class="li-auto-div position-relative">
+                        <input id="li-2" name="li-2_name" placeholder="재료" required autocomplete="off" />
+                        <div class="li-auto">
+                          <ul></ul>
+                        </div>
+                      </div>
                       <input id="li-2" name="li-2_quantity" placeholder="용량" required autocomplete="off" />
                       <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
                     </li>
                     <li id="li-3">
-                      <input id="li-3" name="li-3_name" placeholder="재료" required autocomplete="off" />
+                      <div class="li-auto-div position-relative">
+                        <input id="li-3" name="li-3_name" placeholder="재료" required autocomplete="off" />
+                        <div class="li-auto">
+                          <ul></ul>
+                        </div>
+                      </div>
                       <input id="li-3" name="li-3_quantity" placeholder="용량" required autocomplete="off" />
                       <span class="span-d"><i class="bi bi-x-circle d-btn"></i></span>
                     </li>
@@ -220,7 +236,7 @@
                     <span class="file-img"><i class="bi bi-image"></i></span>
                     <input id="upload" name="thumbnail" class="upload-file" type="file" title="" accept="image/*" />
                     <!--이미지 프리뷰-->
-                    <div class="prv-wrapper">
+                    <div id="thumbnail-box" class="prv-wrapper">
                       <img class="prv-img" name="thumb_img" />
                       <span class="prv-d-btn"><i class="bi bi-x-circle-fill"></i></span>
                     </div>
