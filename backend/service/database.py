@@ -58,6 +58,32 @@ ingre_dict = dict(map(reversed, result))  # tuple to dict (type(result)=tuple)
 
 # 4. DB에 레시피 데이터 입력
 
+PORTION_CHOICES = {
+    '1인분': '_1p',
+    '2인분': '_2p',
+    '3인분': '_3p',
+    '4인분': '_4p',
+    '5인분': '_5p',
+    '6인분 이상': '_6p'
+}
+TIME_CHOICES = {
+    '5분 이내': '_1t',
+    '10분 이내': '_2t',
+    '15분 이내': '_3t',
+    '20분 이내': '_4t',
+    '30분 이내': '_5t',
+    '60분 이내': '_6t',
+    '90분 이내': '_7t',
+    '2시간 이내': '_8t',
+    '2시간 이상': '_9t'
+}
+DEGREE_CHOICES = {
+    '아무나': '_1d',
+    '초급': '_2d',
+    '중급': '_3d',
+    '고급': '_4d'
+}
+
 random_num = []
 for i in range(981):  # 레시피 작성자를 무작위로 뽑음
     random_num.append(randint(1, 31))
@@ -97,7 +123,9 @@ for i in range(1, 6):  # recipe1.json ~ recipe5.json
             # 레시피 정보 데이터 입력
             info = d['info']
             sql = 'INSERT INTO recipeInfo(portion_info, time_info, degree_info, recipe_id) VALUES (%s, %s, %s, %s)'
-            val = (info['info1'], info['info2'], info['info3'], recipe_id)
+            info1, info2, info3 = PORTION_CHOICES[info['info1']
+                                                  ], TIME_CHOICES[info['info2']], DEGREE_CHOICES[info['info3']]
+            val = (info1, info2, info3, recipe_id)
             cursor.execute(sql, val)
             conn.commit()
 
