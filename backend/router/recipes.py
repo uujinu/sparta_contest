@@ -1,6 +1,6 @@
 from flask_restx import Resource
 from util.dto import RecipeDto, recipe_base
-from service.recipe_service import get_a_recipe, get_all_recipes
+from service.recipe_service import get_a_recipe, get_all_recipes, save_new_recipe
 
 
 api = RecipeDto.api
@@ -15,6 +15,14 @@ class RecipeList(Resource):
     def get(self):
         '''등록된 레시피 리스트입니다.'''
         return get_all_recipes()
+
+    @api.doc('새로운 레시피 작성')
+    @api.response(201, '레시피 등록이 완료되었습니다.')
+    @api.response(401, '인증되지 않은 회원')
+    @api.response(500, '서버 오류')
+    def post(self):
+        '''새로운 레시피를 작성합니다.'''
+        return save_new_recipe()
 
 
 @api.route('/<int:id>')
