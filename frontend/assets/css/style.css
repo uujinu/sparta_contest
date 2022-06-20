@@ -688,6 +688,7 @@ section {
 --------------------------------------------------------------*/
 .cta {
   background: #f6f0df;
+  padding-bottom: 0;
 }
 
 .cta h3 {
@@ -730,6 +731,34 @@ section {
   background: none;
 }
 
+.auto-comp-box {
+  height: 150px;
+  overflow: scroll;
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.auto-comp-box ul {
+  padding: 8px 15px 0 15px;
+  margin-bottom: 0;
+}
+
+.auto-comp-box ul li {
+  padding: 2px 0;
+}
+
+.auto-comp-box ul li:hover {
+  background: #e9e9e9;
+}
+
+.auto-comp-bg {
+  padding: 50px;
+  background: #fff;
+  margin-top: 50px;
+}
+
 @media (max-width: 768px) {
   .cta p {
     font-size: 14px;
@@ -744,11 +773,23 @@ section {
     margin: 2% auto;
     right: 10px;
   }
+
+  .auto-comp-box {
+    height: 100px;
+  }
+
+  .auto-comp-bg {
+    padding: 25px;
+  }
 }
 
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
+.portfolio {
+  padding-top: 0;
+}
+
 .portfolio .portfolio-item {
   margin-bottom: 30px;
 }
