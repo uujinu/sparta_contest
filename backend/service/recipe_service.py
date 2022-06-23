@@ -108,10 +108,16 @@ def save_new_recipe():
                 )
                 save_changes(new_img)
 
-    return {
-        'status': 'success',
-        'message': '레시피가 저장되었습니다.'
-    }, 201
+        return {
+            'status': 'success',
+            'message': '레시피가 저장되었습니다.'
+        }, 201
+
+    else:
+        return {
+            'status': 'failed',
+            'message': '레시피 저장에 실패했습니다.'
+        }, 400
 
 
 # 모든 레시피 get
