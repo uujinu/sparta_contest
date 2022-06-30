@@ -1,6 +1,6 @@
 from flask_restx import Resource
 from util.dto import RecipeDto, recipe_base
-from service.recipe_service import get_a_recipe, get_all_recipes, save_new_recipe, edit_recipe
+from service.recipe_service import get_a_recipe, get_all_recipes, save_new_recipe
 
 
 api = RecipeDto.api
@@ -35,7 +35,3 @@ class Recipe(Resource):
         '''레시피 상세 정보입니다.'''
         recipe = get_a_recipe(id=id)
         return recipe
-
-    def put(self, id):
-        '''레시피를 수정합니다.'''
-        return edit_recipe(id=id)

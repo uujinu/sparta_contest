@@ -52,7 +52,7 @@ class Logout(Resource):
 
 
 # 회원 리스트
-@api.route('')
+@api.route('/')
 class UserManagement(Resource):
     @api.response(401, '인증되지 않은 회원')
     @api.marshal_list_with(_user)
