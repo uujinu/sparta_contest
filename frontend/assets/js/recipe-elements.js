@@ -131,12 +131,39 @@ $(document).mouseup(function (e) {
 
 
 function auto_close() {
-  $(".li-auto-div").on("click", function() {
-    const li_auto = $(this).find("div");
+  const input = $(".li-auto-div > input");
+  input.on("click", function(e) {
+    const _input = $(e.target);
+    const li_auto = _input.next();
+
     if (li_auto.children(":first").children().length) {
       if (li_auto.css("display") === "none") {
         li_auto.css("display", "block");
       } else li_auto.css("display", "none");
+    }
+  });
+
+  input.on("keydown", function(e) {
+    const _input = $(e.target);
+    const key = e.keyCode;
+    const li = _input.next().find("li");
+    let now = "";
+    if (li.length) {
+      for (let i = 0; i < li.length; i++) {
+        const _t = $(li[i]);
+        if (_t.css("background") === "e9e9e9") {
+          now = _t;
+          break;
+        }
+      }
+    }
+    if (key === 13 && now !== "") {
+      const ingre_id = now.attr("id");
+      if (ingre_id !== "") {
+        state.ingredient[_id].ingre_id = ingre_id.split("-")[1];
+        state.ingredient[_id][_idx_n] = input.val();
+      }
+      _input.next().css("display", "none");
     }
   });
 };
@@ -163,15 +190,8 @@ function ingre_li_select(autodiv) {
         now.parent().parent().css("display", "none");
       }
     });
-
-    $(input).on("keydown", function(e) {
-      const now_auto_div = $(e.target).next();
-      if (e.keyCode === 13) {
-        now_auto_div.css("display", "none");
-      }
-    });
   }
-}
+};
 
 
 // 재료 자동완성

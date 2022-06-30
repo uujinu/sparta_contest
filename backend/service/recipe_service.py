@@ -3,7 +3,7 @@ from model.models import Ingredient, Recipe, RecipeImage, RecipeInfo, RecipeIngr
 from flask import request
 from flask_restx import abort
 from flask_login import login_required, current_user
-from util.file.file_upload import s3_upload_obj
+from util.file.file_upload import s3_upload_obj, s3_delete_image
 from util.file.file_convert import convert_image
 
 
@@ -96,6 +96,7 @@ def save_new_recipe():
             converted_img = convert_image(thumbnail, 750, 400)
             new_url = s3_upload_obj(converted_img, prefix)
             recipe.thumbnail = new_url
+            db.session.commit()
 
         # images
         imgs = request.files.getlist('images')
@@ -112,6 +113,137 @@ def save_new_recipe():
             'status': 'success',
             'message': '레시피가 저장되었습니다.'
         }, 201
+
+    else:
+        return {
+            'status': 'failed',
+            'message': '레시피 저장에 실패했습니다.'
+        }, 400
+
+
+# 레시피 수정
+@login_required
+def edit_recipe(id):
+    recipe = Recipe.query.filter_by(id=id).first()
+    if not recipe:
+        abort(404, '존재하지 않는 레시피입니다.')
+    prefix = f'recipe/{recipe.id}/'
+
+    title = request.form.get('title')
+    description = request.form.get('description')
+    info = eval(request.form.get('info'))
+    ingredients = eval(request.form.get('ingredients'))
+    steps = eval(request.form.get('steps'))
+    images = eval(request.form.get('imgs'))
+
+    if (check_element(title, description, info, ingredients, steps)):
+        # title
+        if title != recipe.title:
+            recipe.title = title
+            db.session.commit()
+
+        # description
+        if description != recipe.description:
+            recipe.description = description
+            db.session.commit()
+
+        # info
+        recipe_info = recipe.info
+        for key, value in info.items():
+            setattr(recipe_info, key, value)
+            db.session.commit()
+
+        # ingredients
+        recipe_ingre = recipe.ingredients
+        for n, i in enumerate(ingredients):
+            ingre_id = i['ingre_id']
+            if ingre_id == '':
+                new_ingredient = Ingredient(name=i['name'])
+                save_changes(new_ingredient)
+                ingre_id = Ingredient.query.filter_by(
+                    name=i['name']).first().id
+                i['ingre_id'] = ingre_id
+
+            if len(recipe_ingre) > n:
+                for key, value in i.items():
+                    setattr(recipe_ingre[n], key, value)
+                    db.session.commit()
+            else:
+                new_ingre = RecipeIngredient(
+                    name=i['name'],
+                    quantity=i['quantity'],
+                    recipe_id=recipe.id,
+                    ingre_id=ingre_id
+                )
+                save_changes(new_ingre)
+
+        if len(ingredients) < len(recipe_ingre):
+            for i in recipe_ingre[len(ingredients):]:
+                delete_data(i)
+
+        # steps
+        recipe_steps = recipe.steps
+        for n, i in enumerate(steps):
+            img_url = ''
+            if i['step_image'] == 'img':
+                filename = f'img_{n}'
+                img = request.files.get(filename)
+                if img:
+                    img_url = s3_upload_obj(img, prefix)
+
+            if len(recipe_steps) > n:
+                i['step_image'] = img_url
+                i['step_num'] = n + 1
+                for key, value in i.items():
+                    setattr(recipe_steps[n], key, value)
+                    db.session.commit()
+            else:  # 새로운 스텝 추가
+                new_step = RecipeStep(
+                    recipe_id=recipe.id,
+                    step_num=n+1,
+                    step_desc=i['step_desc'],
+                    step_image=img_url
+                )
+                save_changes(new_step)
+
+        if len(steps) < len(recipe_steps):
+            for i in recipe_steps[len(steps):]:
+                delete_data(i)
+
+        # thumbnail
+        thumbnail = request.form.get('thumbnail')
+        if not thumbnail and recipe.thumbnail:  # 썸네일 삭제
+            recipe.thumbnail = ''
+            s3_delete_image(recipe.thumbnail.split('amazonaws.com/')[1])
+            db.session.commit()
+
+        thumbnail = request.files.get('thumbnail')  # 새로운 썸네일
+        if thumbnail:
+            converted_img = convert_image(thumbnail, 750, 400)
+            new_url = s3_upload_obj(converted_img, prefix)
+            recipe.thumbnail = new_url
+            db.session.commit()
+
+        # images
+        for i in recipe.images:
+            if i.img_path not in images:  # 이미지 삭제
+                s3_delete_image(i.img_path.split('amazonaws.com/')[1])
+                delete_data(i)
+
+        imgs = request.files.getlist('images')
+        if len(imgs):
+            for i in imgs:
+                new_url = s3_upload_obj(i, prefix)
+                new_img = RecipeImage(
+                    recipe_id=recipe.id,
+                    img_path=new_url
+                )
+                save_changes(new_img)
+
+        return {
+            'status': 'success',
+            'message': '레시피가 수정되었습니다.'
+        }, 200
 
     else:
         return {
