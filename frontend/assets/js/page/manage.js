@@ -206,6 +206,8 @@ $(document).ready(function() {
 // sidebar menu toggle
 $("ul.components > li").on("click", function(e) {
   e.preventDefault();
+  const section = $(this).closest("#sidebar").next().find("section");
+  const _id = $(this).attr("id").split("-")[1];
 
   if ($(this).attr("class") === "active") return;
 
@@ -217,4 +219,11 @@ $("ul.components > li").on("click", function(e) {
     }
   }
   $(this).toggleClass("active");
+  section.css("display", "none");
+  for (let i = 0; i < section.length; i++) {
+    if ($(section[i]).attr("id") === `user-${_id}`) {
+      $(section[i]).css("display", "block");
+      break;
+    }
+  }
 });
