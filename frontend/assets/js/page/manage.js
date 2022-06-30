@@ -6,6 +6,11 @@ const info_state = {
   nickname: "",
   profile_image: ""
 };
+const user_data = {
+  posts: [],
+  likes: [],
+  refrige: []
+};
 let info_ch_idx = false;
 const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
 
@@ -15,6 +20,27 @@ const user = current_user();
   if (user === null || user.id === null) {
     alert("권한이 없습니다.");
     location.replace("/");
+  } else { // 회원 관련 정보
+    // 작성글 목록
+    axiosWrapper("GET", `/recipes?user=${user.id}`, null, (res) => {
+      user_data.posts = res.data; 
+    }, (e) => {
+      console.log("e: ", e);
+    });
+
+    // 냉장고 재료
+    axiosWrapper("GET", `/users/${user.id}/refrige`, null, (res) => {
+      user_data.refrige = res.data; 
+    }, (e) => {
+      console.log("e: ", e);
+    });
+
+    // 좋아요 목록
+    axiosWrapper("GET", `/users/${user.id}/likes`, null, (res) => {
+      user_data.likes = res.data; 
+    }, (e) => {
+      console.log("e: ", e);
+    });
   }
 }());
 

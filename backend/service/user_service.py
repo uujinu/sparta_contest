@@ -233,6 +233,12 @@ def managy_edit_pw(data):
         abort(400)
 
 
+# 좋아요 한 글
+def user_like_posts(id):
+    user = User.query.filter_by(id=id).first()
+    return user.likes
+
+
 # 회원 생성
 def save_changes(data):
     db.session.add(data)

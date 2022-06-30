@@ -254,15 +254,34 @@ def edit_recipe(id):
 
 # 모든 레시피 get
 def get_all_recipes():
+    qs = str(request.query_string, 'utf-8')
+    if qs != '':
+        user_id = qs.split('=')[1]
+        return Recipe.query.filter_by(user_id=user_id).all()
     return Recipe.query.all()
 
 
 # 특정 레시피 get
 def get_a_recipe(id):
-    return Recipe.query.filter_by(id=id).first()
+    qs = str(request.query_string, 'utf-8')
+    recipe = Recipe.query.filter_by(id=id).first()
+    if not recipe:
+        return abort(404, '존재하지 않는 레시피입니다.')
+
+    if qs != '':
+        if not current_user or recipe.user_id != current_user.id:
+            return abort(403, '권한이 없습니다.')
+    return recipe
 
 
 # 레시피 생성
 def save_changes(data):
     db.session.add(data)
+    db.session.commit()
+
+
+# 데이터 삭제
+@login_required
+def delete_data(data):
+    db.session.delete(data)
     db.session.commit()

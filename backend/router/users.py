@@ -3,6 +3,7 @@ from flask_restx import Resource
 from service.user_service import *
 from service.refrige_service import *
 from util.dto import UserDto, user_base
+from util.dto import recipe_base
 
 
 api = UserDto.api
@@ -12,6 +13,7 @@ _user_profile = UserDto.user_profile
 _user_refrige = UserDto.user_refrige
 _user_ingre = UserDto.user_ingre
 _user_login = UserDto.user_login
+_recipe_card = recipe_base
 
 
 # 회원가입
@@ -158,3 +160,17 @@ class UserRefrige(Resource):
         '''회원 냉장고의 재료를 삭제합니다.'''
         refrige = user_get(id).refrige
         return managy_ingre(refrige.id, ingre_idx)
+
+
+@api.route('/<int:id>/likes')
+@api.param('id', '회원 식별자')
+@api.response(401, '인증되지 않은 회원')
+@api.response(404, '존재하지 않는 회원')
+class UserLikes(Resource):
+    @api.marshal_list_with(_recipe_card)
+    def get(self, id):
+        '''레시피 좋아요 리스트를 불러옵니다.'''
+        if user_get(id):
+            return user_like_posts(id)
+        else:
+            return abort(404, '존재하지 않는 회원입니다')
