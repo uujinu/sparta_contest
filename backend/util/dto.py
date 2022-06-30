@@ -43,6 +43,7 @@ class RecipeDto:
         'degree_info': fields.String(required=True, description='레시피 난이도')
     })
     ingredients = api.model('recipe_ingre', {
+        'ingre_id': fields.String(required=False, description='레시피 재료 식별자'),
         'name': fields.String(required=True, description='레시피 재료명'),
         'quantity': fields.String(required=True, description='레시피 재료 용량')
     })
