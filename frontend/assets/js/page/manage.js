@@ -20,27 +20,11 @@ const user = current_user();
   if (user === null || user.id === null) {
     alert("권한이 없습니다.");
     location.replace("/");
-  } else { // 회원 관련 정보
-    // 작성글 목록
-    axiosWrapper("GET", `/recipes?user=${user.id}`, null, (res) => {
-      user_data.posts = res.data; 
-    }, (e) => {
-      console.log("e: ", e);
-    });
-
-    // 냉장고 재료
-    axiosWrapper("GET", `/users/${user.id}/refrige`, null, (res) => {
-      user_data.refrige = res.data; 
-    }, (e) => {
-      console.log("e: ", e);
-    });
-
-    // 좋아요 목록
-    axiosWrapper("GET", `/users/${user.id}/likes`, null, (res) => {
-      user_data.likes = res.data; 
-    }, (e) => {
-      console.log("e: ", e);
-    });
+  } else { // 회원 관련 정보(작성글 목록, 좋아요 목록, 냉장고 재료)
+    const user_info = JSON.parse(localStorage.getItem("user"));
+    user_data.posts = user_info.posts;
+    user_data.likes = user_info.likes;
+    user_data.refrige = user_info.refrige;
   }
 }());
 
