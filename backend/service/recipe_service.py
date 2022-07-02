@@ -285,3 +285,13 @@ def save_changes(data):
 def delete_data(data):
     db.session.delete(data)
     db.session.commit()
+
+
+# 레시피 검색
+def search_recipe():
+    qs = request.args.get('iname')
+    if qs:  # 재료 검색
+        ingre_list = Ingredient.query.with_entities(
+            Ingredient.id, Ingredient.name).filter(Ingredient.name.like(f'{qs}%')).all()
+        results = [tuple(row) for row in ingre_list]
+        return results
