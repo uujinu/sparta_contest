@@ -80,7 +80,7 @@
                 <li id="my-info" class="active">
                   <a href="#">내 정보</a>
                 </li>
-                <li id="my-posts" >
+                <li id="my-posts">
                   <a href="#">작성한 글</a>
                 </li>
                 <li id="my-likes">
@@ -157,16 +157,38 @@
                 </div>
               </div>
             </section>
-            <section id="user-posts" class="my-posts">
+            <section id="user-posts" class="my-posts" style="display: none;">
               <div class="posts-box">
+                <ul class="post-list-ul">
+                </ul>
               </div>
             </section>
-            <section id="user-likes" class="my-likes">
+            <section id="user-likes" class="my-likes" style="display: none;">
               <div class="likes-box">
+                <ul class="like-list-ul">
+                </ul>
               </div>
             </section>
-            <section id="user-refrige" class="my-refrige">
+            <section id="user-refrige" class="my-refrige" style="display: none;">
+              <div class="refrige-info">
+                <span><i class="bi bi-snow"></i></span>
+                <div>요즘 관심 있는 식재료, 나의 냉장고에 저장하고 레시피를 추천받아 보세요!</div>
+              </div>
               <div id="refrige-box">
+                <div class="refrige-bg-wrap">
+                  <div class="refrige-bg">
+                    <div class="refrige-div">
+                      <div class="ingre-card-wrapper">
+                      </div>          
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="refrige-ingre d-flex align-items-center">
+                    <input type="text" placeholder="재료명을 검색하세요" autocomplete="off" required>
+                    <button>추가</button>
+                  </div>
+                </div>
               </div>
             </section>
           </div>

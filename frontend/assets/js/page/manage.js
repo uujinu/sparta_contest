@@ -13,6 +13,7 @@ const user_data = {
 };
 let info_ch_idx = false;
 const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
+const default_thumb = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/thumb_basic.png";
 
 
 const user = current_user();
@@ -20,13 +21,66 @@ const user = current_user();
   if (user === null || user.id === null) {
     alert("권한이 없습니다.");
     location.replace("/");
-  } else { // 회원 관련 정보(작성글 목록, 좋아요 목록, 냉장고 재료)
-    const user_info = JSON.parse(localStorage.getItem("user"));
+  }
+}());
+
+
+// post init
+function post_init(ul, data, msg) {
+  if (data.length) {
+    for (let i = 0; i < data.length; i++) {
+      const temp_html = `
+        <li class="post-list-li">
+          <div class="post-card-box">
+            <a href="/recipe/${data[i].id}" class="card-link">
+              <img src="${data[i].thumbnail ? data[i].thumbnail : default_thumb}" class="post-img">
+            </a>
+          </div>
+          <div class="post-card-info">
+            <div class="card-info-tit">${data[i].title}</div>
+            <div class="card-info-btm">
+              <div class="card-info-user">
+                <a href="/profile/${data[i].author.id}">
+                  <img src="${data[i].author.profile_image ? data[i].author.profile_image : default_img}">
+                  ${data[i].author.nickname}
+                </a>
+              </div>
+              <div class="card-btm">
+                <span><i class="bi bi-heart-fill"></i> 좋아요 ${data[i].likes}</span>
+              </div>
+            </div>
+          </div>
+        </li>`;
+
+      $(ul).append(temp_html);
+    }
+  } else {
+    ul.append(msg);
+  }
+};
+
+
+// user data init
+$(document).ready(function() {
+  // posts, likes, refrige
+  const content = $("#content");
+  const post_ul = content.children(":nth-child(3)").children(":first").children(":first");
+  const like_ul = content.children(":nth-child(4)").children(":first").children(":first");
+
+  axiosWrapper("GET", `/users/${user.id}`, null, (res) => {
+    const user_info = res.data;
+    user_info["profile_image"] = user_info.profile_url ? user_info.profile_url : default_img;
+    localStorage.setItem("user", JSON.stringify(user_info));
     user_data.posts = user_info.posts;
     user_data.likes = user_info.likes;
     user_data.refrige = user_info.refrige;
-  }
-}());
+
+    post_init(post_ul, user_data.posts, "<span>작성한 글이 없습니다. 나만의 레시피를 작성해보세요.</span>");
+    post_init(like_ul, user_data.likes, "<span>좋아요한 글이 없습니다.</span>");
+  }, (e) => {
+    console.log("error: ", e);
+  });
+});
 
 
 // sidebar toggle

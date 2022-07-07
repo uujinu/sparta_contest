@@ -33,6 +33,20 @@
   justify-content: space-evenly;
 }
 
+.refrige-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-family: "Bazzi";
+}
+
+.refrige-info span {
+  color: #dc3545;
+  margin-right: 4px;
+}
+
 .ingre-card-box {
   position: relative;
   width: 150px;
@@ -141,6 +155,10 @@
     box-shadow: none;
   }
 
+  .refrige-info {
+    font-size: 14px;
+  }
+
   .ingre-card-box {
     width: 100px;
     margin: 5px;
@@ -168,5 +186,29 @@
 
   .ingre-add-box {
     padding: 10px;
+  }
+}
+
+.refrige-ingre {
+  width: 70%;
+  margin: auto;
+  margin-top: 8px;
+  padding: 20px 18px;
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 9%) 0px 3px 12px;
+  background: #e3d7d7;
+}
+
+.refrige-ingre input:focus {
+  border: none;
+}
+
+.refrige-ingre button {
+  width: fit-content;
+}
+
+@media (max-width: 768px) {
+  .refrige-ingre {
+    width: 100%;
   }
 }

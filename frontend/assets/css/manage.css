@@ -287,3 +287,73 @@ a[data-toggle="collapse"] {
     padding: 10px;
   }
 }
+
+/* ---------------------------------------------------
+  posts box
+----------------------------------------------------- */
+.post-list-ul {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post-list-li {
+  width: 222px;
+  margin-right: 12px;
+}
+
+.posts-box {
+  width: 100%;
+  padding: 0 10px;
+}
+
+.post-img {
+  vertical-align: middle;
+  width: 222px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.post-card-info {
+  padding: 10px 4px;
+}
+
+.card-info-tit {
+  margin-bottom: 6px;
+}
+
+.card-info-btm {
+  margin: 0 0 9px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-info-btm i {
+  color: #dc3545;
+}
+
+.card-info-user {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.card-info-user img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  margin: 0 4px -2px 0;
+  vertical-align: text-bottom;
+}
+
+.card-info-user > a:hover {
+  color: #2f4d5a;
+  text-decoration: none;
+}
+
+.card-btm {
+  font-size: 14px;
+  font-family: "HallymGothic-Regular";
+}
