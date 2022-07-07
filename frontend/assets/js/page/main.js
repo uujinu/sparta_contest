@@ -19,10 +19,10 @@ export const main_set = (function() {
                                     </div>          
                                   </div>
                                 </div>
-                                </div>
-                                <div class="refrige-btn">
-                                  <button>재료 등록하러 가기</button>
-                                </div>
+                              </div>
+                              <div class="refrige-btn">
+                                <button>재료 등록하러 가기</button>
+                              </div>
                             </div>
                           </div>`;
     section_top.attr("id", "refrige"); // id 변경
