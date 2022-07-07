@@ -59,7 +59,7 @@ def save_new_recipe():
         # ingredients
         for i in ingredients:
             # 등록이 안된 재료라면 먼저 등록하기
-            ingre_id = i['id']
+            ingre_id = i['ingre_id']
             if ingre_id == '':
                 new_ingredient = Ingredient(name=i['name'])
                 save_changes(new_ingredient)
