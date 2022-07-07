@@ -212,12 +212,9 @@ $("#save-btn").on("click", function(e) {
     formData.append("thumbnail", state.images.thumbnail);
     
     axiosWrapper(mode.method, mode.url, formData, (res) => {
-      console.log("res: ", res);
       if (res.data.status === "success") {
         alert(res.data.message);
-        if (mode.method === "PUT") {
-          location.href = "/";
-        }
+        location.href = "/";
       } else alert("오류가 발생했습니다.");
     }, (e) => {
       console.log("error: ", e);
