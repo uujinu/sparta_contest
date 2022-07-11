@@ -21,7 +21,7 @@ export const main_set = (function() {
                                 </div>
                               </div>
                               <div class="refrige-btn">
-                                <button>재료 등록하러 가기</button>
+                                <button type="button" onclick="location.href='/manage';">재료 등록하러 가기</button>
                               </div>
                             </div>
                           </div>`;
