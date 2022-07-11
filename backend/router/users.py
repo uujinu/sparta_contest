@@ -136,6 +136,7 @@ class UserRefrige(Resource):
 
     @api.expect(_user_ingre, skip_null=True)
     @api.response(201, '냉장고에 재료가 추가되었습니다.')
+    @api.marshal_with(_user_ingre)
     def post(self, id):
         '''회원 냉장고에 재료를 추가합니다.'''
         if user_get(id):

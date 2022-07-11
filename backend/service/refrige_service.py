@@ -38,18 +38,12 @@ def save_new_ingre(id):
 
     new_ingre = Refrige_ingre(
         refrige_id=refrige.id,
-        ingre_id=data['ingre_id'],
+        ingre_id=data['ingre_id'] if data['ingre_id'] else None,
         name=data['name'],
-        memo=data['memo'],
-        created_at=data['created_at']
+        memo=data['memo']
     )
     save_changes(new_ingre)
-
-    response_object = {
-        'status': 'success',
-        'message': '냉장고에 재료가 추가되었습니다.'
-    }
-    return response_object, 201
+    return new_ingre, 201
 
 
 # 냉장고 재료 수정/삭제

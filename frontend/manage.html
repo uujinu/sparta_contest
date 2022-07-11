@@ -38,6 +38,7 @@
     <link href="assets/css/custom.css" rel="stylesheet" />
     <link href="assets/css/refrige.css" rel="stylesheet" />
     <link href="assets/css/manage.css" rel="stylesheet" />
+    <link href="assets/css/new-recipe.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -169,7 +170,7 @@
                 </ul>
               </div>
             </section>
-            <section id="user-refrige" class="my-refrige" style="display: none;">
+            <section id="user-refrige" class="my-refrige" style="display: none; overflow: unset;">
               <div class="refrige-info">
                 <span><i class="bi bi-snow"></i></span>
                 <div>요즘 관심 있는 식재료, 나의 냉장고에 저장하고 레시피를 추천받아 보세요!</div>
@@ -184,9 +185,17 @@
                   </div>
                 </div>
                 <div>
-                  <div class="refrige-ingre d-flex align-items-center">
-                    <input type="text" placeholder="재료명을 검색하세요" autocomplete="off" required>
-                    <button>추가</button>
+                  <div class="refrige-ingre">
+                    <div class="w-100">
+                      <div class="li-auto-div position-relative">
+                        <input id="li-1" name="li-1_name" type="text" placeholder="재료명을 검색하세요" autocomplete="off" required>
+                        <div class="li-auto w-100 text-start">
+                          <ul></ul>
+                        </div>
+                      </div>
+                      <textarea id="ingre_des" maxlength="200" placeholder="메모할 내용을 입력하세요"></textarea>
+                    </div>
+                    <button class="ingre-btn-box">추가</button>
                   </div>
                 </div>
               </div>
@@ -238,5 +247,6 @@
     <script src="assets/js/common/common.js" type="module"></script>
     <script src="assets/js/login.js" type="module"></script>
     <script src="assets/js/page/manage.js" type="module"></script>
+    <script src="assets/js/recipe-elements.js" type="module"></script>
   </body>
 </html>

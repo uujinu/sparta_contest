@@ -1,5 +1,6 @@
 import { current_user } from "../user/user_profile.js";
 import { axiosWrapper } from "../utils/axios_helper.js";
+import { state } from "../recipe-elements.js";
 
 
 const info_state = {
@@ -289,5 +290,49 @@ $("ul.components > li").on("click", function(e) {
       $(section[i]).css("display", "block");
       break;
     }
+  }
+});
+
+
+$(".ingre-btn-box").on("click", function(e) {
+  const _input = $(e.target).prev().children(":first").children(":first");
+  const _desc = _input.parent().next();
+  const _data = {
+    ingre_id: state.ingredient["li-1"].ingre_id,
+    name: _input.val(),
+    memo: _desc.val(),
+  };
+
+  if (_input.val()) {
+    axiosWrapper("POST", `users/${user.id}/refrige`, _data, (res) => {
+      if (res.status === 201) {
+        const userinfo = JSON.parse(localStorage.getItem("user"));
+        userinfo.refrige[0].ingredients.push(res.data);
+        localStorage.setItem("user", JSON.stringify(userinfo)); // 회원정보 업데이트
+        const card_wrapper = $(".ingre-card-wrapper");
+        const ingre_html = `<div class="ingre-card-box" id="ingre_${res.data.id}">
+                              <div class="ingre-card">
+                                <h4>
+                                  ${res.data.name}
+                                </h4>
+                                <span>${res.data.created_at.split("T")[0]}</span>
+                                <div class="ingre-info">
+                                  ${res.data.memo}
+                                </div>
+                                <div class="ingre-btn">
+                                  <button><i class="bi bi-pencil"></i></button>
+                                  <button class="bg-secondary"><i class="bi bi-trash"></i></button>
+                                </div>
+                              </div>
+                            </div>`;
+        card_wrapper.append(ingre_html);
+        alert("냉장고에 재료가 추가되었습니다.");
+      }
+    }, (e) => {
+      console.log("e: ", e);
+      alert("오류가 발생했습니다.");
+    });
+  } else {
+    alert("재료명을 입력하세요.");
   }
 });
