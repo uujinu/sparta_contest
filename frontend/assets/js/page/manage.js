@@ -22,6 +22,13 @@ const user = current_user();
   if (user === null || user.id === null) {
     alert("권한이 없습니다.");
     location.replace("/");
+  } else {
+    if (location.href.split("?tab=")[1] === "refrige") {
+      $("#my-info").toggleClass("active");
+      $("#my-refrige").toggleClass("active");
+      $("#user-info").css("display", "none");
+      $("#user-refrige").css("display", "block");
+    }
   }
 }());
 
