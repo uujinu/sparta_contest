@@ -60,10 +60,9 @@ def managy_ingre(refrige_id, ingre_idx):  # 재료의 id(ingre_id X)
         _f = '삭제'
     else:
         data = request.json
-        ingre.ingre_id = data['ingre_id']
+        ingre.ingre_id = data['ingre_id'] if data['ingre_id'] else None
         ingre.name = data['name']
         ingre.memo = data['memo']
-        ingre.created_at = data['created_at']
         db.session.commit()
 
     response_object = {

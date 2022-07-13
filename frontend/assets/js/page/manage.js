@@ -1,6 +1,7 @@
 import { current_user } from "../user/user_profile.js";
 import { axiosWrapper } from "../utils/axios_helper.js";
 import { state } from "../recipe-elements.js";
+import { ingre_edit, ingre_del } from "../user/user_refrige.js";
 
 
 const info_state = {
@@ -302,8 +303,8 @@ $("ul.components > li").on("click", function(e) {
 
 
 $(".ingre-btn-box").on("click", function(e) {
-  const _input = $(e.target).prev().children(":first").children(":first");
-  const _desc = _input.parent().next();
+  const _input = $(e.target).prev().prev().find("input");
+  const _desc = $(e.target).prev().prev().find("textarea");
   const _data = {
     ingre_id: state.ingredient["li-1"].ingre_id,
     name: _input.val(),
@@ -311,11 +312,21 @@ $(".ingre-btn-box").on("click", function(e) {
   };
 
   if (_input.val()) {
-    axiosWrapper("POST", `users/${user.id}/refrige`, _data, (res) => {
-      if (res.status === 201) {
-        const userinfo = JSON.parse(localStorage.getItem("user"));
-        userinfo.refrige[0].ingredients.push(res.data);
-        localStorage.setItem("user", JSON.stringify(userinfo)); // 회원정보 업데이트
+    const _btn_txt = $(this).text();
+    const _id = $(this).attr("id");
+    const user_info = JSON.parse(localStorage.getItem("user"));
+    let _method = "POST";
+    let _url = `users/${user.id}/refrige`;
+
+    if (_id && _btn_txt === "수정") {
+      _method = "PUT";
+      _url += `/${_id.split("_")[1]}`;
+    }
+
+    axiosWrapper(_method, _url, _data, (res) => {
+      if (_method === "POST" && res.status === 201) {
+        user_info.refrige[0].ingredients.push(res.data);
+        localStorage.setItem("user", JSON.stringify(user_info)); // 회원정보 업데이트
         const card_wrapper = $(".ingre-card-wrapper");
         const ingre_html = `<div class="ingre-card-box" id="ingre_${res.data.id}">
                               <div class="ingre-card">
@@ -327,16 +338,39 @@ $(".ingre-btn-box").on("click", function(e) {
                                   ${res.data.memo}
                                 </div>
                                 <div class="ingre-btn">
-                                  <button><i class="bi bi-pencil"></i></button>
-                                  <button class="bg-secondary"><i class="bi bi-trash"></i></button>
+                                  <button class="edit-btn"><i class="bi bi-pencil"></i></button>
+                                  <button class="del-btn bg-secondary"><i class="bi bi-trash"></i></button>
                                 </div>
                               </div>
                             </div>`;
         card_wrapper.append(ingre_html);
+        ingre_edit();
+        ingre_del();
         alert("냉장고에 재료가 추가되었습니다.");
+      } else if (_method === "PUT" && res.data.status === "success") { // 수정 
+        const _ingre_data = user_info.refrige[0].ingredients;
+        for (let i = 0; i < _ingre_data.length; i++) { // user데이터 수정
+          if (_ingre_data[i].id === parseInt(_id.split("_")[1])) {
+            _ingre_data[i].ingre_id = _data.ingre_id;
+            _ingre_data[i].name = _data.name;
+            _ingre_data[i].memo = _data.memo;
+            user_info.refrige[0].ingredients = _ingre_data;
+            localStorage.setItem("user", JSON.stringify(user_info));
+            break;
+          }
+        }
+
+        const ingre_card = $(`#${_id}`);
+        ingre_card.find("h4").text(_data.name);
+        ingre_card.find("div.ingre-info").text(_data.memo);
+        alert(res.data.message);
+      } else {
+        alert("오류가 발생했습니다.");
       }
+
+      _input.val("");
+      _desc.val("");
     }, (e) => {
-      console.log("e: ", e);
       alert("오류가 발생했습니다.");
     });
   } else {

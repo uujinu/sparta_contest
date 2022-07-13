@@ -230,6 +230,10 @@
   transform: none;
 }
 
+.ingre-btn-active {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .refrige-ingre {
     width: 100%;
