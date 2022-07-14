@@ -80,7 +80,7 @@ export const refrige_controller = (function() {
     if (card_wrapper.length) {
       for (let i = 0; i <ingre_list.length; i++) {
         const ingre_item = ingre_list[i];
-        const ingre_html = `<div class="ingre-card-box" id="ingre_${ingre_item.id}">
+        let ingre_html = `<div class="ingre-card-box" id="ingre_${ingre_item.id}">
                               <div class="ingre-card">
                                 <h4>
                                   ${ingre_item.name}
@@ -88,13 +88,17 @@ export const refrige_controller = (function() {
                                 <span>${ingre_item.created_at.split("T")[0]}</span>
                                 <div class="ingre-info">
                                   ${ingre_item.memo}
-                                </div>
-                                <div class="ingre-btn">
-                                  <button class="edit-btn"><i class="bi bi-pencil"></i></button>
-                                  <button class="del-btn bg-secondary"><i class="bi bi-trash"></i></button>
-                                </div>
-                              </div>
-                            </div>`;
+                                </div>`;
+        if (location.href === "http://127.0.0.1:8080/" || location.hash !== "") {
+          ingre_html += `<div class="ingre-btn"></div></div></div>`;
+        } else {
+          ingre_html += `<div class="ingre-btn">
+                            <button class="edit-btn"><i class="bi bi-pencil"></i></button>
+                            <button class="del-btn bg-secondary"><i class="bi bi-trash"></i></button>
+                          </div>
+                        </div>
+                        </div>`;
+        }
         ingre_total += ingre_html;
       };
       card_wrapper.append(ingre_total);
