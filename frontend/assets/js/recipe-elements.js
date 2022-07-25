@@ -101,7 +101,7 @@ $(document).ready(function() {
   for (let i = 0; i < ingre_input.length; i++) {
     const name = ingre_input.attr("name").split("_")[1];
     if (name === "name") {
-      auto_list_ctrl($(ingre_input[i]));
+      auto_list_ctrl($(ingre_input[i]), 24);
     }
   }
 });
@@ -274,8 +274,8 @@ export function ingre_add_func() {
   auto_close();
 
   const input = parent.children(":last-child").find(".li-auto").prev();
-  auto_list_ctrl(input);
-}
+  auto_list_ctrl(input, 24);
+};
 
 // 재료 추가
 $(".p-ili").on("click", function() {

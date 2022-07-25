@@ -732,12 +732,14 @@ section {
 }
 
 .auto-comp-box {
-  height: 150px;
+  height: fit-content;
+  max-height: 170px;
   overflow: scroll;
   background: #fff;
   border: 1px solid #e9e9e9;
   text-align: left;
   border-radius: 10px;
+  display: none;
 }
 
 .auto-comp-box ul {
@@ -756,7 +758,7 @@ section {
 .auto-comp-bg {
   padding: 50px;
   background: #fff;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 @media (max-width: 768px) {

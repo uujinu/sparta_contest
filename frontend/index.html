@@ -12,9 +12,9 @@
     <link href="assets/img/favicon.png" rel="icon" />
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,7 +41,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
     <!-- =======================================================
     * Template Name: Squadfree - v4.7.0
     * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
@@ -60,8 +59,7 @@
           </h1>
         </div>
         <nav id="navbar" class="navbar">
-          <ul>     
-          </ul>
+          <ul></ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <!-- .navbar -->
@@ -93,8 +91,7 @@
     <main id="main">
       <!-- ======= Main Section ======= -->
       <section id="main-f" class="about">
-        <div class="container">
-        </div>
+        <div class="container"></div>
       </section>
       <!-- End Main Section -->
 
@@ -105,13 +102,19 @@
             <h3>검색해보세요!</h3>
             <p>냉장고 속 재료로 만들 수 있는 레시피들이 준비되어 있어요</p>
             <div id="search-box" class="d-flex align-items-center">
-              <input type="text" placeholder="재료 또는 레시피 이름을 입력하세요." required>
+              <div class="position-relative w-100">
+                <input type="text" placeholder="재료 이름을 검색해보세요." required />
+                <div class="position-absolute w-100 auto-comp-box">
+                  <ul></ul>
+                </div>
+              </div>
               <button>
                 <i class="bi bi-search"></i>
               </button>
             </div>
           </div>
         </div>
+        <div class="auto-comp-bg"></div>
       </section>
       <!-- End Search Section -->
 
@@ -120,9 +123,7 @@
         <div class="container">
           <div class="section-title" data-aos="fade-in" data-aos-delay="100">
             <h2>Trending Now!</h2>
-            <p>
-              인기있는 레시피들을 모아봤어요
-            </p>
+            <p>인기있는 레시피들을 모아봤어요</p>
           </div>
           <div class="row" data-aos="fade-in">
             <div class="col-lg-12 d-flex justify-content-center">
@@ -273,6 +274,7 @@
           &copy; Copyright <strong><span>Squadfree</span></strong
           >. All Rights Reserved
         </div>
+      </div>
     </footer>
     <!-- End Footer -->
 
@@ -291,5 +293,6 @@
     <script src="assets/js/main.js" type="module"></script>
     <script src="assets/js/common/common.js" type="module"></script>
     <script src="assets/js/login.js" type="module"></script>
+    <script src="assets/js/page/search.js" type="module"></script>
   </body>
 </html>
