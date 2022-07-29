@@ -287,11 +287,21 @@ def delete_data(data):
     db.session.commit()
 
 
-# 레시피 검색
-def search_recipe():
+# 재료 검색
+def search_ingre():
     qs = request.args.get('iname')
     if qs:  # 재료 검색
         ingre_list = Ingredient.query.with_entities(
-            Ingredient.id, Ingredient.name).filter(Ingredient.name.like(f'{qs}%')).all()
+            Ingredient.id, Ingredient.name).filter(Ingredient.name.like(f'%{qs}%')).all()
         results = [tuple(row) for row in ingre_list]
         return results
+
+
+# 레시피 검색
+def search_recipe():
+    qs_search = request.args.get('q')
+    id = request.args.get('id')
+    if qs_search:
+        recipe_list = Recipe.query.join(RecipeIngredient).filter((Recipe.title.like(f'%{qs_search}%')) | (
+            RecipeIngredient.ingre_id == id) | (RecipeIngredient.name.like(f'%{qs_search}%'))).all()
+        return recipe_list

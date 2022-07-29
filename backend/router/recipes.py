@@ -1,6 +1,6 @@
 from flask_restx import Resource
 from util.dto import RecipeDto, recipe_base
-from service.recipe_service import get_a_recipe, get_all_recipes, save_new_recipe, edit_recipe, search_recipe
+from service.recipe_service import get_a_recipe, get_all_recipes, save_new_recipe, edit_recipe, search_ingre, search_recipe
 
 
 api = RecipeDto.api
@@ -41,8 +41,16 @@ class Recipe(Resource):
         return edit_recipe(id=id)
 
 
+@api.route('/ingredients')
+class IngreSearch(Resource):
+    def get(self):
+        '''재료를 검색합니다.'''
+        return search_ingre()
+
+
 @api.route('/search')
 class RecipeSearch(Resource):
+    @api.marshal_list_with(_recipe_card)
     def get(self):
         '''레시피 및 재료를 검색합니다.'''
         return search_recipe()
