@@ -357,3 +357,18 @@ a[data-toggle="collapse"] {
   font-size: 14px;
   font-family: "HallymGothic-Regular";
 }
+
+@media (max-width: 768px) {
+  .posts-box {
+    padding: 0;
+  }
+
+  .post-list-li {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .post-img {
+    width: 100%;
+  }
+}

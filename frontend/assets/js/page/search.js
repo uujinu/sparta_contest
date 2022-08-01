@@ -38,7 +38,7 @@ function search_auto() {
 
     if (now_val.length && (key !== 40 && key !== 38 && key !==13)) {
       throttle(
-        axiosWrapper("GET", `/recipes/search?iname=${encodeURIComponent(now_val)}`, null, (res) => {
+        axiosWrapper("GET", `/recipes/ingredients?iname=${encodeURIComponent(now_val)}`, null, (res) => {
           auto_div.empty();
           const ingre_list = res.data;
           let temp_html = "";
@@ -53,7 +53,6 @@ function search_auto() {
           } else autocomp.css("display", "none");
           mouse_event(auto_div);
           search_li_select(auto_div);
-
         }, (e) => {
           console.log("e: ", e);
         }), 500);
@@ -71,6 +70,59 @@ function MainSearch() {
   search_btn();
 };
 
+
+// 검색 결과
+function SearchResult() {
+  const query_str = new URLSearchParams(location.search);
+  const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
+  const default_thumb = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/thumb_basic.png";
+  const search_span = $(".search-kw");
+  const post_ul = search_span.next().children(":first");
+
+  if (query_str.get("q")) {
+    search_span.text(`'${query_str.get("q")}'에 대한 검색 결과입니다.`);
+
+    let _url = `/recipes/search?q=${encodeURIComponent(query_str.get("q"))}`;
+    if (query_str.get("id")) {
+      _url += `&id=${query_str.get("id")}`;
+    }
+    axiosWrapper("GET", _url, null, (res) => {
+      post_ul.empty();
+      if (res.data.length) {
+        for (let i = 0; i < res.data.length; i++) {
+          const temp_html = `<li class="post-list-li">
+                              <div class="post-card-box">
+                                <a href="/recipe/${res.data[i].id}" class="card-link">
+                                  <img src="${res.data[i].thumbnail ? res.data[i].thumbnail : default_thumb}" class="post-img">
+                                </a>
+                              </div>
+                              <div class="post-card-info">
+                                <div class="card-info-tit">${res.data[i].title}</div>
+                                <div class="card-info-btm">
+                                  <div class="card-info-user">
+                                    <a href="/profile/${res.data[i].author.id}">
+                                      <img src="${res.data[i].author.profile_image ? res.data[i].author.profile_image : default_img}">
+                                      ${res.data[i].author.nickname}
+                                    </a>
+                                  </div>
+                                  <div class="card-btm">
+                                    <span><i class="bi bi-heart-fill"></i> 좋아요 ${res.data[i].likes}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>`;
+          post_ul.append(temp_html);
+        }
+      } else {
+        post_ul.append(`<p>검색 결과가 없습니다.</p>`);
+      }
+    }, (e) => {
+      console.log("e: ", e);
+    });
+  }
+};
+
+$(document).ready(SearchResult);
 $(document).ready(MainSearch);
 
 // 자동완성 닫기

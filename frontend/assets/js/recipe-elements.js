@@ -206,7 +206,7 @@ function ingre_auto() {
 
     if (now_val.length && (key !== 40 && key !== 38 && key !== 13)) {
       throttle(
-        axiosWrapper("GET", `/recipes/search?iname=${encodeURIComponent(now_val)}`, null, (res) => {
+        axiosWrapper("GET", `/recipes/ingredients?iname=${encodeURIComponent(now_val)}`, null, (res) => {
           auto_div.empty();
           if (res.data.length) {
             const suggestions = res.data.filter(function(data) {
