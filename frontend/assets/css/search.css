@@ -25,4 +25,12 @@
   .search-res {
     padding: 0 10px;
   }
+
+  .search-kw {
+    font-size: 12px;
+  }
+
+  .posts-box p {
+    font-size: 12px;
+  }
 }

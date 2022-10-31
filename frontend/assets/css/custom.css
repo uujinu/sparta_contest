@@ -434,3 +434,18 @@ button:hover {
 .check-btn {
   width: fit-content;
 }
+
+/* pagination */
+#page-nav {
+  max-width: 1300px;
+  margin-top: 48px;
+}
+
+#page-nav a {
+  border: none;
+  color: #dc3545;
+}
+
+#page-nav a:focus {
+  box-shadow: none;
+}
