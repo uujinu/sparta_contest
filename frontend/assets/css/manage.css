@@ -291,7 +291,8 @@ a[data-toggle="collapse"] {
 /* ---------------------------------------------------
   posts box
 ----------------------------------------------------- */
-.post-list-ul {
+.post-list-ul,
+.like-list-ul {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -302,7 +303,8 @@ a[data-toggle="collapse"] {
   margin-right: 12px;
 }
 
-.posts-box {
+.posts-box,
+.likes-box {
   width: 100%;
   padding: 0 10px;
 }
@@ -321,6 +323,8 @@ a[data-toggle="collapse"] {
 
 .card-info-tit {
   margin-bottom: 6px;
+  height: 50px;
+  overflow: hidden;
 }
 
 .card-info-btm {
@@ -359,7 +363,8 @@ a[data-toggle="collapse"] {
 }
 
 @media (max-width: 768px) {
-  .posts-box {
+  .posts-box,
+  .likes-box {
     padding: 0;
   }
 
