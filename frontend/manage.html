@@ -61,11 +61,9 @@
           </h1>
         </div>
         <nav id="navbar" class="navbar">
-          <ul>     
-          </ul>
+          <ul></ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
-        <!-- .navbar -->
       </div>
     </header>
     <!-- End Header -->
@@ -74,23 +72,23 @@
       <section id="manage" class="manage">
         <div class="side-wrapper">
           <nav id="sidebar">
-              <div class="sidebar-header">
-                  <h3>My Page</h3>
-              </div>
-              <ul class="list-unstyled components">
-                <li id="my-info" class="active">
-                  <a href="#">내 정보</a>
-                </li>
-                <li id="my-posts">
-                  <a href="#">작성한 글</a>
-                </li>
-                <li id="my-likes">
-                  <a href="#">좋아요</a>
-                </li>
-                <li id="my-refrige">
-                  <a href="#">나의 냉장고</a>
-                </li>
-              </ul>
+            <div class="sidebar-header">
+              <h3>My Page</h3>
+            </div>
+            <ul class="list-unstyled components">
+              <li id="my-info" class="active">
+                <a href="#">내 정보</a>
+              </li>
+              <li id="my-posts">
+                <a href="#">작성한 글</a>
+              </li>
+              <li id="my-likes">
+                <a href="#">좋아요</a>
+              </li>
+              <li id="my-refrige">
+                <a href="#">나의 냉장고</a>
+              </li>
+            </ul>
           </nav>
           <!-- Page Content  -->
           <div id="content" class="position-relative m-content">
@@ -104,10 +102,10 @@
                 <div class="info-row">
                   <div class="position-relative m-2">
                     <div class="info-root">
-                      <img class="info-img" src="">
+                      <img class="info-img" src="" />
                     </div>
                     <div class="input-img">
-                      <input type="file" id="pf-img" accept="image/*">
+                      <input type="file" id="pf-img" accept="image/*" />
                       <button class="info-img-ch" style="width: 20px; height: 20px; padding: 0"><i class="bi bi-image"></i></button>
                     </div>
                     <button class="info-img-x" style="width: 20px; height: 20px; padding: 0"><i class="bi bi-x"></i></button>
@@ -115,7 +113,7 @@
                   <div class="info-nick">
                     <p>닉네임</p>
                     <div class="d-flex flex-row">
-                      <input type="text" autocomplete="off" required>
+                      <input type="text" autocomplete="off" required />
                       <button disabled>중복확인</button>
                     </div>
                   </div>
@@ -123,22 +121,20 @@
                 <div class="info-row flex-column infoot">
                   <div class="w-100 pt-3 pb-3">
                     <div class="mb-0">
-                      <button data-bs-toggle="collapse" data-bs-target="#collapsepwd" aria-expanded="false" aria-controls="collapsepwd">
-                        비밀번호 변경
-                      </button>
+                      <button data-bs-toggle="collapse" data-bs-target="#collapsepwd" aria-expanded="false" aria-controls="collapsepwd">비밀번호 변경</button>
                     </div>
                     <div class="collapse" id="collapsepwd">
                       <div class="pwd-ch-box">
                         <p>이메일</p>
-                        <input id="email" type="text" autocomplete="off" required>
+                        <input id="email" type="text" autocomplete="off" required />
                         <p>비밀번호</p>
                         <div class="position-relative">
-                          <input id="pwd1" type="password" autocomplete="off" required>
+                          <input id="pwd1" type="password" autocomplete="off" required />
                           <p id="pwd1-helper-text" class="helper"></p>
                         </div>
                         <p>비밀번호 확인</p>
                         <div class="position-relative">
-                          <input id="pwd2" type="password" autocomplete="off" required>
+                          <input id="pwd2" type="password" autocomplete="off" required />
                           <p id="pwd2-helper-text" class="helper"></p>
                         </div>
                       </div>
@@ -149,28 +145,30 @@
                   </div>
                 </div>
                 <div class="info-row rm-info">
-                  <div class="infoot">
-                    회원탈퇴
-                  </div>
+                  <div class="infoot">회원탈퇴</div>
                 </div>
                 <div class="info-save-btn">
                   <button>변경사항 저장</button>
                 </div>
               </div>
             </section>
-            <section id="user-posts" class="my-posts" style="display: none;">
+            <section id="user-posts" class="my-posts" style="display: none">
               <div class="posts-box">
-                <ul class="post-list-ul">
-                </ul>
+                <ul class="post-list-ul"></ul>
               </div>
+              <nav id="page-nav" aria-label="Page navigation example" class="mx-auto">
+                <ul class="pagination justify-content-center"></ul>
+              </nav>
             </section>
-            <section id="user-likes" class="my-likes" style="display: none;">
+            <section id="user-likes" class="my-likes" style="display: none">
               <div class="likes-box">
-                <ul class="like-list-ul">
-                </ul>
+                <ul class="like-list-ul"></ul>
               </div>
+              <nav id="page-nav" aria-label="Page navigation example" class="mx-auto">
+                <ul class="pagination justify-content-center"></ul>
+              </nav>
             </section>
-            <section id="user-refrige" class="my-refrige" style="display: none; overflow: unset;">
+            <section id="user-refrige" class="my-refrige" style="display: none; overflow: unset">
               <div class="refrige-info">
                 <span><i class="bi bi-snow"></i></span>
                 <div>요즘 관심 있는 식재료, 나의 냉장고에 저장하고 레시피를 추천받아 보세요!</div>
@@ -179,8 +177,7 @@
                 <div class="refrige-bg-wrap">
                   <div class="refrige-bg">
                     <div class="refrige-div">
-                      <div class="ingre-card-wrapper">
-                      </div>          
+                      <div class="ingre-card-wrapper"></div>
                     </div>
                   </div>
                 </div>
@@ -188,7 +185,7 @@
                   <div class="refrige-ingre">
                     <div class="w-100">
                       <div class="li-auto-div position-relative">
-                        <input id="li-1" name="li-1_name" type="text" placeholder="재료명을 검색하세요" autocomplete="off" required>
+                        <input id="li-1" name="li-1_name" type="text" placeholder="재료명을 검색하세요" autocomplete="off" required />
                         <div class="li-auto w-100 text-start">
                           <ul></ul>
                         </div>
@@ -243,7 +240,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
-  
+
     <!-- Template Main JS File -->
     <script src="assets/js/main.js" type="module"></script>
     <script src="assets/js/common/common.js" type="module"></script>
