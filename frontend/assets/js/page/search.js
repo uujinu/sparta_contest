@@ -73,7 +73,7 @@ function MainSearch() {
 
 
 // 레시피 붙이는 함수
-function recipe_pagination(post_ul, start, end, data) {
+export function recipe_pagination(post_ul, start, end, data) {
   const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
   const default_thumb = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/thumb_basic.png";
   const len = data.length;
@@ -106,8 +106,8 @@ function recipe_pagination(post_ul, start, end, data) {
 
 
 // nav 버튼 클릭 이벤트
-function nav_event(page_num, post_ul, data) {
-  const nav_ul = $(".pagination");
+function nav_event(page_num, post_ul, data, m_nav_ul = undefined) {
+  const nav_ul = m_nav_ul ? m_nav_ul : $(".pagination");
   const nav_li = nav_ul.find("a");
   const idx = 30;
 
@@ -128,8 +128,8 @@ function nav_event(page_num, post_ul, data) {
 };
 
 
-function recipe_init(post_ul, data, page_num) {
-  const nav_ul = $(".pagination");
+export function recipe_init(post_ul, data, page_num, m_nav_ul = undefined) {
+  const nav_ul = m_nav_ul ? m_nav_ul : $(".pagination");
   const nav_li = nav_ul.find("a");
   const idx = 30;
 
@@ -143,7 +143,7 @@ function recipe_init(post_ul, data, page_num) {
     if (_label === "Previous" || _label === "Next") {
       init_nav(nav_ul, page_num, _page);
       recipe_pagination(post_ul, start, end, data);
-      nav_event(page_num, post_ul, data);
+      nav_event(page_num, post_ul, data, nav_ul);
     } else {
       recipe_pagination(post_ul, start, end, data);
     }

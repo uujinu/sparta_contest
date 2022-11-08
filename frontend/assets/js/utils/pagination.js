@@ -1,5 +1,5 @@
-export function page_select() {
-  const page_nav = $("#page-nav");
+export function page_select(m_page_nav = undefined) {
+  const page_nav = m_page_nav ? m_page_nav : $("#page-nav");
   const nav_li = page_nav.find("a");
 
   nav_li.on("click", function() {
@@ -16,6 +16,8 @@ export function page_select() {
       $(this).css("background-color", "#e9ecef");
       $(this).parent().toggleClass("disabled");
     }
+
+    window.scrollTo(0, 0);
   });
 };
 
@@ -56,5 +58,5 @@ export function init_nav(nav_ul, _page_num, _page = undefined) {
   if (_prev !== "") $(nav_li[0]).toggleClass("disabled");
   if (_next !== "") $(nav_li.last()).toggleClass("disabled");
 
-  page_select();
+  page_select(nav_ul);
 };
