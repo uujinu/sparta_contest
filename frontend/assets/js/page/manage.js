@@ -2,6 +2,8 @@ import { current_user } from "../user/user_profile.js";
 import { axiosWrapper } from "../utils/axios_helper.js";
 import { state } from "../recipe-elements.js";
 import { ingre_edit, ingre_del } from "../user/user_refrige.js";
+import { init_nav } from "../utils/pagination.js";
+import { recipe_pagination, recipe_init } from "./search.js";
 
 
 const info_state = {
@@ -34,47 +36,18 @@ const user = current_user();
 }());
 
 
-// post init
-function post_init(ul, data, msg) {
-  if (data.length) {
-    for (let i = 0; i < data.length; i++) {
-      const temp_html = `
-        <li class="post-list-li">
-          <div class="post-card-box">
-            <a href="/recipe/${data[i].id}" class="card-link">
-              <img src="${data[i].thumbnail ? data[i].thumbnail : default_thumb}" class="post-img">
-            </a>
-          </div>
-          <div class="post-card-info">
-            <div class="card-info-tit">${data[i].title}</div>
-            <div class="card-info-btm">
-              <div class="card-info-user">
-                <a href="/profile/${data[i].author.id}">
-                  <img src="${data[i].author.profile_image ? data[i].author.profile_image : default_img}">
-                  ${data[i].author.nickname}
-                </a>
-              </div>
-              <div class="card-btm">
-                <span><i class="bi bi-heart-fill"></i> 좋아요 ${data[i].likes}</span>
-              </div>
-            </div>
-          </div>
-        </li>`;
-
-      $(ul).append(temp_html);
-    }
-  } else {
-    ul.append(msg);
-  }
-};
-
-
 // user data init
 $(document).ready(function() {
   // posts, likes, refrige
   const content = $("#content");
   const post_ul = content.children(":nth-child(3)").children(":first").children(":first");
   const like_ul = content.children(":nth-child(4)").children(":first").children(":first");
+  const posts_nav_ul = post_ul.parent().next().children(":first");
+  const likes_nav_ul = like_ul.parent().next().children(":first");;
+  const _page = location.hash ? parseInt(location.hash.substring(1)) : 1;
+  const idx = 30;
+  const start = (_page - 1) * idx;
+  const end = start + idx;
 
   axiosWrapper("GET", `/users/${user.id}`, null, (res) => {
     const user_info = res.data;
@@ -84,8 +57,28 @@ $(document).ready(function() {
     user_data.likes = user_info.likes;
     user_data.refrige = user_info.refrige;
 
-    post_init(post_ul, user_data.posts, "<span>작성한 글이 없습니다. 나만의 레시피를 작성해보세요.</span>");
-    post_init(like_ul, user_data.likes, "<span>좋아요한 글이 없습니다.</span>");
+    const posts_page_num = (user_data.posts.length % idx) ? parseInt(user_data.posts.length / idx) + 1 : parseInt(user_data.posts.length / idx);
+    const likes_page_num = (user_data.likes.length % idx) ? parseInt(user_data.likes.length / idx) + 1 : parseInt(user_data.likes.length / idx);
+
+    if (user_data.posts.length) {
+      init_nav(posts_nav_ul, posts_page_num, _page);
+      posts_nav_ul.on("click", function() {
+        recipe_init(post_ul, user_data.posts, posts_page_num, posts_nav_ul);
+      });
+      recipe_pagination(post_ul, start, end, user_data.posts);
+    } else {
+      post_ul.append("<span>작성한 글이 없습니다. 나만의 레시피를 작성해보세요.</span>");
+    }
+
+    if (user_data.likes.length) {
+      init_nav(likes_nav_ul, likes_page_num, _page);
+      likes_nav_ul.on("click", function() {
+        recipe_init(like_ul, user_data.likes, likes_page_num, likes_nav_ul);
+      });
+      recipe_pagination(like_ul, start, end, user_data.likes);
+    } else {
+      like_ul.append("<span>좋아요한 글이 없습니다.</span>");
+    }
   }, (e) => {
     console.log("error: ", e);
   });
@@ -279,6 +272,8 @@ $(document).ready(function() {
 // sidebar menu toggle
 $("ul.components > li").on("click", function(e) {
   e.preventDefault();
+  location.hash = "#";
+
   const section = $(this).closest("#sidebar").next().find("section");
   const _id = $(this).attr("id").split("-")[1];
 
@@ -377,3 +372,27 @@ $(".ingre-btn-box").on("click", function(e) {
     alert("재료명을 입력하세요.");
   }
 });
+
+
+function cont_pagination() {
+  const sidebar = $("#sidebar");
+  const side_li = sidebar.find("li");
+  const idx = 30;
+
+  side_li.on("click", function(e) {
+    const _id = $(this).attr("id");
+
+    if (_id === "my-posts" || _id === "my-likes") {
+      const sec_id = "user" + _id.substring(2);
+      const cont = $(`#${sec_id}`);
+      const nav_ul = cont.find("ul.pagination");
+      const data_len = _id === "my-posts" ? user_data.posts.length : user_data.likes.length;
+      const _page_num = (data_len % idx) ? parseInt(data_len / idx) + 1 : parseInt(data_len / idx);
+
+      if (data_len) init_nav(nav_ul, _page_num);
+    }
+  });
+};
+
+
+$(document).ready(cont_pagination);
