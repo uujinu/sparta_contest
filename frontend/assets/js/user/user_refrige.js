@@ -73,11 +73,12 @@ export function ingre_del(_user) {
 export const refrige_controller = (function() {
   const user = current_user();
   if (user) {
-    const ingre_list = JSON.parse(localStorage.getItem("user")).refrige[0].ingredients;
+    const user_refrige = JSON.parse(localStorage.getItem("user")).refrige[0];
+    const ingre_list = user_refrige ? user_refrige.ingredients : []; 
     const card_wrapper = $(".ingre-card-wrapper");
     let ingre_total = "";
 
-    if (card_wrapper.length) {
+    if (ingre_list.length) {
       for (let i = 0; i <ingre_list.length; i++) {
         const ingre_item = ingre_list[i];
         let ingre_html = `<div class="ingre-card-box" id="ingre_${ingre_item.id}">
@@ -104,6 +105,9 @@ export const refrige_controller = (function() {
       card_wrapper.append(ingre_total);
       ingre_edit();
       ingre_del(user);
+    } else {
+      const msg = `<div class="mx-auto mt-2">등록된 재료가 없습니다.</div>`;
+      card_wrapper.append(msg);
     }
   }
 }());

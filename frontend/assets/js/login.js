@@ -179,6 +179,10 @@ function user_login() {
           user_data.profile_image = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
         }
 
+        if (user_data.refrige === null) {
+          user_data.refrige = [];
+        }
+
         localStorage.setItem("user", JSON.stringify(user_data));
         location.replace("/");
       }
