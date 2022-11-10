@@ -13,9 +13,9 @@ export const main_set = (function() {
                               <h3>나의 냉장고</h3>
                               <p>요즘 관심 있는 식재료, 나의 냉장고에 저장해보세요</p>
                               <div class="refrige-bg-wrap">
-                                <div class="refrige-bg">
+                                <div class="refrige-bg w-100">
                                   <div class="refrige-div">
-                                    <div class="ingre-card-wrapper">
+                                    <div class="ingre-card-wrapper w-100">
                                     </div>          
                                   </div>
                                 </div>
