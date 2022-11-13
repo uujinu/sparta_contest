@@ -17,7 +17,6 @@ const user_data = {
 };
 let info_ch_idx = false;
 const default_img = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/profile_basic.png";
-const default_thumb = "https://jjbs-s3.s3.ap-northeast-2.amazonaws.com/static/thumb_basic.png";
 
 
 const user = current_user();
@@ -52,6 +51,7 @@ $(document).ready(function() {
   axiosWrapper("GET", `/users/${user.id}`, null, (res) => {
     const user_info = res.data;
     user_info["profile_image"] = user_info.profile_url ? user_info.profile_url : default_img;
+    user_info.refrige = user_info.refrige ? user_info.refrige : []; 
     localStorage.setItem("user", JSON.stringify(user_info));
     user_data.posts = user_info.posts;
     user_data.likes = user_info.likes;
@@ -320,9 +320,22 @@ $(".ingre-btn-box").on("click", function(e) {
 
     axiosWrapper(_method, _url, _data, (res) => {
       if (_method === "POST" && res.status === 201) {
-        user_info.refrige[0].ingredients.push(res.data);
+        const _id = res.data.refrige_id;
+        delete res.data.refrige_id;
+
+        if (user_info.refrige.length) {
+          user_info.refrige[0].ingredients.push(res.data);
+        } else {
+          user_info.refrige.push({
+            id: _id,
+            ingredients: [res.data]
+          });
+        }
         localStorage.setItem("user", JSON.stringify(user_info)); // 회원정보 업데이트
         const card_wrapper = $(".ingre-card-wrapper");
+        if (card_wrapper.find(".msg").length)
+          card_wrapper.empty();
+        
         const ingre_html = `<div class="ingre-card-box" id="ingre_${res.data.id}">
                               <div class="ingre-card">
                                 <h4>
@@ -340,7 +353,7 @@ $(".ingre-btn-box").on("click", function(e) {
                             </div>`;
         card_wrapper.append(ingre_html);
         ingre_edit();
-        ingre_del();
+        ingre_del(user);
         alert("냉장고에 재료가 추가되었습니다.");
       } else if (_method === "PUT" && res.data.status === "success") { // 수정 
         const _ingre_data = user_info.refrige[0].ingredients;

@@ -17,6 +17,7 @@ class UserDto:
     })
     user_ingre = api.model('user_ingre', {
         'id': fields.Integer(required=False, description='회원 냉장고 재료 식별자'),
+        'refrige_id': fields.Integer(required=False, description='회원 냉장고 재료 식별자'),
         'ingre_id': fields.Integer(required=False, description='재료 식별자(재료 테이블 참조용)'),
         'name': fields.String(required=True, description='회원 냉장고 재료명'),
         'memo': fields.String(required=False, description='회원 냉장고 재료 메모'),

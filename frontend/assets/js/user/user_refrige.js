@@ -39,6 +39,9 @@ export function ingre_edit() {
 // 재료 삭제
 export function ingre_del(_user) {
   const del_btn = $(".del-btn");
+  const card_wrapper = $(".ingre-card-wrapper");
+  const msg = `<div class="msg mx-auto mt-2">등록된 재료가 없습니다.</div>`;
+
   del_btn.on("click", function() {
     if(confirm("재료를 삭제하시겠습니까?")) {
       const _id = $(this).parents(".ingre-card-box").attr("id");
@@ -56,6 +59,10 @@ export function ingre_del(_user) {
             break;
           }
         }
+
+        if (card_wrapper.children().length === 0)
+          card_wrapper.append(msg);
+
         alert(res.data.message);
       }, (e) => {
         if (e.response.status === 404) {
@@ -106,7 +113,7 @@ export const refrige_controller = (function() {
       ingre_edit();
       ingre_del(user);
     } else {
-      const msg = `<div class="mx-auto mt-2">등록된 재료가 없습니다.</div>`;
+      const msg = `<div class="msg mx-auto mt-2">등록된 재료가 없습니다.</div>`;
       card_wrapper.append(msg);
     }
   }
