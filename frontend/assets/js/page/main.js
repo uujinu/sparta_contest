@@ -1,4 +1,14 @@
 import { current_user } from "../user/user_profile.js";
+import { axiosWrapper } from "../utils/axios_helper.js";
+
+
+function recom_recipe() {
+  axiosWrapper("GET", "recipes?recommand", null, (res) => {
+    console.log("res: ", res);
+  }, (e) => {
+    console.log("E: ", e);
+  });
+};
 
 
 // 로그인 여부에 따라 Main Section 전환
@@ -6,6 +16,8 @@ export const main_set = (function() {
   const user = current_user();
   const section_top = $("#main-f");
   const section_attach = section_top.children().first();
+
+  recom_recipe();
 
   if (user) { // 로그인한 상태
     const refrige_html = `<div class="position-relative">

@@ -1,10 +1,11 @@
 from app.extension import db
-from model.models import Ingredient, Recipe, RecipeImage, RecipeInfo, RecipeIngredient, RecipeStep
+from model.models import Ingredient, Recipe, RecipeImage, RecipeInfo, RecipeIngredient, RecipeStep, User
 from flask import request
 from flask_restx import abort
 from flask_login import login_required, current_user
 from util.file.file_upload import s3_upload_obj, s3_delete_image
 from util.file.file_convert import convert_image
+from sqlalchemy import func
 
 
 # 레시피 필수 요소 입력 검사
@@ -255,7 +256,18 @@ def edit_recipe(id):
 # 모든 레시피 get
 def get_all_recipes():
     qs = str(request.query_string, 'utf-8')
-    if qs != '':
+    print('qs: ', qs)
+    if qs == 'recommand':
+        recommand_list = Recipe.query.join(Recipe.like_users).limit(20).all()
+        if len(recommand_list) < 20:
+            rcps = Recipe.query.all()
+            for rcp in rcps:
+                if rcp not in recommand_list:
+                    recommand_list.append(rcp)
+                    if len(recommand_list) == 20:
+                        break
+        return recommand_list
+    elif qs != '':
         user_id = qs.split('=')[1]
         return Recipe.query.filter_by(user_id=user_id).all()
     return Recipe.query.all()
