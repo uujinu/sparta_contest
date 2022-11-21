@@ -1,12 +1,16 @@
 import { current_user } from "../user/user_profile.js";
 import { axiosWrapper } from "../utils/axios_helper.js";
+import { recipe_pagination } from "./search.js";
 
 
 function recom_recipe() {
   axiosWrapper("GET", "recipes?recommand", null, (res) => {
     console.log("res: ", res);
+    const post_ul = $(".posts-box").children(":first");
+    post_ul.empty();
+    recipe_pagination(post_ul, 0, 20, res.data);
   }, (e) => {
-    console.log("E: ", e);
+    console.log("e: ", e);
   });
 };
 
