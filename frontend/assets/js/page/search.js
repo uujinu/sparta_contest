@@ -81,7 +81,7 @@ export function recipe_pagination(post_ul, start, end, data) {
   for (let i = start; i < len && i < end; i++) {
     const temp_html = `<li class="post-list-li">
                         <div class="post-card-box">
-                          <a href="/recipe/${data[i].id}" class="card-link">
+                          <a href="/recipe?id=${data[i].id}" class="card-link">
                             <img src="${data[i].thumbnail ? data[i].thumbnail : default_thumb}" class="post-img">
                           </a>
                         </div>
@@ -89,7 +89,7 @@ export function recipe_pagination(post_ul, start, end, data) {
                           <div class="card-info-tit">${data[i].title}</div>
                           <div class="card-info-btm">
                             <div class="card-info-user">
-                              <a href="/profile/${data[i].author.id}">
+                              <a href="/profile?id=${data[i].author.id}">
                                 <img src="${data[i].author.profile_image ? data[i].author.profile_image : default_img}">
                                 ${data[i].author.nickname}
                               </a>
