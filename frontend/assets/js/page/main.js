@@ -5,7 +5,6 @@ import { recipe_pagination } from "./search.js";
 
 function recom_recipe() {
   axiosWrapper("GET", "recipes?recommand", null, (res) => {
-    console.log("res: ", res);
     const post_ul = $(".posts-box").children(":first");
     post_ul.empty();
     recipe_pagination(post_ul, 0, 20, res.data);
@@ -20,8 +19,10 @@ export const main_set = (function() {
   const user = current_user();
   const section_top = $("#main-f");
   const section_attach = section_top.children().first();
+  const pathname = location.pathname;
 
-  recom_recipe();
+  if (pathname === "/" || pathname === "/manage")
+    recom_recipe();
 
   if (user) { // 로그인한 상태
     const refrige_html = `<div class="position-relative">

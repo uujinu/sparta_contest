@@ -37,6 +37,7 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
     <link href="assets/css/refrige.css" rel="stylesheet" />
+    <link href="assets/css/manage.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -118,132 +119,18 @@
       </section>
       <!-- End Search Section -->
 
-      <!-- ======= Portfolio Section ======= -->
-      <section id="portfolio" class="portfolio">
+      <!-- ======= Recommand Section ======= -->
+      <section id="recommand" class="recommand">
         <div class="container">
           <div class="section-title" data-aos="fade-in" data-aos-delay="100">
             <h2>Trending Now!</h2>
             <p>인기있는 레시피들을 모아봤어요</p>
           </div>
-          <div class="row" data-aos="fade-in">
-            <div class="col-lg-12 d-flex justify-content-center">
-              <ul id="portfolio-flters">
-                <li data-filter="*" class="filter-active">All</li>
-                <li data-filter=".filter-app">App</li>
-                <li data-filter=".filter-card">Card</li>
-                <li data-filter=".filter-web">Web</li>
-              </ul>
-            </div>
+          <div class="posts-box">
+            <ul class="post-list-ul justify-content-center"></ul>
           </div>
-          <div class="row portfolio-container" data-aos="fade-up">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-              <div>/////////////////</div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-              <div class="portfolio-wrap">
-                <a href="#">
-                  <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="" />
-                </a>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
+          <div class="my-5 text-center">
+            <button type="button" onclick="location.href='/recipes/list';">더보기</button>
           </div>
         </div>
       </section>
