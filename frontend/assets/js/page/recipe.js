@@ -92,6 +92,20 @@ function post_init(data) {
     }
     step_box.append(step_list);
   }
+
+  // 이미지
+  if (data.images.length) {
+    const wrapper = $(".swiper-wrapper");
+    let img_html = "";
+    for (let i = 0; i < data.images.length; i++) {
+      img_html += `<div class="swiper-slide">
+                    <div class="testimonial-item">
+                      <img src="${data.images[i]}" />
+                    </div>
+                  </div>`;
+    }
+    wrapper.append(img_html);
+  }
 };
 
 export function recipe_content() {
