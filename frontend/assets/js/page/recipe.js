@@ -1,4 +1,5 @@
 import { axiosWrapper } from "../utils/axios_helper.js";
+import { current_user } from "../user/user_profile.js";
 
 
 export const portion_choices = {
@@ -29,6 +30,25 @@ export const degree_choices = {
   "_2d": "초급",
   "_3d": "중급",
   "_4d": "고급"
+};
+
+
+const user = current_user();
+
+
+function user_like() {
+  if (user) {
+    const like_btn = $(".like-box").children(":first");
+    like_btn.on("click", function() {
+      const num = parseInt($(this).next().text());
+      const html = $(this).children(":first").attr("class") === "bi bi-heart" ? `<i class="bi bi-heart-fill"></i>` : `<i class="bi bi-heart"></i>`
+      $(this).children(":first").remove();
+      $(this).append(html);
+      $(this).next().text(num + 1);
+    });
+  } else {
+    alert("로그인이 필요합니다.");
+  }
 };
 
 
@@ -105,15 +125,46 @@ function post_init(data) {
                   </div>`;
     }
     wrapper.append(img_html);
+  } else {
+    $(".recipe-img").remove();
   }
 };
 
+
 export function recipe_content() {
   const _id = location.search.split("?id=")[1];
+  let user_likes = "";
+
+  if (user) { // 레시피 좋아요 목록
+    axiosWrapper("GET", `users/${user.id}/likes`, null, (res) => {
+      user_likes = res.data;
+    }, (e) => {
+      console.log("e: ", e);
+    });
+  }
 
   if (_id) {
     axiosWrapper("GET", `recipes/${_id}`, null, (res) => {
       post_init(res.data);
+
+      let flag = true;
+      const like_box = $(".like-box");
+
+      if (user_likes.length) {
+        for (let i = 0; i < user_likes.length; i++) {
+          if (String(user_likes[i].id) === _id) {
+            like_box.append(`<a class="like-btn"><i class="bi bi-heart-fill"></i></a><p>${res.data.likes}</p>`);
+            flag = false;
+            break;
+          }
+        }
+      }
+
+      if (flag) {
+        like_box.append(`<a class="like-btn"><i class="bi bi-heart"></i></a><p>${res.data.likes}</p>`);
+      }
+
+      user_like();
     }, (e) => {
       console.log("e: ", e);
     });

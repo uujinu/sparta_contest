@@ -181,7 +181,92 @@
   max-height: 100%;
 }
 
+.bt-none {
+  border-top: none;
+}
+
 .swiper-slide > div img {
-  width: 80%;
+  width: 65%;
   border-radius: 10px;
+}
+
+.like-box {
+  text-align: center;
+}
+
+a.like-btn {
+  font-size: 25px;
+  color: #dc3545;
+  cursor: pointer;
+}
+
+a.like-btn:hover {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .user-img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .post-info {
+    font-size: 20px;
+    padding: 20px 0 0 0;
+  }
+
+  .post-content {
+    padding-bottom: 0;
+  }
+
+  .post-body {
+    padding: 50px 10px;
+  }
+
+  .line-title {
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .ingre-box ul {
+    padding: 0;
+  }
+
+  .ingre-box li {
+    width: 100%;
+    font-size: 14px;
+    margin: 0 10px 10px 10px;
+  }
+
+  .step-box {
+    padding: 0;
+  }
+
+  .step-num {
+    font-size: 15px;
+    font-weight: bold;
+    width: 25px;
+  }
+
+  .step-des {
+    font-size: 14px;
+  }
+
+  .post-body section {
+    padding: 0;
+  }
+
+  .swiper-slide > div img {
+    width: 100%;
+  }
+
+  .testimonials div {
+    padding: 0;
+  }
+
+  .testimonials .testimonial-item {
+    min-height: fit-content;
+  }
 }
